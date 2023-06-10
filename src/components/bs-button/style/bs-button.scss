@@ -1,0 +1,21 @@
+@import "../../../styles/bootstrap-variables";
+@import "bootstrap/scss/buttons";
+.bs-button{
+  &.is-loading{
+    opacity: 0.75;
+    cursor: default;
+  }
+  .spinner-border,
+  .spinner-grow{
+    width: 1em;
+    height: 1em;
+    border-width: 0.15em;
+    //vertical-align: -0.06em;
+    margin-right: 0.4em;
+  }
+}
+/*.bs-button:not(.btn-block){
+  & + .bs-button:not(.btn-block){
+    margin-left: 0.625rem;
+  }
+}*/

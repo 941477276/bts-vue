@@ -1,0 +1,193 @@
+.bs-select-input{
+  position: relative;
+  .form-control{
+    padding-right: 2rem;
+  }
+  .bs-tag{
+    height: 1.75rem;
+    line-height: calc(1.75rem - 2px);
+    margin: 0 0 0.3125rem 0.375rem;
+  }
+  /*.bs-input{
+    &.has-clear-content_icon{
+      .custom-suffix-icon{
+        display: none;
+      }
+    }
+  }*/
+  &.is-focus{
+    /*.bs-input-wrap{
+      .form-control{
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+        color: #495057;
+        background-color: #fff;
+      }
+      .bs-icon-chevron-down{
+        transform: rotate(-180deg);
+      }
+    }*/
+    .bs-icon-chevron-down{
+      transform: rotate(-180deg);
+    }
+  }
+  &.bs-select-input-lg{
+    .bs-select-input-tags{
+      padding-top: 0.5rem;
+    }
+    .bs-tag{
+      height: 2rem;
+      line-height: calc(2rem - 2px);
+      margin: 0 0 0.5rem 0.75rem;
+    }
+    .form-control{
+      padding-right: 2.5rem;
+    }
+    .bs-select-input-search{
+      height: 2rem;
+      line-height: 2rem;
+      margin: 0 0 0.5rem 0.75rem;
+      font-size: 1rem;
+    }
+    .bs-select-input-suffix{
+      min-width: 2.5rem;
+      font-size: 1.2rem;
+    }
+  }
+  &.bs-select-input-sm{
+    .bs-select-input-tags{
+      padding-top: 0.3125rem;
+      padding-bottom: 1px;
+    }
+    .bs-tag{
+      height: 1.25rem;
+      line-height: calc(1.25rem - 2px);
+      margin: 0 0 0.3125rem 0.25rem;
+    }
+    .form-control{
+      padding-right: 1.5rem;
+    }
+    .bs-select-input-search{
+      height: 1.25rem;
+      line-height: 1.25rem;
+      margin: 0 0 0.3125rem 0.25rem;
+      font-size: 0.75rem;
+    }
+    .bs-select-input-suffix{
+      min-width: 1.5rem;
+      font-size: 0.875rem;
+    }
+  }
+  &.is-disabled{
+    cursor: not-allowed;
+    //.custom-suffix-icon,
+    .bs-select-input-tags,
+    .bs-select-input-suffix{
+      cursor: default;
+    }
+    .bs-select-input-suffix{
+      background-color: #E9ECEF;
+    }
+  }
+}
+.bs-select-input-wrap{
+  .form-control{
+    &:not(:disabled){
+      cursor: pointer;
+      background-color: #fff;
+    }
+  }
+  .custom-suffix-icon{
+    color: #a0a6ad;
+    cursor: pointer;
+  }
+  .bs-icon-chevron-down{
+    transition: transform .3s;
+  }
+  .bs-spinner{
+    width: 1em;
+    height: 1em;
+    border-width: 1px;
+  }
+}
+.bs-select-input-suffix{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 5;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  min-width: 2rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+  font-size: 1rem;
+  color: #aaa;
+  cursor: pointer;
+  // 不能加白色背景，因为会覆盖输入框校验通过或不通过的样式
+  //background-color: #fff;
+  /*&:hover{
+    color: #333;
+  }*/
+  .clear-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0.125rem;
+    transform: translate(-50%, -50%);
+    transition: opacity .2s;
+    opacity: 0;
+    cursor: pointer;
+    background-color: #fff;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+.bs-select-input-tags{
+  position: absolute;
+  top: 0;
+  left: 0;
+  //bottom: 0;
+  right: 2rem;
+  //background-color: rgba(0,0,0,0.25);
+  padding-top: 0.3125rem;
+  //padding: 0.25rem 0;
+  /*display: flex;
+  flex-wrap: wrap;*/
+  cursor: pointer;
+  //background-color: #fff;
+
+}
+.bs-select-input-search{
+  display: inline-block;
+  vertical-align: middle;
+  width: 1rem;
+  min-width: 1rem;
+  max-width: calc(100% - 0.3125rem);
+  height: 1.75rem;
+  line-height: 1.75rem;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  margin: 0 0 0.3125rem 0.3125rem;
+  font-size: 0.875rem;
+  background-color: transparent;
+}
+.auxiliary-calc-text-width-box{
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  width: auto;
+  white-space: nowrap;
+  top: -100%;
+}
+.bs-select-input-loading-shadow{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  //background-color: rgba(0,0,0,0.05);
+}

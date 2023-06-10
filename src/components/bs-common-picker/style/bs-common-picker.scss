@@ -1,0 +1,111 @@
+.bs-date-time-editor{
+  //position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  //width: 100%;
+  /*&.is-focus{
+    .form-control{
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+    }
+  }
+  .is-valid,
+  .is-invalid{
+    & + .bs-input-suffix{
+      .custom-suffix-icon{
+        display: none;
+      }
+    }
+  }*/
+  .form-control{
+    padding-right: 2rem;
+  }
+  &.bs-date-time-editor-lg{
+    .form-control{
+      padding-right: 2.5rem;
+    }
+    .bs-date-time-editor-input-suffix{
+      min-width: 2.5rem;
+      font-size: 1.25rem;
+    }
+  }
+  &.bs-date-time-editor-sm{
+    .form-control{
+      padding-right: 1.5rem;
+    }
+    .bs-date-time-editor-input-suffix{
+      min-width: 1.5rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+.bs-date-time-editor-input-wrap{
+  position: relative;
+}
+.bs-date-time-editor-input-suffix{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 5;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  min-width: 2rem;
+  font-size: 1rem;
+  color: #aaa;
+  //cursor: pointer;
+  /*&:hover{
+    color: #333;
+  }*/
+  .clear-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0.125rem;
+    transform: translate(-50%, -50%);
+    transition: opacity .2s;
+    opacity: 0;
+    cursor: pointer;
+    background-color: #fff;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+.bs-picker-panel-container{
+  border-radius: 0.24rem 0.25rem;
+  border: 1px solid #efefef;
+  overflow: hidden;
+  background-color: #fff;
+}
+.bs-picker-dropdown{
+  position: absolute;
+  z-index: 1000;
+  border-radius: 0.24rem 0.25rem;
+  box-shadow: 0 1px 0.5rem rgba(0,0,0,0.15);
+  font-size: 0.875rem;
+}
+.bs-picker-panel{
+  background-color: #fff;
+  &.has-panel-sidebar{
+    display: flex;
+  }
+}
+.bs-picker-header{
+  .bs-icon{
+    vertical-align: 0.125rem;
+  }
+}
+.bs-picker-footer{
+  border-top: 1px solid #efefef;
+}
+.bs-picker-btns{
+  display: flex;
+  padding: 0.5rem 0.875rem;
+  .bs-picker-ok,
+  .bs-picker-clear{
+    margin-left: auto;
+  }
+}

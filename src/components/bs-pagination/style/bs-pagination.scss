@@ -1,0 +1,175 @@
+@import "../../../styles/bootstrap-variables";
+@import "bootstrap/scss/pagination";
+.bs-pagination{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .pagination{
+    margin: 0 1rem 0 0;
+  }
+  &>div,
+  &>ul{
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}
+.page-link{
+  min-width: 2.25rem; // 36px
+  padding: 0.5rem 0.25rem;
+  //font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+.bs-pagination-pager{
+  .bs-icon{
+    vertical-align: middle;
+    transform: translateY(-0.1rem);
+  }
+  .page-item{
+    &.active{
+      .page-link{
+        cursor: default;
+      }
+    }
+  }
+  .chevron-double-left,
+  .chevron-double-right{
+    display: none;
+  }
+  .prev-more{
+    &:hover{
+      .three-dots{
+        display: none;
+      }
+      .chevron-double-left{
+        display: inline-block;
+      }
+    }
+  }
+  .next-more{
+    &:hover{
+      .three-dots{
+        display: none;
+      }
+      .chevron-double-right{
+        display: inline-block;
+      }
+    }
+  }
+}
+.bs-pagination-sizes{
+  margin-right: 1rem;
+  .bs-select{
+    width: 7rem; // 112px
+    /*&.bs-select-lg{
+      width: 9rem; // 144px
+      .bs-input-suffix-icon{
+        line-height: calc(1.5em + 1.5rem + 2px);
+      }
+    }*/
+  }
+  /*.bs-input.input-group-lg{
+    .form-control:not(textarea){
+      height: calc(1.5em + 1.5rem + 2px);
+      font-size: 1.25rem;
+    }
+  }*/
+}
+.bs-pagination-total{
+  margin-right: 1rem;
+}
+.bs-pagination-jumper{
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  margin-right: 1rem;
+  .bs-input{
+    //display: inline-flex;
+    //vertical-align: middle;
+    width: 3.5rem; // 52px
+    margin: 0 0.35rem;
+    /*&.input-group-lg{
+      width: 4.6875rem; // 75px
+      .form-control:not(textarea){
+        //height: calc(1.5em + 1.5rem + 2px);
+        font-size: 1.25rem;
+      }
+    }*/
+  }
+  .form-control{
+    text-align: center;
+  }
+  /*.bs-input.input-group-lg{
+    width: 4.6875rem; // 75px
+    .form-control:not(textarea){
+      //height: calc(1.5em + 1.5rem + 2px);
+      font-size: 1.25rem;
+    }
+  }*/
+}
+.bs-pagination-jumper-lg{
+  .bs-input{
+    margin: 0 0.85rem;
+  }
+}
+.bs-pagination-sm{
+  .page-link{
+    min-width: 1.75rem; // 76px
+  }
+  .bs-pagination-total,
+  .bs-pagination-sizes,
+  .bs-pagination-jumper{
+    line-height: 1.5;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+  }
+  .bs-pagination-pager{
+    margin-right: 0.5rem;
+  }
+  .bs-pagination-sizes{
+    .bs-select{
+      width: 5.5rem; // 88px
+    }
+  }
+  .bs-pagination-jumper {
+    .bs-input {
+      width: 2.7rem; // 75px
+      .form-control:not(textarea) {
+        //height: calc(1.5em + 1.5rem + 2px);
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+.bs-pagination-lg{
+  .page-link{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    min-width: 3.75rem; // 76px
+  }
+  .bs-pagination-total,
+  .bs-pagination-sizes,
+  .bs-pagination-jumper{
+    line-height: 1.5;
+    font-size: 1.25rem;
+    margin-right: 1.5rem;
+  }
+  .bs-pagination-pager{
+    margin-right: 1.5rem;
+  }
+  .bs-pagination-sizes{
+    .bs-select{
+      width: 8.5rem; // 136px
+    }
+  }
+  .bs-pagination-jumper {
+    .bs-input {
+      width: 4.6875rem; // 75px
+      .form-control:not(textarea) {
+        //height: calc(1.5em + 1.5rem + 2px);
+        font-size: 1.25rem;
+      }
+    }
+  }
+}

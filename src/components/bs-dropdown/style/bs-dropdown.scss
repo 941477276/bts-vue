@@ -1,0 +1,41 @@
+@import "../../../styles/slide-transition.mixin";
+@import "../../../styles/bootstrap-variables";
+@import "bootstrap/scss/dropdown";
+.bs-dropdown{
+  display: inline-block;
+  vertical-align: middle;
+  &.is-disabled{
+    opacity: 0.65;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.dropdown-item{
+  &.disabled{
+    cursor: not-allowed;
+  }
+  &:not(.disabled){
+    cursor: pointer;
+  }
+}
+
+.bs-dropdown-menu{
+  display: block;
+  float: none;
+  min-width: 5rem;
+  //min-width: 13rem;
+  line-height: 1.5715;
+  border-color: #ebebeb;
+  margin: 0;
+  //transition: transform .2s, opacity .2s;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 5px 14px #00000014, 0 7px 24px 6px #0000000d;
+  //box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+  .dropdown-item{
+    &:not(.active).dropdown-item-hover{
+      color: #16181b;
+      text-decoration: none;
+      background-color: #e9ecef;
+    }
+  }
+}

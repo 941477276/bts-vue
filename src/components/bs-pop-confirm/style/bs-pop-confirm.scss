@@ -1,0 +1,84 @@
+.bs-pop-confirm{
+  min-width: 10rem;
+  padding: 0.75rem;
+  border: 1px solid #ebeef5;
+  border-radius: 0.3125rem;
+  box-shadow: 0 2px 12px 0 rgb(0,0,0,0.1);
+  .bs-popper-arrow{
+    width: 0.625rem;
+    height: 0.625rem;
+    &::before{
+      width: 0.625rem;
+      height: 0.625rem;
+      border: 1px solid transparent;
+      //background-color: #F7F7F7;
+    }
+  }
+  &[data-popper-placement^='top']{
+    .bs-popper-arrow{
+      bottom: -0.3125rem;
+      &::before{
+        border-bottom-color: #ebeef5;
+        border-right-color: #ebeef5;
+      }
+    }
+  }
+  &[data-popper-placement^='bottom']{
+    .bs-popper-arrow{
+      top: -0.3125rem;
+      &::before{
+        border-top-color: #ebeef5;
+        border-left-color: #ebeef5;
+      }
+    }
+  }
+  &[data-popper-placement^='left']{
+    .bs-popper-arrow{
+      right: -0.3125rem;
+      &::before{
+        border-top-color: #ebeef5;
+        border-right-color: #ebeef5;
+      }
+    }
+  }
+  &[data-popper-placement^='right']{
+    .bs-popper-arrow{
+      left: -0.3125rem;
+      &::before{
+        border-bottom-color: #ebeef5;
+        border-left-color: #ebeef5;
+      }
+    }
+  }
+}
+.bs-pop-confirm-message{
+  &::before,
+  &::after{
+    display: table;
+    table-layout: fixed;
+    content: ' ';
+    clear: both;
+  }
+}
+.bs-pop-confirm-icon{
+  float: left;
+  line-height: 1;
+  margin-right: 0.5rem;
+  color: var(--danger);
+  font-size: 1rem;
+  .bs-icon{
+    vertical-align: middle;
+  }
+}
+.bs-pop-confirm-message-text{
+  overflow: hidden;
+}
+.bs-pop-confirm-buttons{
+  margin-top: 0.625rem;
+  text-align: right;
+  .bs-button{
+    & + .bs-button{
+      margin-left: 0.5rem;
+    }
+  }
+}

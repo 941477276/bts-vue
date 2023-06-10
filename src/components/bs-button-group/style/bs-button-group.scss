@@ -1,0 +1,41 @@
+@import "../../../styles/bootstrap-variables";
+@import "bootstrap/scss/button-group";
+.bs-button-group{
+  &:not(.btn-group-vertical){
+    .bs-dropdown{
+      &:not(:first-child){
+        .bs-button{
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+      &:not(:last-child){
+        .bs-button{
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  }
+  &.btn-group-vertical{
+    .bs-dropdown{
+      display: block;
+      width: 100%;
+      .bs-button{
+        width: 100%;
+      }
+      &:not(:first-child){
+        .bs-button{
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
+      &:not(:last-child){
+        .bs-button{
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  }
+}

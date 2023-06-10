@@ -1,0 +1,72 @@
+.bs-picker-time-panel{
+  padding-top: 0.25rem;
+  .bs-picker-body{
+    padding: 0;
+    border-top: none;
+  }
+}
+.bs-picker-content{
+  display: flex;
+  height: 10.5rem; //168px
+  &.has-periods-column{
+    width: 25%;
+  }
+}
+
+.bs-picker-time-panel-column{
+  position: relative;
+  flex: 1 0 auto;
+  //width: 3.375rem; // 54px
+  width: 33.33%;
+  min-width: 3.375rem; // 54px
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: hidden;
+  background-color: #fff;
+  &+.bs-picker-time-panel-column{
+    border-left: 1px solid #efefef;
+  }
+  &:hover{
+    overflow-y: auto;
+  }
+  &::after{ // 为了能置顶最后一个时间点
+    display: block;
+    content: ' ';
+    height: 8.75rem; // 140px
+  }
+  &.bs-picker-time-panel-column-periods{
+    &::after{
+      display: none;
+    }
+  }
+}
+.bs-picker-time-panel-cell{
+  height: 1.75rem; // 28px
+  line-height: 1.75rem;
+  padding: 0 0 0 0.875rem;
+  margin: 0;
+  color: #333;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+  &:hover{
+    background-color: #e9ecef;
+  }
+  &.is-disabled{
+    cursor: not-allowed;
+    color: #ccc;
+    &:hover{
+      background-color: transparent;
+    }
+  }
+  &.is-selected{
+    color: #fff;
+    background-color: var(--primary);
+    &:hover{
+      background-color: var(--primary);
+    }
+    &.is-disabled{
+      opacity: 0.7;
+    }
+  }
+}

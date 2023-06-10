@@ -1,0 +1,44 @@
+.aside-menu{
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: 18.5rem; // 300px
+  border-right: 1px solid #eee;
+  background-color: #fff;
+  .header-search-box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+  }
+  .aside-menu-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding-top: 1rem;
+    overflow: hidden;
+    &:hover{
+      overflow-y: auto;
+    }
+    &.scroll-auto{
+      overflow: auto;
+    }
+  }
+
+  .bs-menu-vertical{
+    border-right: none;
+  }
+  &.show-search-box{
+    .aside-menu-container {
+      padding-top: 4.5rem;
+    }
+  }
+}

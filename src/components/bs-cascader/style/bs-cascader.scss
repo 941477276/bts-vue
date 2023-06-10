@@ -1,0 +1,123 @@
+.bs-cascader-dropdown{
+  position: absolute;
+  z-index: 2000;
+  border: 1px solid #e4e7eb;
+  border-radius: 0.28rem;
+  overflow: auto;
+  box-shadow: 0 1px 0.5rem rgba(0,0,0,0.15);
+  background-color: #fff;
+  /*&[data-horizontal-fullinview="false"] {
+    .bs-cascader-panel{
+      max-width: var(--cascader-refernce-width, calc(100vw - 2rem));
+    }
+  }*/
+  .bs-cascader-panel{
+    max-width: var(--cascader-refernce-width, calc(100vw - var(--left, 0) - 2rem));
+  }
+}
+.bs-cascader-panel{
+  display: flex;
+  //flex-wrap: wrap;
+  //max-width: calc(100vw - 2rem);
+  //max-width: var(--cascader-refernce-width);
+  //border: 1px solid #ced4da;
+  overflow-x: auto;
+  background-color: #fff;
+}
+.bs-cascader-menu{
+  //position: absolute;
+  height: 12.5rem; // 200px
+  min-width: 10rem;
+  //border: 1px solid #ced4da;
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  & + .bs-cascader-menu{
+    border-left: 1px solid #e4e7eb;
+  }
+}
+.bs-cascader-menu-item{
+  display: flex;
+  align-items: center;
+  line-height: 1.375rem;
+  list-style: none;
+  padding: 0.375rem 0.75rem;
+  background-color: #fff;
+  cursor: pointer;
+  color: #454545;
+  transition: color .3s, background-color .3s;
+  &.is-single-actived{
+    color: rgba(0, 123, 255, 0.6);
+  }
+  &.is-checked{
+    color: var(--primary);
+    &.is-multiple{
+      color: #212529;
+    }
+    .bs-cascader-check-icon{
+      display: block;
+    }
+  }
+  &.is-expanded {
+    color: var(--primary);
+  }
+  &.is-disabled{
+    color: #a1a1a1;
+    cursor: not-allowed;
+  }
+  &:not(.is-disabled):not(.is-checked):hover{
+    background-color: #E9ECEF;
+  }
+  .bs-checkbox,
+  .bs-radio{
+    margin-right: 0.625rem;
+  }
+}
+.bs-cascader-menu-item-label{
+  flex: 1;
+  //padding: 0 0.625rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.bs-cascader-loading-icon{
+  width: 0.9rem;
+  height: 0.9rem;
+  //vertical-align: 0.125em;
+  border-width: 1px;
+  margin-left: 0.5rem;
+}
+.bs-cascader-check-icon{
+  display: none;
+  margin-left: 0.5rem;
+  font-size: 1.15rem;
+}
+.bs-cascader-empty{
+  min-width: 10rem;
+  flex: 1;
+  padding: 1.5rem 1.2rem;
+  color: #888;
+  text-align: center;
+  cursor: default;
+}
+.bs-cascader-loading{
+  min-width: 10rem;
+  flex: 1;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+  color: var(--primary);
+  opacity: 0.65;
+  .bs-spinner{
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    border-width: 0.125rem;
+  }
+}
+.bs-cascader-loading-text{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.8rem;
+}
+

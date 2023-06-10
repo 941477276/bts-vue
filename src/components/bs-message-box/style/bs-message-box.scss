@@ -1,0 +1,190 @@
+.bs-message-box-root{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*background-color: rgba(0,0,0,0.2);*/
+  /*text-align: center;*/
+}
+.bs-message-box{
+  min-width: 25rem; // 400px
+  border-radius: .25rem;
+  background-color: #fff;
+
+  &.scalePop-enter-active,
+  &.scalePop-leave-to{
+    transition: all .3s cubic-bezier(.78,.14,.15,.86);
+    /* 这里的缩放和opacity都需设置为0，否则效果不佳 */
+    transform: scale(0);
+    opacity: 0;
+  }
+  &.scalePop-enter-to,
+  &.scalePop-leave-from{
+    transform: scale(1);
+    opacity: 1;
+  }
+  &.scalePop-leave-active{
+    transition: all .3s cubic-bezier(.78,.14,.15,.86);
+  }
+  /*&.scalePop-leave-to{
+    transform: scale(0.3);
+    opacity: 0;
+  }*/
+}
+.bs-message-box-header{
+  padding: 1rem 1rem .625rem 1rem;
+  border-radius: .25rem .25rem 0 0;
+  font-weight: bold;
+  color: #222;
+}
+.bs-message-box-title{
+  margin-bottom: .5rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.bs-message-box-close{
+  display: none;
+  line-height: 1;
+  padding: .25rem 1rem .25rem .5rem;
+  color: #ccc;
+  &:hover,
+  &:focus{
+    text-decoration: none;
+    box-shadow: none;
+  }
+  span{
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+}
+.bs-message-box-body{
+  padding: 2rem;
+  font-size: 0.875rem;
+}
+.bs-message-box-icon{
+  float: left;
+  margin-right: 1.2rem;
+  .bs-icon{
+    //width: 1.5rem;
+    //height: 1.5rem;
+    vertical-align: middle;
+    font-size: 1.5rem;
+  }
+}
+.bs-message-box-content-wrap{
+  overflow: hidden;
+}
+.bs-message-box-btns{
+  padding: 0 2rem 1.5rem 2rem;
+  text-align: right;
+  .bs-button + .bs-button{
+    margin-left: .625rem;
+  }
+}
+
+
+.bs-message-box{
+  position: relative;
+  top: 6.25rem; /* 100px */
+  width: 25rem; /* 400px */
+  /*display: inline-block;
+  vertical-align: middle;
+  text-align: left;*/
+  margin: 0 auto;
+  .bs-form-item{
+    margin-bottom: 0;
+  }
+  &.theme-dialog{
+    .bs-message-box-header{
+      position: relative;
+      &.has-close{
+        padding-right: 3rem;
+        .bs-message-box-close{
+          display: block;
+        }
+      }
+    }
+    .bs-message-box-title{
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+    .bs-message-box-close{
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      /*margin-top: .1rem;*/
+    }
+    .bs-message-box-body{
+      padding: .625rem 1rem;
+    }
+    .bs-message-box-btns{
+      padding: .625rem 1rem 1rem 1rem;
+    }
+  }
+  &.bs-message-box-info{
+    .bs-message-box-icon{
+      color: var(--primary);
+    }
+  }
+  &.bs-message-box-success{
+    .bs-message-box-icon{
+      color: var(--success);
+    }
+  }
+  &.bs-message-box-warning{
+    .bs-message-box-icon{
+      color: var(--warning);
+    }
+  }
+  &.bs-message-box-danger{
+    .bs-message-box-icon{
+      color: var(--danger);
+    }
+  }
+  &.bs-message-box-prompt{
+    .bs-message-box-content-wrap{
+      overflow: visible;
+    }
+  }
+}
+.bs-message-box-root{
+  &.bs-message-box-centered{
+    &::after{
+      display: inline-block;
+      vertical-align: middle;
+      content: ' ';
+      width: 0;
+      height: 100%;
+    }
+    text-align: center;
+    .bs-message-box{
+      top: 0;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .bs-message-box{
+    top: 8vh;
+    width: 100%;
+    min-width: auto;
+    max-width: calc(100% - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  .bs-message-box-root{
+    &.bs-message-box-centered{
+      .bs-message-box{
+        top: 0;
+      }
+    }
+  }
+}

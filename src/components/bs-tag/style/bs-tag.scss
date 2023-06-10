@@ -1,0 +1,206 @@
+.bs-tag{
+  /*display: inline-block;
+  vertical-align: middle;*/
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  line-height: calc(2rem - 2px);
+  max-width: 100%;
+  padding: 0 0.5rem;
+  border: 1px solid #d9ecff;
+  border-radius: 0.25rem;
+  background-color: #ecf5ff;
+  color: #007bff;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: width .3s, height .3s, font-size .3s, transform .3s;
+  & + .bs-tag{
+    margin-left: 0.5rem;
+  }
+  &:hover{
+    max-width: none;
+    overflow: unset;
+  }
+  &.fold-enter-active,
+  &.fold-leave-active{
+    transition: all .3s cubic-bezier(.55, 0, .1, 1);
+  }
+  &.fold-enter-from,
+  &.fold-leave-to{
+    opacity: 0;
+    transform: scale(0);
+    overflow: hidden;
+  }
+  &.bs-tag-custom-color{
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .bs-tag-close{
+    //transform: translateY(-1px);
+    margin-left: 0.35rem;
+    font-size: 1.3em;
+  }
+  .bs-icon-x{
+    vertical-align: middle;
+  }
+  .bs-icon-x-circle-fill{
+    display: none;
+    vertical-align: middle;
+  }
+  .bs-tag-operate{
+    cursor: pointer;
+    &:hover{
+      .bs-icon-x{
+        display: none;
+      }
+      .bs-icon-x-circle-fill{
+        display: inline-block;
+      }
+    }
+  }
+
+  &.bs-tag-md{
+    height: 1.75rem;
+    line-height: calc(1.75rem - 2px);
+    .bs-tag-close{
+      margin-left: 0.2rem;
+      font-size: 1.2em;
+    }
+  }
+  &.bs-tag-sm{
+    height: 1.5rem;
+    line-height: calc(1.5rem - 2px);
+    .bs-tag-close{
+      margin-left: 0.15rem;
+      font-size: 1.1em;
+    }
+  }
+  &.bs-tag-mini{
+    height: 1.25rem;
+    line-height: calc(1.25rem - 2px);
+    .bs-tag-close{
+      margin-left: 0.1rem;
+      transform: translateY(-1px);
+      font-size: 1em;
+    }
+  }
+}
+
+.bs-tag--dark{
+  border-color: #007bff;
+  color: #fff;
+  background-color: #007bff;
+}
+.bs-tag--plain{
+  border-color: #007bff;
+  color: #007bff;
+  background-color: #fff;
+}
+.bs-tag-secondary{
+  border-color: #d7d7d7;
+  color: #6c757d;
+  background-color: #dfdfdf;
+  &.bs-tag--dark{
+    border-color: #6c757d;
+    color: #fff;
+    background-color: #6c757d;
+  }
+  &.bs-tag--plain{
+    border-color: #6c757d;
+    color: #6c757d;
+    background-color: #fff;
+  }
+}
+.bs-tag-success{
+  border-color: #90dda1;
+  color: #28a745;
+  background-color: #9ce7ad;
+  &.bs-tag--dark{
+    border-color: #28a745;
+    color: #fff;
+    background-color: #28a745;
+  }
+  &.bs-tag--plain{
+    border-color: #28a745;
+    color: #28a745;
+    background-color: #fff;
+  }
+}
+.bs-tag-danger{
+  border-color: #f3949d;
+  color: #d11728;
+  background-color: #ee7783;
+  &.bs-tag--dark{
+    border-color: #dc3545;
+    color: #fff;
+    background-color: #dc3545;
+  }
+  &.bs-tag--plain{
+    border-color: #dc3545;
+    color: #dc3545;
+    background-color: #fff;
+  }
+}
+.bs-tag-warning{
+  border-color: #f7e8bd;
+  color: #ffc107;
+  background-color: #fbf0cf;
+  &.bs-tag--dark{
+    border-color: #ffc107;
+    color: #fff;
+    background-color: #ffc107;
+  }
+  &.bs-tag--plain{
+    border-color: #ffc107;
+    color: #ffc107;
+    background-color: #fff;
+  }
+}
+.bs-tag-info{
+  border-color: #95e4f1;
+  color: #17a2b8;
+  background-color: #a7ecf7;
+  &.bs-tag--dark{
+    border-color: #17a2b8;
+    color: #fff;
+    background-color: #17a2b8;
+  }
+  &.bs-tag--plain{
+    border-color: #17a2b8;
+    color: #17a2b8;
+    background-color: #fff;
+  }
+}
+.bs-tag-light{
+  border-color: #eee;
+  color: #212529;
+  background-color: #f2f5f7;
+  &.bs-tag--dark{
+    border-color: #f8f9fa;
+    color: #212529;
+    background-color: #f8f9fa;
+  }
+  &.bs-tag--plain{
+    border-color: #aaa;
+    color: #aaa;
+    background-color: #fff;
+  }
+}
+.bs-tag-dark{
+  border-color: #e9e9e9;
+  color: #ededed;
+  background-color: #6e6e6e;
+  &.bs-tag--dark{
+    border-color: #343a40;
+    color: #fff;
+    background-color: #343a40;
+  }
+  &.bs-tag--plain{
+    border-color: #343a40;
+    color: #343a40;
+    background-color: #fff;
+  }
+}
