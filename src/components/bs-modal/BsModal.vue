@@ -10,10 +10,10 @@
         v-show="visibleInner"
         v-drag="{dragBar: '.modal-header', target: '.modal-dialog', useDrag: draggable, useBoundary: boundary}"
         class="bs-modal modal"
-        :class="{
+        :class="[{
           'modal-opened': visibleInner,
           'modal-fullscreen': fullscreen
-        }"
+        }, className]"
         tabindex="-1"
         role="dialog"
         :aria-hidden="!visibleInner"

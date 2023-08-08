@@ -3,8 +3,9 @@
     <nav class="navbar navbar-expand-lg bg-primary">
       <transition name="brand-slide">
         <router-link v-show="navbarBrandVisible" class="navbar-brand" to="/component">
-          <BsiBootstrap></BsiBootstrap>
-          <BsiBootstrapFill></BsiBootstrapFill>
+          <!--<BsiBootstrap></BsiBootstrap>
+          <BsiBootstrapFill></BsiBootstrapFill>-->
+          <img class="bts-vue-logo" src="../assets/bts-vue-logo.png" alt="">
           <span class="brand-text">
            Bootstrap <i>Vue<small>3</small></i>
         </span>

@@ -30,6 +30,9 @@ export const bsModalProps = {
     type: String,
     default: ''
   },
+  className: { // 自定义class
+    type: [String, Array, Object]
+  },
   size: { // 弹窗大小
     type: String as PropType<ModalSize>,
     default: ''

@@ -7,6 +7,7 @@ import { siteDocTransform } from './plugin/siteDocTransform';
 
 // https://vitejs.dev/config/
 const imgSuffixs = ['.jpg', '.jpeg', '.gif', '.png', '.webp', '.bmp'];
+const isDev = process.env.NODE_ENV == 'development';
 export default defineConfig({
   base: './',
   server: {
@@ -29,6 +30,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        format: 'esm',
         entryFileNames: 'static/js/[name]-[hash].js',
         chunkFileNames: 'static/js/[name]-[hash].js',
         assetFileNames (assetInfo) {
@@ -46,6 +48,6 @@ export default defineConfig({
     }
   },
   esbuild: {
-    drop: ['console', 'debugger'] // 移除代码中的console
+    drop: isDev ? [] : ['console', 'debugger'] // 移除代码中的console
   }
 });

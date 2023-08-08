@@ -340,7 +340,7 @@ async function buildDistLib (format) {
       emptyOutDir: false,
       lib: {
         entry: path.resolve(__dirname, '../src/components/dist.ts'),
-        name: 'BsVue',
+        name: 'BtsVue',
         fileName: 'bts-vue',
         formats: [format]
       },

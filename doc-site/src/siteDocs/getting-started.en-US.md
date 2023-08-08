@@ -16,7 +16,7 @@ If you use Vue's default template syntax, you need to register components before
 import { createApp } from 'vue';
 import App from './App';
 // import bts-vue
-import BsVue from 'bts-vue';
+import BtsVue from 'bts-vue';
 // import bts-vue component style
 // import 'bts-vue/es/components/index.js'; // import is .scss file
 import 'bts-vue/es/components/css.js'; // import is .css file
@@ -26,7 +26,7 @@ import 'bts-vue/es/styles/bootstrap-other.css';
 
 const app = createApp(App);
 
-app.use(BsVue).mount('#app');
+app.use(BtsVue).mount('#app');
 ```
 ### Global Part Registration
 ```javascript
@@ -81,7 +81,7 @@ This method needs to register component subcomponents separately, such as BsDrop
 
 ## Browser introduction
 
-Use the `script` and `link` tags in the browser to directly import the file, and use the global variable `BsVue`
+Use the `script` and `link` tags in the browser to directly import the file, and use the global variable `BtsVue`
 
 There are `bts-vue.js`, `bts-vue.css`, `bootstrap-other.css` files in the `bd-vue/dist` directory in the npm release package, you can import them manually
 ```html
@@ -111,7 +111,7 @@ If you use Vite, you can use [unplugin-vue-components](https://github.com/antfu/
 ```javascript
 import type { ComponentResolver, SideEffectsInfo } from 'unplugin-vue-components';
 
-export interface BsVueResolverOptions {
+export interface BtsVueResolverOptions {
   /**
    * exclude components that do not require automatic import
    *
@@ -208,7 +208,7 @@ function kebabCase (camelStr: string): string {
   });
 };
 
-function getSideEffects(compName: string, options: BsVueResolverOptions): SideEffectsInfo {
+function getSideEffects(compName: string, options: BtsVueResolverOptions): SideEffectsInfo {
   const {
     importStyle = true,
     importScss = false
@@ -235,9 +235,9 @@ function getSideEffects(compName: string, options: BsVueResolverOptions): SideEf
 }
 
 /**
- * Resolver for BsVue
+ * Resolver for BtsVue
  */
-export function BsVueResolver(options: BsVueResolverOptions = {}): ComponentResolver {
+export function BtsVueResolver(options: BtsVueResolverOptions = {}): ComponentResolver {
   return {
     type: 'component',
     resolve: (name: string) => {
@@ -275,7 +275,7 @@ export function BsVueResolver(options: BsVueResolverOptions = {}): ComponentReso
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { BsVueResolver } from './unplugin-vue-components-resolver';
+import { BtsVueResolver } from './unplugin-vue-components-resolver';
 
 export default defineConfig({
    base: './',
@@ -285,7 +285,7 @@ export default defineConfig({
      Components({
        dts: true,
        resolvers: [
-         BsVueResolver({
+         BtsVueResolver({
            // exclude: ['BsButton'], // need to exclude auto-imported components
            importStyle: 'scss' // Which style file to import the component, optional values: boolean, scss, css. Import css style files by default
            // importCss: boolean, // Whether to import the css file of the component

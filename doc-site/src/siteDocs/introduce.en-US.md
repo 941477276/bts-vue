@@ -1,5 +1,5 @@
-#BsVue
-`Bootstrap Vue`, or `BsVue` for short, is a set of component libraries based on Vue.js 3.x and Bootstrap UI.
+#BtsVue
+`Bootstrap Vue`, or `BtsVue` for short, is a set of component libraries based on Vue.js 3.x and Bootstrap UI.
 
 It is suitable for user-oriented or background management products, and adapts to different types of devices such as PCs, tablets, and mobile phones.
 

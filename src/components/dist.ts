@@ -1,10 +1,11 @@
-import BsVue, { BsToast, BsMessage, BsMessageBox, closeMessage, closeAllMessage, closeMessageBox, closeAllMessageBox } from './index';
+import BtsVue, { BsToast, BsMessage, BsMessageBox, BsLoading, closeMessage, closeAllMessage, closeMessageBox, closeAllMessageBox } from './index';
 
 export default {
-  ...BsVue,
+  ...BtsVue,
   BsToast,
   BsMessage,
   BsMessageBox,
+  BsLoading,
   closeMessage,
   closeAllMessage,
   closeMessageBox,

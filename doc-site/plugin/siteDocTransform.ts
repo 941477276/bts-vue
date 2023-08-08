@@ -52,11 +52,11 @@ export function siteDocTransform () {
         // 新代码
         let newCode = `
           <template>
-            <bts-vue-doc>
+            <BtsVueDoc>
               <article class="bts-vue-doc-article ${fileName}-article">
                 ${content}
               </article>
-            </bts-vue-doc>
+            </BtsVueDoc>
           </template>
           <script>
             export default {

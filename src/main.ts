@@ -8,12 +8,12 @@ import 'dayjs/locale/zh-cn';
 
 import App from './App.vue';
 import './styles/index';
-import BsVue from './components/index';
+import BtsVue from './components/index';
 
 import './components/style';
 
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+// import Antd from 'ant-design-vue';
+// import 'ant-design-vue/dist/antd.css';
 
 const app = createApp(App);
 
@@ -23,7 +23,7 @@ dayjs.locale('zh-cn');
 // initRouterDefend(router);
 // app.use(store);
 // app.use(router);
-app.use(BsVue);
+app.use(BtsVue);
 app.use(Antd);
 
 app.mount('#app');

@@ -14,8 +14,6 @@ import {
   checkTerminal
 } from '../../utils/bs-util';
 
-let documentNodeNames = ['HTML', 'BODY'];
-
 export interface DropdownOffset {
   top?: number;
   left?: number;
@@ -49,6 +47,7 @@ export interface DropdownDirection {
  */
 const endReg = /(\w+)End$/;
 const centerReg = /(\w+)Center$/;
+const documentNodeNames = ['HTML', 'BODY'];
 export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLElement, direction: string, tryAllDirection = false, tryEndDirection = true, dropdownOffset?: DropdownOffset): DropdownDirection {
   if (!referenceEl || !targetEl || !direction) {
     throw new Error('One of the parameters of referenceEl, targetEl, direction is missing!');
@@ -72,6 +71,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
   var referenceOffset = offset(referenceEl);
   // 判断参照元素是否在position: fixed的元素中
   var referenceIsInFixedPosition = eleIsInFixedParents(referenceEl);
+  // 目标元素是否在在position: fixed的元素中
+  var targetIsInFixedPosition = eleIsInFixedParents(targetEl);
   var referenceRect = referenceEl.getBoundingClientRect();
   var styleDisplay = targetEl.style.display;
   var styleOpacity = targetEl.style.opacity;
@@ -162,7 +163,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     }
     var bottom = null;
     var right = null;
-   // var isInView = eleIsInView(targetEl, top, left, needSubtractScrollOffset);
+    // var isInView = eleIsInView(targetEl, top, left, needSubtractScrollOffset);
     top += dropdownOffsetTop;
     left += dropdownOffsetLeft;
     if (targetIsInBody) {
@@ -187,7 +188,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       documentHasScroll: bodyHasScroll,
       documentScrollInfo: scrollInfo,
       scrollParent: referenceScrollParent, // 获取目标元素所处有滚动条的父级容器
-      windowWH: { ...windowWH }
+      windowWH: { ...windowWH },
+      targetIsInFixedPosition
     });
     // 如果目标元素插入到了body中，则需减去参照元素有滚动条父级容器滚动条滚动到距离（调用eleIsInView函数前不需要减去，因为eleIsInView函数内部计算时会减去）
     top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
@@ -207,7 +209,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       }
     } else {
       // bottom = targetElOffsetParent.offsetHeight - (referenceOffset.top - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
-      right = targetElOffsetParent.offsetWidth - (referenceOffset.left - targetElOffsetParentOffset.left) - referenceRect.width + referenceElWrapperScrollLeft;
+      right = targetElOffsetParent.clientWidth - (referenceOffset.left - targetElOffsetParentOffset.left) - referenceRect.width; // + referenceElWrapperScrollLeft;
     }
     /* if (targetIsInBody) {
       /!* if (bodyHasScroll.vertical && !bodyScrollVisible.vertical) {
@@ -265,7 +267,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       documentHasScroll: bodyHasScroll,
       documentScrollInfo: scrollInfo,
       scrollParent: referenceScrollParent, // 获取目标元素所处有滚动条的父级容器
-      windowWH: { ...windowWH }
+      windowWH: { ...windowWH },
+      targetIsInFixedPosition
     });
     // 如果目标元素插入到了body中，则需减去参照元素有滚动条父级容器滚动条滚动到距离（调用eleIsInView函数前不需要减去，因为eleIsInView函数内部计算时会减去）
     top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
@@ -292,8 +295,9 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
         bottom -= scrollInfo.top;
       }
     } else {
-      bottom = targetElOffsetParent.offsetHeight - (referenceOffset.top - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
-      right = targetElOffsetParent.offsetWidth - (referenceOffset.left - targetElOffsetParentOffset.left) - referenceRect.width + referenceElWrapperScrollLeft;
+      // 这里应该取 targetElOffsetParent.clientWidth，因为targetElOffsetParent可能会有垂直滚动条，offsetWidth会将垂直滚动条的宽度算进去
+      bottom = targetElOffsetParent.clientHeight - (referenceOffset.top - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
+      right = targetElOffsetParent.clientWidth - (referenceOffset.left - targetElOffsetParentOffset.left) - referenceRect.width; // + referenceElWrapperScrollLeft;
     }
     /* if (targetIsInBody) {
       if (bodyHasScroll.vertical && !bodyScrollVisible.vertical) {
@@ -350,7 +354,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       }
     } else {
       if (isLeftBottom) {
-        bottom = targetElOffsetParent.offsetHeight - (referenceOffset.top + referenceRect.height - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
+        bottom = targetElOffsetParent.clientHeight - (referenceOffset.top + referenceRect.height - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
       }
     }
 
@@ -378,7 +382,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       documentHasScroll: bodyHasScroll,
       documentScrollInfo: scrollInfo,
       scrollParent: referenceScrollParent, // 获取目标元素所处有滚动条的父级容器
-      windowWH: { ...windowWH }
+      windowWH: { ...windowWH },
+      targetIsInFixedPosition
     });
     // 如果目标元素插入到了body中，则需减去参照元素有滚动条父级容器滚动条滚动到距离（调用eleIsInView函数前不需要减去，因为eleIsInView函数内部计算时会减去）
     top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
@@ -405,11 +410,9 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     } else {
       // let referenceIsTargetElOffsetParent = referenceEl === targetElOffsetParent;
       // right = targetElOffsetParent.offsetWidth - (referenceOffset.left - targetElOffsetParentOffset.left) + referenceElWrapperScrollLeft;
-      right = targetElOffsetParent.offsetWidth - (referenceOffset.left - targetElOffsetParentOffset.left); // + referenceElWrapperScrollLeft;
-      // 如果参照元素有滚动条的父级元素等于目标元素的offsetParent，那么right值需要加上参照元素有滚动条的父级元素滚动条滚去的距离
-      if (referenceScrollParent === targetElOffsetParent) {
-        right += referenceElWrapperScrollLeft;
-      }
+      // right = targetElOffsetParent.offsetWidth - (referenceOffset.left - targetElOffsetParentOffset.left); // + referenceElWrapperScrollLeft;
+      // 这里应该取 targetElOffsetParent.clientWidth，因为targetElOffsetParent可能会有垂直滚动条，offsetWidth会将垂直滚动条的宽度算进去
+      right = targetElOffsetParent.clientWidth - (referenceOffset.left - targetElOffsetParentOffset.left); // + referenceElWrapperScrollLeft;
     }
     let newTop = top - targetElOffsetParentOffset.top;
     let newLeft = left - targetElOffsetParentOffset.left;
@@ -469,7 +472,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
         // 实际为：浏览器可见高度-参照元素在可见高度内的位置-浏览器滚动条滚动的距离+参照元素滚动容器滚动滚动的距离
         bottom = windowWH.height - (referenceOffset.top + referenceRect.height) + referenceElWrapperScrollTop;
       } else {
-        bottom = targetElOffsetParent.offsetHeight - (referenceOffset.top + referenceRect.height - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
+        bottom = targetElOffsetParent.clientHeight - (referenceOffset.top + referenceRect.height - targetElOffsetParentOffset.top);// + referenceElWrapperScrollTop;
       }
     }
 
@@ -485,7 +488,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       documentHasScroll: bodyHasScroll,
       documentScrollInfo: scrollInfo,
       scrollParent: referenceScrollParent, // 获取目标元素所处有滚动条的父级容器
-      windowWH: { ...windowWH }
+      windowWH: { ...windowWH },
+      targetIsInFixedPosition
     });
     // 如果目标元素插入到了body中，则需减去参照元素有滚动条父级容器滚动条滚动到距离（调用eleIsInView函数前不需要减去，因为eleIsInView函数内部计算时会减去）
     top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
@@ -665,8 +669,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     let result = flow.handler(tryEndDirection ? !flow.isTail : flow.isTail, flow.isCenter);
     let inView = result.vertical && result.horizontal;
     let inScrollParentView = result.scrollParentVertical && result.scrollParentHorizontal;
-
     let flag = allInView ? (inView && inScrollParentView) : (inView || inScrollParentView);
+    console.log('result2', result);
 
     if (result.direction === defaultDirection) {
       defaultDirectionResult = result;
@@ -686,6 +690,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     // 判断在有滚动条的父级容器中是否完可视
     let inScrollParentView = result.scrollParentVertical && result.scrollParentHorizontal;
 
+    console.log('result1', result);
     if (result.direction === defaultDirection) {
       defaultDirectionResult = result;
     }
@@ -708,6 +713,7 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       }
     }
   });
+  console.log('calcedDirection', calcedDirection);
   // 如果尝试了所有方位后都无法显示，则显示默认方位
   if (!calcedDirection) {
     let inViewDirection: DropdownDirection|null = null;
@@ -729,7 +735,9 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       calcedDirection = defaultDirectionResult as any;
       calcedDirection.isRollback = true;
     }
+    console.log('回滚后的calcedDirection', calcedDirection);
   }
+
   // 恢复目标元素的display、opacity属性
   targetEl.style.opacity = styleOpacity || '';
   targetEl.style.display = styleDisplay || '';
@@ -752,7 +760,9 @@ function eleIsInView (options: any) {
     bodyScrollVisible,
     referenceIsInFixedPosition,
     scrollParent, // 获取目标元素有滚动条的父级容器
-    windowWH
+    windowWH,
+    targetIsInFixedPosition,
+    targetIsInBody
     // verticalRight, // 垂直方向展示且右对齐时的right值
     // horizontalBottom // 水平方向展示且底部对齐时的bottom值
   } = options;
@@ -771,8 +781,8 @@ function eleIsInView (options: any) {
     eleWrapperScrollLeft = scrollLeft(scrollParent);
     let newTop = top;
     let newLeft = left;
-    // 只有参照元素是在固定定位的容器中时top、left才需要减去浏览器滚动条滚动的距离
-    if (referenceIsInFixedPosition) {
+    // 只有参照元素是在固定定位的容器中并且目标元素插入在body时top、left才需要减去浏览器滚动条滚动的距离
+    if (referenceIsInFixedPosition && targetIsInBody) {
       if (documentHasScroll.vertical && !bodyScrollVisible.vertical) {
         newTop -= documentScrollInfo.top;
       }
@@ -794,11 +804,14 @@ function eleIsInView (options: any) {
     }
   }
 
-  if (documentHasScroll.vertical) {
-    top -= documentScrollInfo.top;
-  }
-  if (documentHasScroll.horizontal) {
-    left -= documentScrollInfo.left;
+  // 目标元素不在固定定位的元素中时需减去浏览器滚动条滚动的距离
+  if (!targetIsInFixedPosition) {
+    if (documentHasScroll.vertical) {
+      top -= documentScrollInfo.top;
+    }
+    if (documentHasScroll.horizontal) {
+      left -= documentScrollInfo.left;
+    }
   }
   top = top - eleWrapperScrollTop;
   left = left - eleWrapperScrollLeft;

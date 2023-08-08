@@ -1,12 +1,14 @@
 import { App } from 'vue';
 import * as components from './components';
+import BsLoadingDefault from './bs-loading';
 import version from '../version';
 
 export * from './components';
 export * from './types';
 
+console.log('components', components);
 export default {
-  name: 'BsVue',
+  name: 'BtsVue',
   version,
   install (vueApp: App<any>) {
     // 全局注册组件
@@ -16,6 +18,7 @@ export default {
         vueApp.use(component);
       }
     });
+    vueApp.use(BsLoadingDefault);
     return vueApp;
   }
 };

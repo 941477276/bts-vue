@@ -1,6 +1,6 @@
 import type { ComponentResolver, SideEffectsInfo } from 'unplugin-vue-components';
 
-export interface BsVueResolverOptions {
+export interface BtsVueResolverOptions {
   /**
    * exclude components that do not require automatic import
    *
@@ -78,6 +78,10 @@ const childComponentDirs: ChildComponentDirInfo[] = [
   {
     componentDir: 'bs-select',
     componentNames: ['BsOption', 'BsOptionGroup']
+  },
+  {
+    componentDir: 'bs-dropdown',
+    componentNames: ['BsDropdownItem']
   }
 ];
 
@@ -97,7 +101,7 @@ function kebabCase (camelStr: string): string {
   });
 };
 
-function getSideEffects(compName: string, options: BsVueResolverOptions): SideEffectsInfo {
+function getSideEffects(compName: string, options: BtsVueResolverOptions): SideEffectsInfo {
   const {
     importStyle = true,
     importScss = false
@@ -124,9 +128,9 @@ function getSideEffects(compName: string, options: BsVueResolverOptions): SideEf
 }
 
 /**
- * Resolver for BsVue
+ * Resolver for BtsVue
  */
-export function BsVueResolver(options: BsVueResolverOptions = {}): ComponentResolver {
+export function BtsVueResolver(options: BtsVueResolverOptions = {}): ComponentResolver {
   return {
     type: 'component',
     resolve: (name: string) => {

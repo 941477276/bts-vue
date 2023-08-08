@@ -20,6 +20,7 @@ subtitle: 模态弹窗
 | transitionName           | 过渡动画名称                                                         | string                                | fade |
 | title                    | 标题                                                             | `string`/`() => stirng｜vnode`/`vnode` |      |
 | width                    | 弹窗宽度                                                           | string                                |      |
+| className                | 自定义class                                                       | `string`/`object`/`array`             |      |
 | size                     | 弹窗大小                                                           | `xl`(超大)/`lg`(大的)/`sm`(小的)            |      |
 | centered                 | 是否居中显示                                                         | boolean                               | false |
 | mask                     | 是否显示遮罩                                                         | boolean                               | true |
@@ -34,7 +35,7 @@ subtitle: 模态弹窗
 | showClose                | 是否显示关闭按钮                                                       | boolean                               | true |
 | lazy                     | 首次渲染是否延迟                                                       | boolean                               | true |
 | destroyOnClose           | 关闭弹窗时是否销毁弹窗的元素                                                 | boolean                               | false |
-| confirmLoading           | 是否禁用关闭，若值为true，则任何方式都关闭不了，此功能可用于正在提交数据的场景    | boolean                               | false |
+| confirmLoading           | 是否禁用关闭，若值为true，则任何方式都关闭不了，此功能可用于正在提交数据的场景                      | boolean                               | false |
 | okText                   | 确定按钮文案                                                         | string                                | 确定 |
 | cancelText               | 取消按钮文案                                                         | string                                | 取消 |
 | onOk                     | 确认按钮点击事件，如果事件函数执行后返回`Promise`，那么弹窗将在Promise的状态变为`fulfilled`后关闭 | () => any                             |      |

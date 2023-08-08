@@ -16,7 +16,7 @@ npm install bts-vue -S
 import { createApp } from 'vue';
 import App from './App';
 // 导入bts-vue
-import BsVue from 'bts-vue';
+import BtsVue from 'bts-vue';
 // 导入bts-vue组件样式
 // import 'bts-vue/es/components/index.js'; // 导入的是.scss文件
 import 'bts-vue/es/components/css.js'; // 导入的是.css文件
@@ -26,7 +26,7 @@ import 'bts-vue/es/styles/bootstrap-other.css';
 
 const app = createApp(App);
 
-app.use(BsVue).mount('#app');
+app.use(BtsVue).mount('#app');
 ```
 
 ### 全局部分注册
@@ -82,7 +82,7 @@ app.config.globalProperties.$message = BsMessage;
 
 ## 浏览器引入
 
-在浏览器中使用`script`和`link`标签直接引入文件，并使用全局变量`BsVue`
+在浏览器中使用`script`和`link`标签直接引入文件，并使用全局变量`BtsVue`
 
 在 npm 发布包内的 `bd-vue/dist` 目录下有 `bts-vue.js`、`bts-vue.css`、`bootstrap-other.css`文件，你可以手动的引入它们
 ```html
@@ -113,7 +113,7 @@ import 'bts-vue/es/components/bs-form/style'; // 导入的是.scss文件
 ```javascript
 import type { ComponentResolver, SideEffectsInfo } from 'unplugin-vue-components';
 
-export interface BsVueResolverOptions {
+export interface BtsVueResolverOptions {
   /**
    * exclude components that do not require automatic import
    *
@@ -210,7 +210,7 @@ function kebabCase (camelStr: string): string {
   });
 };
 
-function getSideEffects(compName: string, options: BsVueResolverOptions): SideEffectsInfo {
+function getSideEffects(compName: string, options: BtsVueResolverOptions): SideEffectsInfo {
   const {
     importStyle = true,
     importScss = false
@@ -237,9 +237,9 @@ function getSideEffects(compName: string, options: BsVueResolverOptions): SideEf
 }
 
 /**
- * Resolver for BsVue
+ * Resolver for BtsVue
  */
-export function BsVueResolver(options: BsVueResolverOptions = {}): ComponentResolver {
+export function BtsVueResolver(options: BtsVueResolverOptions = {}): ComponentResolver {
   return {
     type: 'component',
     resolve: (name: string) => {
@@ -277,7 +277,7 @@ export function BsVueResolver(options: BsVueResolverOptions = {}): ComponentReso
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { BsVueResolver } from './unplugin-vue-components-resolver';
+import { BtsVueResolver } from './unplugin-vue-components-resolver';
 
 export default defineConfig({
   base: './',
@@ -287,7 +287,7 @@ export default defineConfig({
     Components({
       dts: true,
       resolvers: [
-        BsVueResolver({
+        BtsVueResolver({
           // exclude: ['BsButton'], // 需要排除自动导入的组件
           importStyle: 'scss' // 导入组件的哪种样式文件，可选值：boolean、scss、css。默认导入css样式文件
           // importCss: boolean, // 是否导入组件的css文件

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'BsVueDoc'
+  name: 'BtsVueDoc'
 };
 </script>
 

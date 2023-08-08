@@ -1,5 +1,5 @@
-# BsVue
-`Bootstrap Vue` 简称 `BsVue`，它是基于Vue.js 3.x及Bootstrap UI的一套组件库，
+# BtsVue
+`Bootstrap Vue` 简称 `BtsVue`，它是基于Vue.js 3.x及Bootstrap UI的一套组件库，
 
 它适用于面向用户的或后台管理类的产品，适配PC、平板、手机等不同类型的设备。
 

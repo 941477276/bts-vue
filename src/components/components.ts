@@ -131,4 +131,4 @@ export * from './bs-message-box';
 export type { BsToastProps, BsToastPlacement } from './bs-toast/bs-toast-types';
 export * from './bs-toast';
 export type { BsLoadingProps, BsLoadingOptions } from './bs-loading/bs-loading-types';
-export * from './bs-loading/loading';
+export * from './bs-loading';
