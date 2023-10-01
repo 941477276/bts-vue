@@ -20,9 +20,9 @@ import {
   PlainObject
 } from '../types';
 import {
-  findNodeInfoByValue2,
-  findParentsByNodeValue2
-} from '../../components/bs-tree/bs-tree-utils';
+  findNodeByUid,
+  findParentsByUid
+} from '../../utils/bs-tree-utils';
 import {
   useCascaderMultiple
 } from './useCascaderMultiple';
@@ -153,7 +153,8 @@ export function useCascaderMenu (options: any) {
     }
     // 获取当前option的所有父级节点
     let findOptionParents = function () {
-      let optionParentNodeInfos = findParentsByNodeValue2(cascaderId, value, valueKey, flatternOptions.value);
+      // let optionParentNodeInfos = findParentsByNodeValue2(cascaderId, value, valueKey, flatternOptions.value);
+      let optionParentNodeInfos = findParentsByUid(cascaderId, value, flatternOptions.value);
       let optionParents = optionParentNodeInfos.map((nodeInfo: BsNodeInfo) => {
         return nodeInfo.node;
       }) as CascaderOptionItem[];
@@ -252,7 +253,8 @@ export function useCascaderMenu (options: any) {
           let oldCheckedOptionPath = oldCheckedOptions[optionValue];
           option = oldCheckedOptionPath[oldCheckedOptionPath.length - 1];
         } else {
-          let currentOption = findNodeInfoByValue2(cascaderId, optionValue, valueKey, flatternOptions.value);
+          // let currentOption = findNodeInfoByValue2(cascaderId, optionValue, valueKey, flatternOptions.value);
+          let currentOption = findNodeByUid(cascaderId, optionValue, flatternOptions.value);
           if (!currentOption) { // 如果在节点列表没有找到该节点，则根据节点的值创建一个新节点
             option = {
               [labelKey]: optionValue,

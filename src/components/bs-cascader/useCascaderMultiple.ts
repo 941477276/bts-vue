@@ -15,13 +15,14 @@ import {
 } from './bs-cascader-types';
 import { BsNodeInfo } from '../bs-tree/bs-tree-types';
 import {
-  findParentsByNodeValue2,
-  findChildrenByNodeValue2
-} from '../../components/bs-tree/bs-tree-utils';
+  findParentsByUid,
+  findDescendantByBid
+} from '../../utils/bs-tree-utils';
 
 export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptions>, halfCheckedOptions: Ref<PlainObject>, fieldNameProps: ComputedRef<CascaderFieldNames>, flatternOptions: Ref<BsNodeInfo[]>, dropdownTransitionRef: Ref<any>, cascaderId: string) {
   let findOptionParents = function (value: string, valueKey: string) {
-    let optionParentNodeInfos = findParentsByNodeValue2(cascaderId, value, valueKey, flatternOptions.value);
+    // let optionParentNodeInfos = findParentsByNodeValue2(cascaderId, value, valueKey, flatternOptions.value);
+    let optionParentNodeInfos = findParentsByUid(cascaderId, value, flatternOptions.value);
     let optionParents = optionParentNodeInfos.map((nodeInfo: BsNodeInfo) => {
       return nodeInfo.node;
     }) as CascaderOptionItem[];
@@ -60,7 +61,8 @@ export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptio
         checkedOptions.value[value] = [...optionParents, optionItem];
       } else {
         // 找到节点的所有子孙节点
-        let optionChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+        // let optionChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+        let optionChildrens = findDescendantByBid(cascaderId, value, flatternOptions.value).map(item => item.node);
         // 没有子孙节点的节点
         let optionPureChildrens: CascaderOptionItem[] = [];
         // 有子孙节点的节点
@@ -101,7 +103,7 @@ export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptio
     let timer = setTimeout(function () {
       clearTimeout(timer);
       dropdownTransitionRef.value?.refresh();
-    }, 60);
+    }, 100);
   };
 
   /**
@@ -132,7 +134,8 @@ export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptio
       delete checkedOptions.value[value];
     } else {
       // 找到节点的所有子孙节点
-      let optionChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+      // let optionChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+      let optionChildrens = findDescendantByBid(cascaderId, value, flatternOptions.value).map(item => item.node);
       // 没有子孙节点的节点
       let optionPureChildrens: CascaderOptionItem[] = [];
       // 有子孙节点的节点
@@ -170,7 +173,7 @@ export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptio
     let timer = setTimeout(function () {
       clearTimeout(timer);
       dropdownTransitionRef.value?.refresh();
-    }, 60);
+    }, 100);
   };
 
   /**
@@ -201,7 +204,8 @@ export function useCascaderMultiple (props:any, checkedOptions: Ref<CheckedOptio
           hasAnyChecked = true;
         } else { // 如果该节点不是半选中状态，则查找它下面的没有子节点的子孙节点的选中情况
           // 找到节点的所有子孙节点
-          let optionItemChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+          // let optionItemChildrens = findChildrenByNodeValue2(cascaderId, value, valueKey, childrenKey, flatternOptions.value);
+          let optionItemChildrens = findDescendantByBid(cascaderId, value, flatternOptions.value).map(item => item.node);
           let pureChildrenLength = 0;
           let pureChildrenCheckedCount = 0;
           optionItemChildrens.forEach(function (childrenItem: any) {
