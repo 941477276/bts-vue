@@ -7,6 +7,8 @@ const path = require('path');
 const matter = require('gray-matter');
 const MarkdownIt = require('markdown-it');
 const Prism = require('prismjs');
+// 导入typescript插件
+require('prismjs/components/prism-typescript');
 
 // 菜单分类排序
 const menuCategoryOrder = [

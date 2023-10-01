@@ -6,6 +6,7 @@ import { isString } from '../../src/utils/bs-util';
 // @ts-ignore;
 import prism from 'prismjs';
 import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-typescript';
 
 function kebabCase2CamelCase (kebabStr: string): string {
   if (!isString(kebabStr)) {
