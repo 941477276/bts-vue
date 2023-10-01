@@ -27,7 +27,7 @@ export function useTreeNode (props: any, treeCtx: TreeContext) {
   });
   // 是否选中
   let isChecked = computed(function () {
-    return props.checkedKeys.includes(nodeValue.value);
+    return props.checkedKeys.has(nodeValue.value);
   });
   // 判断当前节点是否被点击
   let isCurrent = computed(function () {
@@ -39,7 +39,7 @@ export function useTreeNode (props: any, treeCtx: TreeContext) {
   });
   // 是否为半选中状态
   let isIndeterminate = computed(function () {
-    return treeCtx.halfCheckedKeys.value.includes(nodeValue.value);
+    return treeCtx.halfCheckedKeys.value.has(nodeValue.value);
   });
   // 是否禁用
   let isDisabled = computed(function () {

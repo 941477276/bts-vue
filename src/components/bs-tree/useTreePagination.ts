@@ -1,7 +1,6 @@
-import { computed, ref, Ref } from 'vue';
+import { computed, ComputedRef, ref, Ref } from 'vue';
 import {
-  findNodeInfoByValue2,
-  findChildrenInfoFlattarnByNodeValue2
+  findDescendantByBid
 } from './bs-tree-utils';
 import { BsNodeData, BsNodeInfo } from './bs-tree-types';
 import { PlainObject } from '../types';
@@ -12,7 +11,7 @@ import { PlainObject } from '../types';
  * @param treeId 树id
  * @param treeData 树数据
  */
-export function useTreePagination (props: any, treeId: string, flatTreeNodeInfoArr: Ref<BsNodeInfo[]>, treeData?: Ref<BsNodeData[]|undefined>) {
+export function useTreePagination (props: any, treeId: string, flatTreeNodeInfoArr: Ref<BsNodeInfo[]>, treeData?: Ref<BsNodeData[]|undefined>, treeNodeProps?: ComputedRef<Record<string, boolean>>) {
   // 当前页码
   let pageCount = ref(1);
   // 子节点
@@ -22,7 +21,7 @@ export function useTreePagination (props: any, treeId: string, flatTreeNodeInfoA
     let filterText = props.filterText;
     let filterFn = props.filterMethod;
     let nodeKey = props.nodeKey;
-    let childrenKey = typeof treeData === 'undefined' ? props.childrenKey : props.props.children;
+    let childrenKey = typeof treeData === 'undefined' ? props.childrenKey : treeNodeProps?.value.children;
 
     let result = [];
     if (!isNaN(pageSize) && pageSize > 0 && children.length > pageSize) {
@@ -36,11 +35,11 @@ export function useTreePagination (props: any, treeId: string, flatTreeNodeInfoA
         let show = false;
         // 如果节点有子孙节点，则只要子孙节点有一个匹配的那么该节点都应该显示出来
         if (nodeData[childrenKey]) {
-          let childrensIfno = findChildrenInfoFlattarnByNodeValue2(treeId, nodeData[nodeKey], nodeKey, flatTreeNodeInfoArr.value);
-          childrensIfno.unshift({
+          let childrensInfo = findDescendantByBid(treeId, nodeData[nodeKey], flatTreeNodeInfoArr.value);
+          childrensInfo.unshift({
             node: nodeData
           } as BsNodeInfo);
-          show = childrensIfno.some(function (childNodeInfo) {
+          show = childrensInfo.some(function (childNodeInfo) {
             return filterFn(childNodeInfo.node, filterText);
           });
         } else {

@@ -5,7 +5,7 @@ order: 0
 title:
   zh-CN: 分页
   en-US: Paging
-description: 
+description:
   zh-CN: 当有大量数据时可以通过分页的方式来提升渲染性能，设置`page-size`属性可开启分页，它接收一个`number`类型的值，默认为`30`，若值为`0`则不开启分页
   en-US: When there is a large amount of data, the rendering performance can be improved by paging. Setting the `page-size` property can enable paging. It accepts a `number` type value, and the default is `30`. If the value is `0`, it will disable paging.
 ---
@@ -192,6 +192,26 @@ let treeData1 = ref([
         id: '3_5'
       }
     ]
+  },
+  {
+    label: '一级 4',
+    id: '4'
+  },
+  {
+    label: '一级 5',
+    id: '5'
+  },
+  {
+    label: '一级 6',
+    id: '6'
+  },
+  {
+    label: '一级 7',
+    id: '7'
+  },
+  {
+    label: '一级 8',
+    id: '8'
   }
 ]);
 

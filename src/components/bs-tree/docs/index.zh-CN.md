@@ -79,3 +79,21 @@ subtitle: 树形控件
 | empty         | 树没有数据的提示  |     |
 | switcher-icon | 自定义图标     |     |
 | default       | 节点标题      |     |
+
+
+
+### Tree 函数
+
+| 函数名称                     | 说明                         | 参数                                                                               |
+|--------------------------|----------------------------|----------------------------------------------------------------------------------|
+| getParentNodeByNodeValue | 根据节点的值获取父节点                | `(nodeValue: string) => Record<string, any>｜null`                                |
+| getCheckedNodes | 获取选中的节点                    | `() => Record<string, any>[]`                                                    |
+| getCheckedKeys | 获取选中的节点的key                | `() => string[]`                                                                 |
+| getHalfCheckedNodes | 获取半选中的节点                   | `() => Record<string, any>[]`                                                    |
+| getHalfCheckedKeys | 获取选中的节点的key                | `() => Record<string, any>[]`                                                    |
+| getCheckedNodes | 获取选中的节点                    | `Record<string, any>[]`                                                          |
+| getCheckedNodes | 获取选中的节点                    | `Record<string, any>[]`                                                          |
+| selectAll                | 选中当前表格中的所有节点（disabled的除外）   |                                                                                  |
+| selectNone               | 取消选中当前表格中的所有节点（disabled的除外） |                                                                                  |
+| addCheckedItem                | 选中指定节点                     | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
+| removeCheckedItem              | 取消选中指定节点                    | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |

@@ -36,7 +36,7 @@
         </slot>-->
         <BsTreeNodeSwitcherIcon v-if="!loadingData" :node-data="nodeData" :node="{}"></BsTreeNodeSwitcherIcon>
         <span v-else class="bs-tree-node-spinner">
-          <BsSpinner class="bs-tree-node-spinner2" color-type="primary"></BsSpinner>
+          <BsSpinner color-type="primary"></BsSpinner>
         </span>
       </span>
       <BsCheckbox
@@ -132,6 +132,18 @@ export default defineComponent({
   props: {
     ...bsTreeProps,
     ...bsTreeNodeProps,
+    checkedKeys: { // 选中的节点的key数组（受控）
+      type: Set,
+      default () {
+        return new Set();
+      }
+    },
+    /* expandedKeys: { // 展开的节点的 key 的数组
+      type: Set,
+      default () {
+        return new Set();
+      }
+    }, */
     treeId: {
       type: String,
       default: ''
@@ -186,7 +198,7 @@ export default defineComponent({
     };
 
     // 分页相关数据
-    let { pageCount, nodeChildren, totalPage, showMoreChildNode, showAllChildNode } = useTreePagination(props, props.treeId, treeCtx.flatTreeNodeInfoArr);
+    let { pageCount, nodeChildren, totalPage, showMoreChildNode, showAllChildNode } = useTreePagination(props, props.treeId, treeCtx.flattenTreeNodeInfos);
 
     // 复选框的值
     let inputModel = computed({

@@ -1,14 +1,15 @@
 import {
+  ComputedRef,
   Ref
 } from 'vue';
 import { BsNodeInfo } from './bs-tree-types';
-import { findNodeInfoByValue2 } from '../../components/bs-tree/bs-tree-utils';
+import { findNodeByUid } from '../../components/bs-tree/bs-tree-utils';
 
-export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[]>, checkedKeysRoot: Ref<(string|number)[]>, halfCheckedKeys: Ref<(string|number)[]>, treeId: string) {
+export function useTreeMethods (props: any, treeId: string, flatTreeNodeInfoArr: Ref<BsNodeInfo[]>, getSelectionInfo: () => any, treeNodeProps: ComputedRef<Record<string, any>>) {
 // 根据节点值查找节点
   let getNodeByNodeValue = function (nodeValue: string|number) {
     let flatTreeInfo = flatTreeNodeInfoArr.value;
-    let nodeInfo = findNodeInfoByValue2(treeId, nodeValue, props.nodeKey, flatTreeInfo);
+    let nodeInfo = findNodeByUid(treeId, nodeValue, flatTreeInfo);
     if (!nodeInfo.node) {
       return null;
     }
@@ -27,7 +28,7 @@ export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[
   // 根据节点值查找父级节点
   let getParentNodeByNodeValue = function (nodeValue: string|number) {
     let flatTreeInfo = flatTreeNodeInfoArr.value;
-    let nodeInfo = findNodeInfoByValue2(treeId, nodeValue, props.nodeKey, flatTreeInfo);
+    let nodeInfo = findNodeByUid(treeId, nodeValue, flatTreeInfo);
     if (!nodeInfo.node) {
       return null;
     }
@@ -51,8 +52,8 @@ export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[
   };
 
   // 获取选中的节点
-  let getCheckedNodes = function () {
-    let flatTreeInfo = flatTreeNodeInfoArr.value;
+  let getCheckedNodes = function (): Record<string, any>[] {
+    /* let flatTreeInfo = flatTreeNodeInfoArr.value;
     let nodeKey = props.nodeKey;
 
     let nodes = checkedKeysRoot.value.map(checkedKey => {
@@ -61,27 +62,49 @@ export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[
     });
     nodes = nodes.filter(key => typeof key !== 'undefined');
 
-    return nodes;
+    return nodes; */
+    let selectionInfo = getSelectionInfo();
+    return selectionInfo.selectedRows || [];
+  };
+
+  // 获取选中的节点的值
+  let getCheckedKeys = function (): Record<string, any>[] {
+    /* let flatTreeInfo = flatTreeNodeInfoArr.value;
+    let nodeKey = props.nodeKey;
+
+    let nodes = checkedKeysRoot.value.map(checkedKey => {
+      let nodeInfo = flatTreeInfo.find(nodeInfoItem => nodeInfoItem.node[nodeKey] === checkedKey);
+      return nodeInfo?.node;
+    });
+    nodes = nodes.filter(key => typeof key !== 'undefined');
+
+    return nodes; */
+    let selectionInfo = getSelectionInfo();
+    return selectionInfo.selectedRowKeys || [];
   };
 
   // 获取选中节点的label
   let getCheckedNodesLabel = function () {
     let checkedNodes = getCheckedNodes();
-    let labelKey = props.props.label;
-    let disabledKey = props.props.disabled;
+    // let labelKey = props.props.label;
+    // let disabledKey = props.props.disabled;
+    let {
+      label: labelKey,
+      disabled: disabledKey
+    } = treeNodeProps.value;
     let nodeKey = props.nodeKey;
-    return checkedNodes.map(checkedNode => {
+    return checkedNodes.map((checkedNode) => {
       return {
-        label: checkedNode?.[labelKey],
-        value: checkedNode?.[nodeKey],
-        disabled: checkedNode?.[disabledKey]
+        label: checkedNode[labelKey],
+        value: checkedNode[nodeKey],
+        disabled: checkedNode[disabledKey]
       };
     });
   };
 
   // 获取半选中的节点
   let getHalfCheckedNodes = function () {
-    let flatTreeInfo = flatTreeNodeInfoArr.value;
+    /* let flatTreeInfo = flatTreeNodeInfoArr.value;
     let nodeKey = props.nodeKey;
 
     let nodes = halfCheckedKeys.value.map(checkedKey => {
@@ -90,18 +113,22 @@ export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[
     });
     nodes = nodes.filter(key => typeof key !== 'undefined');
 
-    return nodes;
+    return nodes; */
+    let selectionInfo = getSelectionInfo();
+    return selectionInfo.halfSelectedRows || [];
   };
 
   // 获取半选中的节点
   let getHalfCheckedKeys = function () {
-    let halfCheckedNodes = getHalfCheckedNodes();
+    /* let halfCheckedNodes = getHalfCheckedNodes();
     let nodeKey = props.nodeKey;
     let keys = halfCheckedNodes.map((nodeData: any) => {
       return nodeData[nodeKey];
     });
     keys = keys.filter(key => typeof key !== 'undefined');
-    return keys;
+    return keys; */
+    let selectionInfo = getSelectionInfo();
+    return selectionInfo.halfSelectedRowKeys || [];
   };
 
   return {
@@ -110,6 +137,7 @@ export function useTreeMethods (props: any, flatTreeNodeInfoArr: Ref<BsNodeInfo[
     getNodeByNodeValue,
     getNodeByNodeLevelPath,
     getCheckedNodes,
+    getCheckedKeys,
     getHalfCheckedNodes,
     getHalfCheckedKeys,
     getCheckedNodesLabel
