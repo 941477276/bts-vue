@@ -6,10 +6,8 @@ title:
   zh-CN: 行列合并
   en-US: ColSpan and rowSpan
 description:
-  zh-CN: 表头只支持列合并，使用 column 里的`colSpan`进行设置。 表格支持行/列合并，使用 column里的 `customCellAttrs` 进行设置，
-  `customCellAttrs`函数返回的对象中包含`colSpan`属性会进行列合并，包含`rowSpan`属性会进行行合并，当它们的值为0时不会进行合并。
-  en-US: The table header only supports column merging, which is set using `colSpan` in column. Tables support row/column merging, use `customCellAttrs` in column to set,
-  The object returned by the `customCellAttrs` function contains the `colSpan` attribute for column merging, and the `rowSpan` attribute for row merging. When their values are 0, no merging will be performed.
+  zh-CN: 表头只支持列合并，使用 column 里的`colSpan`进行设置。 表格支持行/列合并，使用 column里的 `customCellAttrs` 进行设置， `customCellAttrs`函数返回的对象中包含`colSpan`属性会进行列合并，包含`rowSpan`属性会进行行合并，当它们的值为0时不会进行合并。
+  en-US: The table header only supports column merging, which is set using `colSpan` in column. Tables support row or column merging, use `customCellAttrs` in column to set, The object returned by the `customCellAttrs` function contains the `colSpan` attribute for column merging, and the `rowSpan` attribute for row merging. When their values are 0, no merging will be performed.
 ---
 </docs>
 
@@ -55,7 +53,7 @@ const columns = [
     colSpan: 2, // table head merge
     prop: 'tel',
     headSlotName: 'homeTh', // custom table head
-    customHeadCellAttrs () { // set cell attributes
+    customHeadCellAttrs () { // set head cell attributes
       return {
         style: {
           fontSize: '1.2em'
@@ -100,7 +98,7 @@ const columns2 = [
     },
     colSpan: 2,
     prop: 'tel',
-    customHeadCellAttrs () { // set cell attributes
+    customHeadCellAttrs () { // set head cell attributes
       return {
         style: {
           fontSize: '1.2em'

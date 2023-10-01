@@ -5,10 +5,352 @@
   table-layout: fixed;
   border-spacing: 0;
   margin-bottom: 0;
-  thead th{
+  th{
     border-bottom: none;
+    border-top: none;
+    background-color: #fff;
+  }
+  td{
+    transition: color .2s, background-color .2s;
+    background-color: #fff;
   }
   &.table-sm{
     font-size: 0.875rem;
   }
+}
+.bs-table-wrapper{
+  //overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.bs-table-cell{
+  &.bs-table-cell-align-left{
+    text-align: left;
+  }
+  &.bs-table-cell-align-center{
+    text-align: center;
+  }
+  &.bs-table-cell-align-right{
+    text-align: right;
+  }
+}
+.bs-table-header{
+  flex-shrink: 0;
+  overflow: hidden;
+  .table{
+    table-layout: fixed;
+    th{
+      position: relative;
+      border-bottom: 1px solid #dee2e6;
+    }
+  }
+}
+.bs-table-thead{
+  th{
+    position: relative;
+  }
+}
+.bs-table-head-cell-content{
+  display: flex;
+}
+.bs-table-head-cell-title{
+  flex: 1;
+  align-self: center;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.bs-table-column-sorters{
+  align-self: center;
+}
+.bs-table-column-sort-handler{
+  display: block;
+  padding: 0 0.25rem;
+  font-size: 0.75rem;
+  transition: color .3s;
+  cursor: pointer;
+  color: #aaa;
+  &.bs-icon-caret-up-fill{
+    transform: translateY(1px);
+  }
+  &.bs-icon-caret-down-fill{
+    transform: translateY(-1px);
+  }
+  &.is-on-sort,
+  &:hover{
+    color: var(--primary);
+  }
+}
+
+.bs-table-resize-handle{
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: -0.5rem;
+  bottom: 0;
+  width: 1rem;
+  cursor: col-resize;
+  &.bs-table-resize-handle-active{
+    &::after{
+      position: absolute;
+      content: ' ';
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background-color: var(--primary);
+    }
+  }
+}
+.bs-table-cell-last{
+  .bs-table-resize-handle{
+    right: 0;
+    &.bs-table-resize-handle-active{
+      &::after{
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+}
+.bs-table-body{
+  flex: 1;
+  overflow: auto;
+}
+td.bs-table-column-on-sort{
+  background-color: #ececec;
+}
+th.bs-table-column-on-sort{
+  background-color: #dedede;
+}
+.bs-table-cell-ellipsis{
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bs-table-cell-fixed-left,
+.bs-table-cell-fixed-right {
+  position: sticky!important;
+  z-index: 10;
+  background-color: #fff;
+}
+.bs-table-cell-fixed-left-last,
+.bs-table-cell-fixed-right-first{
+  &::before{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 2rem;
+    content: ' ';
+    pointer-events: none;
+    transition: box-shadow .2s;
+  }
+}
+.bs-table-cell-fixed-left-last{
+  &::before{
+    left: 100%;
+  }
+}
+.bs-table-cell-fixed-right-first{
+  &::before{
+    right: 100%;
+  }
+}
+
+.bs-table-expand-cell{
+  .bs-table-cell-content{
+    text-align:  center;
+  }
+}
+.bs-table-expand-cell-head{
+  text-align: center;
+}
+.bs-table-row-expand-icon{
+  line-height: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  .bs-icon-chevron-right{
+    vertical-align: middle;
+    transition: transform .2s;
+  }
+  .bs-spinner{
+    width: 1rem;
+    height: 1rem;
+    border-width: 1px;
+  }
+}
+.bs-table-row-indent{
+  display: inline-block;
+  width: 1rem;
+  height: 1px;
+}
+.bs-table-row-expand-icon-expanded{
+  .bs-icon-chevron-right{
+    transform: rotate(90deg);
+  }
+}
+.bs-table-tree-row-expand-icon{
+  margin-right: 0.5rem;
+}
+.bs-table-row-expand-placeholder{
+  display: inline-block;
+  width: 1rem;
+  height: 1px;
+  margin-right: 0.5rem;
+}
+.bs-table{
+  .bs-table-cell{
+    vertical-align: middle;
+  }
+  &.table-bordered{
+    thead{
+      th:first-child{
+        border-left: none;
+      }
+      th:last-child{
+        border-right: none;
+      }
+    }
+   tbody,
+   tfoot{
+     tr:last-child{
+       td{
+         border-bottom: none;
+       }
+     }
+     td:first-child{
+       border-left: none;
+     }
+     td:last-child{
+       border-right: none;
+     }
+   }
+  }
+  &.bs-table-ping-left{
+    .bs-table-cell-fixed-left-last{
+      &::before{
+        //left: 100%;
+        box-shadow: inset 0.625rem 0 0.5rem -0.5rem rgba(0,0,0,0.26);
+      }
+    }
+  }
+  &.bs-table-ping-right{
+    .bs-table-cell-fixed-right-first{
+      &::before{
+        //right: 100%;
+        box-shadow: inset -0.625rem 0 0.5rem -0.5rem rgba(0,0,0,0.26);
+      }
+    }
+  }
+}
+.bs-table-header + .bs-table-body{
+  tbody tr:first-child{
+    td{
+      border-top: none;
+    }
+  }
+}
+/*.table-striped{
+  tbody{
+    tr{
+      &:nth-of-type(odd) {
+        background-color: #f2f2f2;
+        .bs-table-cell-fixed-left,
+        .bs-table-cell-fixed-right{
+          background-color: #f2f2f2;
+        }
+      }
+      &:hover{
+        background-color: #ececec;
+        .bs-table-cell-fixed-left,
+        .bs-table-cell-fixed-right{
+          background-color: #ececec;
+        }
+      }
+    }
+  }
+}*/
+/*.table-hover{
+  tbody{
+    tr{
+      &:hover{
+        .bs-table-cell-fixed-left,
+        .bs-table-cell-fixed-right{
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}*/
+.bs-table-row-striped{
+  &:nth-of-type(odd) {
+    &>td{
+      background-color: #f2f2f2;
+    }
+  }
+}
+.bs-table-row-hover{
+  &:hover{
+    &>td{
+      background-color: #ececec;
+    }
+  }
+}
+.table-bordered{
+  .bs-table-cell{
+    &.bs-table-cell-scrollbar-prev-neighbor{
+      border-right-color: transparent;
+    }
+    &.bs-table-cell-scrollbar{
+      //border: none;
+      padding: 0;
+      border-left: none;
+      &::after{
+        display: none;
+      }
+    }
+  }
+  .bs-table-cell-fixed-left{
+    position: relative;
+    &::after{ /* 解决边框不显示问题 */
+      position: absolute;
+      top: 0;
+      right: -1px;
+      height: 100%;
+      width: 1px;
+      content: ' ';
+      background-color: #dee2e6;
+    }
+  }
+  .bs-table-cell-fixed-right{
+    position: relative;
+    &::after{ /* 解决边框不显示问题 */
+      position: absolute;
+      top: 0;
+      left: -1px;
+      height: 100%;
+      width: 1px;
+      content: ' ';
+      background-color: #dee2e6;
+    }
+  }
+}
+.bs-table-empty-content{
+  padding: 3rem 1rem;
+  color: #aaa;
+  text-align: center;
+}
+.bs-table-empty-icon-box{
+  line-height: 1;
+  font-size: 4rem;
+}
+.bs-table-footer{
+  flex-shrink: 0;
+  overflow: auto;
 }

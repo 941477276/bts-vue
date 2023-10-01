@@ -13,7 +13,7 @@ description:
 
 <template>
   <div>
-    <BsTable :columns="columns" :data="tableData"></BsTable>
+    <BsTable :columns="columns" :data="tableData" row-key="id"></BsTable>
   </div>
 </template>
 
@@ -30,39 +30,51 @@ const columns = [
   {
     label: 'Address',
     prop: 'address'
+  },
+  {
+    label: 'Hobbies',
+    prop: 'hobbies',
+    customCell (rowData) {
+      return rowData.hobbies.join(', ');
+    }
   }
 ];
 
 const tableData = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park'
+    'name': 'John',
+    'age': 25,
+    'address': '123 Main St, New York, NY',
+    'id': 'A123456',
+    'hobbies': ['hiking', 'photography']
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    tel: '0571-22098333',
-    address: 'London No. 1 Lake Park'
+    'name': 'Alice',
+    'age': 30,
+    'address': '456 Elm St, Los Angeles, CA',
+    'id': 'B789012',
+    'hobbies': ['reading', 'painting']
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park'
+    'name': 'Michael',
+    'age': 22,
+    'address': '789 Oak St, San Francisco, CA',
+    'id': 'C345678',
+    'hobbies': ['surfing', 'music']
   },
   {
-    key: '4',
-    name: 'Jim Red',
-    age: 18,
-    address: 'London No. 2 Lake Park'
+    'name': 'Emily',
+    'age': 28,
+    'address': '987 Pine St, Chicago, IL',
+    'id': 'D901234',
+    'hobbies': ['cooking', 'gardening']
   },
   {
-    key: '5',
-    name: 'Jake White',
-    age: 18,
-    address: 'Dublin No. 2 Lake Park'
+    'name': 'Daniel',
+    'age': 29,
+    'address': '654 Birch St, Miami, FL',
+    'id': 'E567890',
+    'hobbies': ['traveling', 'dancing']
   }
 ];
 </script>
