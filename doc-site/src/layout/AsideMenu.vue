@@ -21,6 +21,9 @@
               @click="handleMenuItemClick(menu)">
               {{ menu.title }}
               <small v-if="menu.subtitle && langCode != 'en'">{{ menu.subtitle }}</small>
+              <bs-badge v-if="menu.startVersion" class="component-start-version" size="sm" type="primary" title="start version">
+                {{ menu.startVersion }}
+              </bs-badge>
             </bs-menu-item>
           </bs-menu-item-group>
           <bs-menu-item
@@ -30,6 +33,9 @@
             @click="handleMenuItemClick(menuItem)">
             {{ menuItem.title }}
             <small v-if="menuItem.subtitle && langCode != 'en'">{{ menuItem.subtitle }}</small>
+            <bs-badge v-if="menuItem.startVersion" class="component-start-version" size="sm" type="primary" title="start version">
+              {{ menuItem.startVersion }}
+            </bs-badge>
           </bs-menu-item>
         </template>
 

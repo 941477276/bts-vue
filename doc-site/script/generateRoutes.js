@@ -66,6 +66,7 @@ const menuCategoryOrder = [
       typeCode: typeCode,
       title: matterData.title,
       subtitle: matterData.subtitle,
+      startVersion: matterData.startVersion,
       componentName
     });
 
@@ -128,6 +129,7 @@ export interface MenuItem {
   typeCode: string;
   title: string;
   subtitle?: string;
+  startVersion?: string;
   componentName: string;
 };
 
