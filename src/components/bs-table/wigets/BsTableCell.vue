@@ -76,7 +76,7 @@ import BsTableHeadCellContent from './BsTableHeadCellContent.vue';
 import { BsColgroupItem, BsTableColumnInner, bsTableCtxKey, bsSelectionColumnKey, bsExpandColumnKey } from '../bs-table-types';
 import { bsTableCellProps } from './bs-table-cell-props';
 import { isFunction } from '@vue/shared';
-import { BsTableCellContent } from './BsTableCellContent';
+import BsTableCellContent from './BsTableCellContent.tsx';
 import BsSpinner from '../../../components/bs-spinner/BsSpinner.vue';
 import { BsiChevronRight } from 'vue3-bootstrap-icon/es/icons/BsiChevronRight';
 

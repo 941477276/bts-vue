@@ -57,7 +57,7 @@ import {
 } from '../bs-table-types';
 import { isFunction } from '@vue/shared';
 import { bsTableFootProps } from './bs-table-foot-props';
-import { BsTableCellContent } from './BsTableCellContent';
+import BsTableCellContent from './BsTableCellContent.tsx';
 // import BsTableCell from './BsTableCell.vue';
 
 export default defineComponent({
