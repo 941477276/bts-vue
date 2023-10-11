@@ -18,7 +18,7 @@
 
       <div class="navbar-container" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item" :class="{active: $route.path == '/doc/introduce' }">
+          <li class="nav-item" :class="{active: $route.path.startsWith('/doc') }">
             <router-link class="nav-link" to="/doc/introduce"><!--文档-->{{ $t('doc') }}</router-link>
           </li>
           <li class="nav-item" :class="{active: $route.path.startsWith('/component') }">
