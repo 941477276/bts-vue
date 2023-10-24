@@ -23,7 +23,7 @@ import { defineComponent, PropType, computed, SetupContext, VNode } from 'vue';
 import { isFunction } from '@vue/shared';
 import { isNumber, isObject } from '../../../utils/bs-util';
 import { BsTableColumn } from '../bs-table-types';
-import BsTableCellContent from './BsTableCellContent.tsx';
+import BsTableCellContent from './BsTableCellContent';
 
 export default defineComponent({
   name: 'BsTableHeader',

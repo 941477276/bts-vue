@@ -38,13 +38,6 @@ import {
   SetupContext
 } from 'vue';
 import BsTableHead from './BsTableHead.vue';
-import {
-  BsTableColumn,
-  BsTableSize,
-  BsColgroupItem,
-  BsTableSelectionType,
-  BsTableSelectionConfig
-} from '../bs-table-types';
 import { bsTableHeadProps } from './bs-table-head-props';
 
 export default defineComponent({
