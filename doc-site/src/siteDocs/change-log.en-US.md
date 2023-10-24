@@ -10,3 +10,7 @@ Update date: `2023-10-01`
 ## 0.1.3
 Update date: `2023-10-11`
 + 🐞 Fixed the problem that the `table` component's row expansion and single/multiple selection functions are invalid.
+
+## 0.1.4
+Update date: `2023-10-25`
++ 🐞 Fixed the issue of `Can't resolve './BsTableCellContent.jsx' reported after installing dependencies
