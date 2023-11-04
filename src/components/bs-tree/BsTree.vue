@@ -152,13 +152,16 @@ export default defineComponent({
     let {
       checkedKeysRoot,
       halfCheckedKeys,
+      checkedRows,
+      checkedRowsCurrent,
 
       linkParentCheckbox,
       selectRow,
       unSelectRow,
       getSelectionInfo,
       selectAll,
-      selectNone
+      selectNone,
+      addCheckedKey
     } = useBsTree(
       flattenTreeNodeInfos,
       treeId,
@@ -222,15 +225,21 @@ export default defineComponent({
           return;
         }
         if (!props.showCheckbox && props.showRadio) { // 单选
+          checkedKeysRoot.value.clear();
+          checkedRows.value.clear();
+          halfCheckedKeys.value.clear();
+          checkedRowsCurrent.value.clear();
           if (checkedKeys?.length >= 1) {
-            checkedKeysRoot.value = new Set(checkedKeys.slice(0, 1));
+            addCheckedKey(checkedKeys[0]);
           }
           return;
         }
 
         checkedKeysRoot.value = new Set(checkedKeys);
         if (checkedKeys.length == 0) {
-          halfCheckedKeys.value = new Set();
+          halfCheckedKeys.value.clear();
+          checkedRows.value.clear();
+          checkedRowsCurrent.value.clear();
           return;
         }
         linkParentCheckbox();

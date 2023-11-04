@@ -83,16 +83,16 @@ tree-structured list
 
 ### Tree function
 
-| function name | description | parameters |
+| function name | description | parameters                                                                       |
 |--------------------------|----------------------------|----------------------------------------------------------------------------------|
-| getParentNodeByNodeValue | Get the parent node according to the value of the node | `(nodeValue: string) => Record<string, any>|null` |
-| getCheckedNodes | Get the selected nodes | `() => Record<string, any>[]` |
-| getCheckedKeys | Get the key of the selected node | `() => string[]` |
-| getHalfCheckedNodes | Get half-selected nodes | `() => Record<string, any>[]` |
-| getHalfCheckedKeys | Get the key of the selected node | `() => Record<string, any>[]` |
-| getCheckedNodes | Get the selected nodes | `Record<string, any>[]` |
-| getCheckedNodes | Get the selected nodes | `Record<string, any>[]` |
-| selectAll | Select all nodes in the current table (except disabled ones) | |
-| selectNone | Unselect all nodes in the current table (except disabled ones) | |
+| getParentNodeByNodeValue | Get the parent node according to the value of the node | `(nodeValue: string) => Record<string, any>                                      |null` |
+| getCheckedNodes | Get the selected nodes | `() => Record<string, any>[]`                                                    |
+| getCheckedKeys | Get the key of the selected node | `() => string[]`                                                                 |
+| getHalfCheckedNodes | Get half-selected nodes | `() => Record<string, any>[]`                                                    |
+| getHalfCheckedKeys | Get the key of the selected node | `() => Record<string, any>[]`                                                    |
+| getCheckedNodes | Get the selected nodes | `Record<string, any>[]`                                                          |
+| getCheckedNodes | Get the selected nodes | `Record<string, any>[]`                                                          |
+| selectAll | Select all nodes in the current table (except disabled ones) |                                                                                  |
+| selectNone | Unselect all nodes in the current table (except disabled ones) | `(force?: boolean) => void`                                                                                  |
 | addCheckedItem | Select the specified node | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
 | removeCheckedItem | Uncheck the specified node | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |

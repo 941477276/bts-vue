@@ -94,6 +94,6 @@ subtitle: 树形控件
 | getCheckedNodes | 获取选中的节点                    | `Record<string, any>[]`                                                          |
 | getCheckedNodes | 获取选中的节点                    | `Record<string, any>[]`                                                          |
 | selectAll                | 选中当前表格中的所有节点（disabled的除外）   |                                                                                  |
-| selectNone               | 取消选中当前表格中的所有节点（disabled的除外） |                                                                                  |
+| selectNone               | 取消选中当前表格中的所有节点（disabled的除外） | `(force?: boolean) => void`                                                        |
 | addCheckedItem                | 选中指定节点                     | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
 | removeCheckedItem              | 取消选中指定节点                    | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
