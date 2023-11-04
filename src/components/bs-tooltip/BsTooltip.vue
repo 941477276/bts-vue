@@ -150,6 +150,12 @@ export default defineComponent({
       }
     };
 
+    if (document && !document.querySelector('body>#bs-tooltip-container')) {
+      let containerEl = document.createElement('div');
+      containerEl.id = 'bs-tooltip-container';
+      document.body.appendChild(containerEl);
+    }
+
     watch(() => props.visible, function (visibleVal: boolean) {
       if (isControlled.value) {
         isShow.value = visibleVal;

@@ -14,7 +14,7 @@ export const bsTooltipContentProps = {
   },
   appendTo: { // 指示 Tooltip 的内容将附加在哪一个网页元素上
     type: [String, Object],
-    default: 'body'
+    default: '#bs-tooltip-container'
   },
   content: { // tooltip内容
     type: [String, Number],
