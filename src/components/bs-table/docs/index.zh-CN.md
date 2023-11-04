@@ -143,7 +143,7 @@ interface BsTableSelectionChangeResult {
 |------------------|----------------------------|----------------------------------------------------------------------------------|
 | getSelectionInfo | 获取选中行的信息                   |                                                                                  |
 | selectAll        | 选中当前表格中的所有行（disabled的除外）   |                                                                                  |
-| selectNone       | 取消选中当前表格中的所有行（disabled的除外） |                                                                                  |
+| selectNone       | 取消选中当前表格中的所有行（disabled的除外） | `(force?: boolean) => void`                                                      |
 | selectRow        | 选中指定行                      | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
 | unSelectRow      | 取消选中指定行                    | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
 | updateRow        | 更新行及children               | `(rowDataOrKey: Record<string, any>｜string) => any`                              |

@@ -138,15 +138,15 @@ interface BsTableSelectionChangeResult {
 
 ### Table function
 
-| function name | description | parameters |
+| function name | description | parameters                                                                       |
 |------------------|----------------------------|----------------------------------------------------------------------------------|
-| getSelectionInfo | Get selected row information | |
-| selectAll | Select all rows in the current table (except disabled ones) | |
-| selectNone | Uncheck all rows in the current table (except disabled ones) | |
+| getSelectionInfo | Get selected row information |                                                                                  |
+| selectAll | Select all rows in the current table (except disabled ones) |                                                                                  |
+| selectNone | Uncheck all rows in the current table (except disabled ones) | `(force?: boolean) => void`                                                                                 |
 | selectRow | Select the specified row | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
 | unSelectRow | Unselect the specified row | `(rowKey: string, rowData?: Record<string, any>, forceSelect?: boolean) => void` |
-| updateRow | Update rows and children | `(rowDataOrKey: Record<string, any>|string) => any` |
-| doSort | Sort | `(columnId: string, sortDirection: BsTableSortDirection) => void` |
-| cancelSort | Cancel sorting | `(columnId: string, sortDirection?: BsTableSortDirection) => void` |
-| filter | Filter | `(filterFn: (rowData: Record<string, any>, index: number) => boolean) = void` |
-| cancelSort | Cancel filtering | `(columnId: string, sortDirection?: BsTableSortDirection) => void` |
+| updateRow | Update rows and children | `(rowDataOrKey: Record<string, any>                                              |string) => any` |
+| doSort | Sort | `(columnId: string, sortDirection: BsTableSortDirection) => void`                |
+| cancelSort | Cancel sorting | `(columnId: string, sortDirection?: BsTableSortDirection) => void`               |
+| filter | Filter | `(filterFn: (rowData: Record<string, any>, index: number) => boolean) = void`    |
+| cancelSort | Cancel filtering | `(columnId: string, sortDirection?: BsTableSortDirection) => void`               |

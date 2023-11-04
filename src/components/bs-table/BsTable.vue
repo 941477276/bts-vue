@@ -523,13 +523,24 @@ export default defineComponent({
         }
         console.log('watch checkedKeys 333');
         if (props.selectionConfig?.type == 'radio') {
-          checkedKeysRoot.value = new Set([checkedKeys[0]]);
+          // checkedKeysRoot.value = new Set([checkedKeys[0]]);
+          checkedKeysRoot.value.clear();
+          checkedRows.value.clear();
+          halfCheckedKeys.value.clear();
+          checkedRowsCurrent.value.clear();
+          if (checkedKeys?.length >= 1) {
+            addCheckedKey(checkedKeys[0]);
+          }
         } else {
-          checkedKeysRoot.value = new Set([...checkedKeys, ...Array.from(checkedKeysRoot.value)]);
+          let reserveSelectedRowKeys = props.selectionConfig.reserveSelectedRowKeys
+          checkedKeysRoot.value = new Set([...checkedKeys, ...(reserveSelectedRowKeys ? props.Array.from(checkedKeysRoot.value) : [])]);
         }
 
         if (checkedKeys.length == 0) {
           halfCheckedKeys.value = new Set();
+          checkedRows.value.clear();
+          halfCheckedKeys.value.clear();
+          checkedRowsCurrent.value.clear();
           return;
         }
         linkParentCheckbox();
