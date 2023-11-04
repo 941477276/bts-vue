@@ -48,7 +48,7 @@
   color: #454545;
   transition: color .3s, background-color .3s;
   &.is-single-actived{
-    color: rgba(0, 123, 255, 0.6);
+    color: var(--primary);
   }
   &.is-checked{
     color: var(--primary);
@@ -60,7 +60,7 @@
     }
   }
   &.is-expanded {
-    color: var(--primary);
+    color: rgba(0, 123, 255, 0.6);
   }
   &.is-disabled{
     color: #a1a1a1;
