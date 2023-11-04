@@ -290,9 +290,9 @@ export function useBsTree (flattenTreeDatas: Ref<BsNodeInfo[]>, treeId: string, 
   };
 
   // 取消选择所有行
-  let selectNone = function () {
+  let selectNone = function (force?: boolean) {
     let { type, checkStrictly, onSelectChange } = getSelectionConfig();
-    if (type != 'checkbox') {
+    if (type != 'checkbox' && force !== true) {
       return;
     }
     flattenTreeDatas.value.forEach(rowInfo => {

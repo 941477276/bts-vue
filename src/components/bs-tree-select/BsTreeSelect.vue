@@ -261,6 +261,7 @@ export default defineComponent({
     // 清空内容
     let onInputClear = function () {
       let val = props.multiple ? [] : '';
+      (treeRef.value as any)?.selectNone(true);
       ctx.emit('update:modelValue', val);
       ctx.emit('change', val);
       callFormItem('validate', 'change');
