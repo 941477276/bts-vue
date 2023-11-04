@@ -14,9 +14,9 @@ description:
 <template>
   <div>
     <BsTable :columns="columns" :data="data" stripe border row-key="id">
-      <template #opt>
+      <template #opt="{row}">
         <bs-button type="primary" size="sm">Edit</bs-button>
-        <bs-button type="danger" size="sm" style="margin-left: 0.5rem;">Delete</bs-button>
+        <bs-button type="danger" size="sm" @click="doDelete(row)" style="margin-left: 0.5rem;">Delete</bs-button>
       </template>
     </BsTable>
   </div>
@@ -24,6 +24,7 @@ description:
 
 <script setup>
 import { ref } from 'vue';
+import { BsMessageBox } from '../../bs-message-box';
 
 const columns = [
   {
@@ -144,4 +145,18 @@ const data = ref([
     address: 'Dublin No. 2 Lake Park'
   }
 ]);
+
+const doDelete = function (row) {
+  BsMessageBox.warning( {
+    title: `Are you sure to delete "${row.name}"?`,
+    onOk () {
+      return new Promise(function (resolve, reject) {
+        let timer = setTimeout(function () {
+          clearTimeout(timer);
+          resolve();
+        }, 1000)
+      })
+    }
+  });
+};
 </script>
