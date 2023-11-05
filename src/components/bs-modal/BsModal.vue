@@ -2,15 +2,18 @@
   <teleport :disabled="!teleported" :to="appendTo">
     <transition
       :name="transitionName"
-      @after-enter="$emit('open')"
+      @enter="onEnter"
+      @after-enter="$emit('open', $event)"
       @after-leave="onLeave">
       <div
         ref="rootRef"
         v-if="rendered"
         v-show="visibleInner"
-        v-drag="{dragBar: '.modal-header', target: '.modal-dialog', useDrag: draggable, useBoundary: boundary}"
-        class="bs-modal modal"
+        v-drag="{dragBar: '.modal-header', target: !freedom ? '.modal-dialog' : '', useDrag: draggable, useBoundary: boundary}"
+        class="bs-modal"
         :class="[{
+          'modal': !freedom,
+          'modal-freedom': freedom,
           'modal-opened': visibleInner,
           'modal-fullscreen': fullscreen
         }, className]"
@@ -70,7 +73,7 @@
       </div>
     </transition>
     <BsMask
-      v-if="mask && rendered"
+      v-if="mask && rendered && !freedom"
       v-model:visible="maskVisible"
       :z-index="zIndex - 1"></BsMask>
   </teleport>
@@ -121,16 +124,37 @@ export default defineComponent({
     let unLockScroll: any;
     let maskVisible = ref(false);
 
+    // 更新元素left坐标
+    let updateDialogLeftPosition = function () {
+      let el = rootRef.value;
+      if (!el) {
+        return
+      }
+      let elWidth = el.offsetWidth;
+      if (!elWidth) {
+        return;
+      }
+      let elLeft = (window.innerWidth - elWidth) / 2;
+      el.style.left = elLeft + 'px';
+    }
+
     watch(() => props.visible, function (visible) {
       if (props.confirmLoading && !visible) { // 当前不允许关闭
         return;
       }
+      let {
+        mask: showMask,
+        freedom,
+        lockScroll,
+        draggable,
+        autoPosition
+      } = props;
       if (visible) {
         windowWidth.value = window.innerWidth;
         // 更新z-index
         zIndex.value = nextZIndex();
         // 锁定浏览器滚动条
-        if (props.lockScroll) {
+        if (props.lockScroll && !freedom) {
           unLockScroll = useLockScroll();
         }
         // 弹窗显示后始终将当前弹窗id至于弹窗队列末尾
@@ -139,12 +163,15 @@ export default defineComponent({
           modalIdQueue.splice(index, 1);
         }
         modalIdQueue.push(modalId);
+        if (freedom && !draggable && autoPosition) {
+          useGlobalEvent.addEvent('window', 'resize', updateDialogLeftPosition);
+        }
 
         if (!rendered.value) {
           rendered.value = true;
           nextTick(function () {
             visibleInner.value = true;
-            if (props.mask) {
+            if (showMask && !freedom) {
               maskVisible.value = true;
             }
           });
@@ -153,13 +180,13 @@ export default defineComponent({
 
         visibleInner.value = visible;
         maskVisible.value = true;
-        if (props.mask) {
+        if (showMask && !freedom) {
           maskVisible.value = true;
         }
         return;
       }
       visibleInner.value = visible;
-      if (props.mask) {
+      if (showMask && !freedom) {
         maskVisible.value = false;
       }
       if (props.destroyOnClose) {
@@ -169,6 +196,9 @@ export default defineComponent({
       let index = modalIdQueue.findIndex(id => id === modalId);
       if (index > -1) {
         modalIdQueue.splice(index, 1);
+      }
+      if (freedom) {
+        useGlobalEvent.removeEvent('window', 'resize', updateDialogLeftPosition);
       }
     }, { flush: 'post', immediate: true });
 
@@ -216,6 +246,22 @@ export default defineComponent({
       if (index === modalIdQueue.length - 1) {
         close();
       }
+    };
+
+    let onEnter = function (el: HTMLElement) {
+      let {
+        freedom,
+        draggable,
+        autoPosition
+      } = props;
+      if (!freedom || (freedom && !autoPosition)) {
+        return;
+      }
+      // 在可以拖拽的情况下只有第一次显示时才需要计算弹窗的中心位置
+      if (draggable && !!el.style.left) {
+        return;
+      }
+      updateDialogLeftPosition();
     };
 
     let onLeave = function () {
@@ -276,6 +322,7 @@ export default defineComponent({
       close,
       onRootElClick,
       onLeave,
+      onEnter,
       onOKBtnClick
     };
   }

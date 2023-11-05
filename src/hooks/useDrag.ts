@@ -1,6 +1,10 @@
 function drag (el: HTMLElement, binding: any) {
+  const target = binding.value.target;
   const dialogHeaderEl = el.querySelector(binding.value.dragBar);
-  const dragDom = el.querySelector(binding.value.target);
+  const dragDom = !target ? el : el.querySelector(binding.value.target);
+  if (!dragDom) {
+    console.warn('The v-drag directive is missing the dragged element');
+  }
   // 是否使用边界，如果使用边界则元素不会被拖出窗口
   const useBoundary = binding.value.useBoundary !== false;
   const onDrag = binding.value.onDrag;
@@ -101,13 +105,13 @@ function drag (el: HTMLElement, binding: any) {
 export default {
   mounted (el: HTMLElement, binding: any) {
     if (!binding.value.dragBar) {
-      console.error('需传递拖拽元素的选择器，参数名：dragBar');
+      console.error('The v-drag directive lacks a drag bar element. The parameter name is dragBar');
       return;
     }
-    if (!binding.value.target) {
+    /* if (!binding.value.target) {
       console.error('需传递被拖拽元素的选择器，参数名：target');
       return;
-    }
+    } */
     if (binding.value.useDrag === false) {
       return;
     }

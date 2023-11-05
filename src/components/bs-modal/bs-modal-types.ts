@@ -97,6 +97,14 @@ export const bsModalProps = {
     type: Boolean,
     default: true
   },
+  freedom: { // 是否为自由模式
+    type: Boolean,
+    default: false
+  },
+  autoPosition: { // 自由模式时，是否自动计算弹窗显示位置
+    type: Boolean,
+    default: true
+  },
   confirmLoading: { // 是否禁用关闭，若值为true，则任何方式都关闭不了，此功能可用于正在提交数据的场景
     type: Boolean,
     default: false

@@ -2,6 +2,7 @@
 <div class="demo-index">
   <Basic></Basic>
   <Draggable></Draggable>
+  <Freedom></Freedom>
   <Sizes></Sizes>
   <CustomModal></CustomModal>
   <AsyncClose></AsyncClose>
@@ -23,6 +24,7 @@ import Scroll from './scroll.vue';
 import Centered from './centered.vue';
 import ModalNesting from './modal-nesting.vue';
 import Fullscreen from './fullscreen.vue';
+import Freedom from './freedom.vue';
 
 export default defineComponent({
   name: 'DemoIndex',
@@ -35,7 +37,8 @@ export default defineComponent({
     Scroll,
     Centered,
     ModalNesting,
-    Fullscreen
+    Fullscreen,
+    Freedom
   }
 });
 </script>
