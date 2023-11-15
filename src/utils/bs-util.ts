@@ -1023,6 +1023,7 @@ export function eleIsInScrollParentView (ele: HTMLElement, scrollEl: HTMLElement
   var scrollElOffset = offset(scrollEl);
   var scrollElScrollTop = scrollTop(scrollEl);
   var scrollElScrollLeft = scrollLeft(scrollEl);
+  var scrollElHasScroll = hasScroll(scrollEl);
   var scrollElScrollWidth = scrollWidth(scrollEl);
   var elOffset = {
     top,
@@ -1050,8 +1051,9 @@ export function eleIsInScrollParentView (ele: HTMLElement, scrollEl: HTMLElement
     scrollElOffset.top -= documentScrollTop;
     scrollElOffset.left -= documentScrollLeft;
   }
-  var scrollElOffsetRight = scrollElOffset.left + scrollEl.offsetWidth - scrollElScrollWidth.vertical;
-  var scrollElOffsetBottom = scrollElOffset.top + scrollEl.offsetHeight - scrollElScrollWidth.horizontal;
+  // 计算元素offsetRight时需减去元素的滚动条宽度。（当元素有滚动条，但元素设置了overflow: hidden时不应减去滚动条，因为此时滚动条是没有显示出来的）
+  var scrollElOffsetRight = scrollElOffset.left + scrollEl.offsetWidth - (scrollElHasScroll.vertical ? scrollElScrollWidth.vertical : 0);
+  var scrollElOffsetBottom = scrollElOffset.top + scrollEl.offsetHeight - (scrollElHasScroll.horizontal ? scrollElScrollWidth.horizontal : 0);
   var eleOffsetRight = elOffset.left + ele.offsetWidth;
   var eleOffsetBottom = elOffset.top + ele.offsetHeight;
 
