@@ -1,6 +1,6 @@
 {
   "name": "bts-vue",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "`bts-vue` is a Vue component library based on `vue3.x` and `Bootstrap UI 4.x`! It enhances and improves on the basis of Bootstrap UI, making `bts-vue`\nIt is more beautiful than bootstrap ui and has a friendly experience.",
   "repository": {
     "type": "git",

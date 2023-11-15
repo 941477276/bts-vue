@@ -14,3 +14,11 @@ Update date: `2023-10-11`
 ## 0.1.4
 Update date: `2023-10-25`
 + 🐞 Fixed the issue of `Can't resolve './BsTableCellContent.jsx' reported after installing dependencies
+
+## 0.1.5
+Update date: `2023-11-15`
++ 🐞 Fix the problem that `BsTreeSelect`, `BsTree`, `BsTable` and components cannot clear content
++ 🐞 Fixed the problem that the `BsTreeSelect` component setting default value interface does not echo
++ 🌟 `tooltip` floating window content is inserted into the specified container (no longer directly inserted into the body)
++ 🌟 `BsModal` adds free mode pop-up window
++ 🌟 `BsDropdownTransition` drop-down transition component adds right-click menu function

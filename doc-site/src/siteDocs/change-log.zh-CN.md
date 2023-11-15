@@ -14,3 +14,11 @@
 ## 0.1.4
 更新日期：`2023-10-25`
 + 🐞 修复安装依赖后报`Can't resolve './BsTableCellContent.jsx'`问题
+
+## 0.1.5
+更新日期：`2023-11-15`
++ 🐞 修复`BsTreeSelect`、`BsTree`、`BsTable`、组件无法清空内容问题
++ 🐞 修复`BsTreeSelect`组件设置默认值界面不回显出来问题
++ 🌟 `tooltip`浮窗内容插入到指定容器中（不再直接插入到body）
++ 🌟 `BsModal`增加自由模式弹窗
++ 🌟 `BsDropdownTransition`下拉过渡组件增加右键菜单功能
