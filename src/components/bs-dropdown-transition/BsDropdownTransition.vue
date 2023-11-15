@@ -10,7 +10,7 @@
     @after-leave="onLeave"
     class="bs-dropdown-transition"
     :class="[
-      `bs-placement-${camelCase2KebabCase(dropdownStyle.direction)}`,
+      dynamicClassname,
       {
         'use-bottom-position': dropdownStyle.bottom != null,
         'use-right-position': dropdownStyle.right != null
@@ -18,8 +18,8 @@
     ]"
     :style="{
       position: position,
-      ...(setWidth ? { width: dropdownStyle.width + 'px' } : {}),
-      ...(setMinWidth ? { minWidth: dropdownStyle.width + 'px' } : {}),
+      ...(setWidth && !contextMenu ? { width: dropdownStyle.width + 'px' } : {}),
+      ...(setMinWidth && !contextMenu ? { minWidth: dropdownStyle.width + 'px' } : {}),
       ...transitionOrigin,
       left: dropdownStyle.right == null ? (dropdownStyle.left + 'px') : 'auto',
       right: dropdownStyle.right != null ? (dropdownStyle.right + 'px') : '',
@@ -41,7 +41,7 @@ import {
   onMounted,
   onBeforeMount,
   ref,
-  watch
+  watch, computed
 } from 'vue';
 import { NOOP, isObject } from '@vue/shared';
 import {
@@ -53,9 +53,33 @@ import {
   camelCase2KebabCase
 } from '../../utils/bs-util';
 import { getDropdownDirection } from './useDropdownDirection';
+import { getContextmenuDropdownDirection } from './useContextmenuDropdownDirection';
 import { useGlobalEvent } from '../../hooks/useGlobalEvent';
 import { PlainObject } from '../types';
 import { bsDropdownTransitionProps, BsDropdownPositionInfo } from './bs-dropdown-transition-types';
+
+const documentNodeNames = ['HTML', 'BODY'];
+const zoomTransitionOrigin: PlainObject = {
+  top: '0 100%',
+  topEnd: '100% 100%',
+  topCenter: '0 50%',
+  bottom: '0 0',
+  bottomEnd: '100% 0',
+  bottomCenter: '0 50%',
+  left: '100% 0',
+  leftEnd: '100% 100%',
+  leftCenter: 'right center',
+  right: '0 0',
+  rightEnd: '0 100%',
+  rightCenter: '0 center'
+};
+const transitionNameMap = {
+  zoom: 'bs-zoom',
+  slideUp: 'bs-slide-up',
+  slideDown: 'bs-slide-down'
+};
+const slideUpTransitionPlacements = ['top', 'topCenter', 'topEnd'];
+const slideDownTransitionPlacements = ['bottom', 'bottomCenter', 'bottomEnd'];
 
 export default defineComponent({
   name: 'BsDropdownTransition',
@@ -79,56 +103,43 @@ export default defineComponent({
     let referenceScrollParent: HTMLElement|undefined;
     let isVisible = ref(false);
     let targetRef = ref<HTMLElement|null>(null);
-    let documentNodeNames = ['HTML', 'BODY'];
-    let zoomTransitionOrigin: PlainObject = {
-      top: '0 100%',
-      topEnd: '100% 100%',
-      bottom: '0 0',
-      bottomEnd: '100% 0',
-      left: '100% 0',
-      leftEnd: '100% 100%',
-      leftCenter: 'right center',
-      right: '0 0',
-      rightEnd: '0 100%',
-      rightCenter: '0 center'
-    };
     // 外部自定义样式
     let styleCustom = ref<PlainObject>({});
 
     // 刷新定位
     let refresh = function () {
-      let referenceRef = props.referenceRef;
+      let {
+        referenceRef,
+        contextMenu,
+        virtualMouseEvent
+      } = props;
+      let displayDirection: any;
       let referenceEl: HTMLElement|null = null;
-      if (referenceRef.nodeName) {
-        referenceEl = referenceRef;
-      } else if (isObject(referenceRef) && referenceRef.$el) {
-        referenceEl = referenceRef.$el;
-      }
-      if (!targetEl || !referenceEl) {
+      let referenceElRect: DOMRect|null = null;
+      if (!targetEl) {
         return;
       }
-      let referenceElRect = referenceEl.getBoundingClientRect();
+      if (!contextMenu) {
+        if (referenceRef.nodeName) {
+          referenceEl = referenceRef;
+        } else if (isObject(referenceRef) && referenceRef.$el) {
+          referenceEl = referenceRef.$el;
+        }
+        if (!referenceEl) {
+          return;
+        }
+        referenceElRect = referenceEl.getBoundingClientRect();
+        displayDirection = getDropdownDirection(referenceEl, targetEl, props.placement, props.tryAllPlacement, props.tryEndPlacement, props.offset);
+      } else {
+        displayDirection = getContextmenuDropdownDirection(virtualMouseEvent, targetEl, props.placement, props.tryAllPlacement, props.tryEndPlacement, props.offset);
+      }
 
-      let displayDirection: any = getDropdownDirection(referenceEl, targetEl, props.placement, props.tryAllPlacement, props.tryEndPlacement, props.offset);
       let bottom = displayDirection.bottom;
       let right = displayDirection.right;
       let direction = displayDirection.direction;
-
-      /* let customTransitionName = props.customTransitionName;
-      if (!isFunction(customTransitionName)) {
-        if (slideUpTransitionPlacements.includes(direction)) {
-          transitionName.value = 'bs-slide-up';
-        } else if (slideDownTransitionPlacements.includes(direction)) {
-          transitionName.value = 'bs-slide-down';
-        } else {
-          transitionName.value = 'bs-zoom';
-        }
-      } else {
-        transitionName.value = customTransitionName(displayDirection);
-      } */
       calcTransitionName(displayDirection);
 
-      if (transitionName.value == 'bs-zoom') {
+      if (transitionName.value == transitionNameMap.zoom) {
         let origin = zoomTransitionOrigin[direction];
         transitionOrigin.value = {
           'transform-origin': origin,
@@ -151,7 +162,9 @@ export default defineComponent({
       dropdownStyle.horizontalFullInview = displayDirection.horizontal;
       dropdownStyle.verticalFullInview = displayDirection.vertical;
       dropdownStyle.direction = direction;
-      dropdownStyle.width = referenceElRect.width;
+      if (!contextMenu) {
+        dropdownStyle.width = referenceElRect!.width;
+      }
       dropdownStyle.top = displayDirection.top;
       dropdownStyle.left = displayDirection.left;
       if (bottom === null) {
@@ -172,65 +185,88 @@ export default defineComponent({
     let calcTransitionName = function (displayDirection: any) {
       let direction = displayDirection.direction;
       let customTransitionName = props.customTransitionName;
+      if (props.useZoomTransition) {
+        transitionName.value = transitionNameMap.zoom;
+        return;
+      }
       if (!isFunction(customTransitionName)) {
         if (slideUpTransitionPlacements.includes(direction)) {
-          transitionName.value = 'bs-slide-up';
+          transitionName.value = transitionNameMap.slideUp;
         } else if (slideDownTransitionPlacements.includes(direction)) {
-          transitionName.value = 'bs-slide-down';
+          transitionName.value = transitionNameMap.slideDown;
         } else {
-          transitionName.value = 'bs-zoom';
+          transitionName.value = transitionNameMap.zoom;
         }
       } else {
         transitionName.value = customTransitionName(displayDirection);
       }
     };
 
-    let slideUpTransitionPlacements = ['top', 'topCenter', 'topEnd'];
-    let slideDownTransitionPlacements = ['bottom', 'bottomCenter', 'bottomEnd'];
     let transitionOrigin = ref<any>({});
     // 监听willVisible，在下拉菜单显示出来前计算出下拉菜单显示位置，如过useZoomTransition为true可以略过
     watch(() => props.willVisible, function (isVisible) {
       if (props.useZoomTransition) {
-        transitionName.value = 'bs-zoom';
+        transitionName.value = transitionNameMap.zoom;
         return;
       }
       if (!isVisible) {
         return;
       }
-      let referenceRef = props.referenceRef;
+      let {
+        referenceRef,
+        virtualMouseEvent,
+        contextMenu
+      } = props;
       let referenceEl: HTMLElement|null = null;
-      if (!referenceRef) {
-        return;
-      }
-      if (referenceRef.nodeName) {
-        referenceEl = referenceRef;
-      } else if (isObject(referenceRef) && referenceRef.$el) {
-        referenceEl = referenceRef.$el;
-      }
-      let displayDirection: any = getDropdownDirection(referenceEl!, targetRef.value!, props.placement, props.tryAllPlacement);
 
+      let displayDirection: any;
+      if (!contextMenu) {
+        if (!referenceRef) {
+          return;
+        }
+        if (referenceRef.nodeName) {
+          referenceEl = referenceRef;
+        } else if (isObject(referenceRef) && referenceRef.$el) {
+          referenceEl = referenceRef.$el;
+        }
+        displayDirection = getDropdownDirection(referenceEl!, targetRef.value!, props.placement, props.tryAllPlacement);
+      } else {
+        console.log('virtualMouseEvent', virtualMouseEvent);
+        displayDirection = getContextmenuDropdownDirection(virtualMouseEvent, targetRef.value!, props.placement, props.tryAllPlacement);
+      }
       calcTransitionName(displayDirection);
     });
 
+    watch(() => props.virtualMouseEvent, function () {
+      // isVisible为false的时候不允许刷新，否则会与onEnter事件同时执行，导致第二次显示时丢失过渡效果
+      if (!props.contextMenu || !isVisible.value) {
+        return;
+      }
+      refresh();
+    }, { deep: true });
+
     let onEnter = function (el:HTMLElement, done: () => void) {
-      // 延迟50毫秒是为了解决目标元素使用v-if控制后导致元素位置计算不准确问题
-      // let timer = setTimeout(function () {
-      //   clearTimeout(timer);
-      let referenceRef = props.referenceRef;
+      let {
+        referenceRef,
+        virtualMouseEvent,
+        contextMenu
+      } = props;
       let referenceEl: HTMLElement|null = null;
-      if (!referenceRef) {
-        console.log('referenceRef不存在!-----------------------');
-        return;
-      }
-      if (referenceRef.nodeName) {
-        referenceEl = referenceRef;
-      } else if (isObject(referenceRef) && referenceRef.$el) {
-        referenceEl = referenceRef.$el;
-      }
-      // console.log('onEnter执行了', referenceEl?.nodeName, el);
-      if (!referenceEl) {
-        console.log('参照元素不存在!-----------------------');
-        return;
+      if (!contextMenu) {
+        if (!referenceRef) {
+          console.log('referenceRef不存在!-----------------------');
+          return;
+        }
+        if (referenceRef.nodeName) {
+          referenceEl = referenceRef;
+        } else if (isObject(referenceRef) && referenceRef.$el) {
+          referenceEl = referenceRef.$el;
+        }
+        // console.log('onEnter执行了', referenceEl?.nodeName, el);
+        if (!referenceEl) {
+          console.log('参照元素不存在!-----------------------');
+          return;
+        }
       }
       if (!el) {
         console.log('目标元素不存在!========================');
@@ -238,6 +274,7 @@ export default defineComponent({
       }
       isVisible.value = true;
       targetEl = el;
+      console.log('进入onEnter事件了,1111111111111');
       refresh();
 
       let onTransitionDone = function () {
@@ -249,14 +286,16 @@ export default defineComponent({
       el.addEventListener('transitionend', onTransitionDone, false);
       el.addEventListener('transitioncancel', onTransitionDone, false);
       ctx.emit('enter', el, NOOP);
-      // }, !targetEl ? 50 : 0);
 
-      referenceScrollParent = getScrollParent(referenceEl);
-      let nodeName = referenceScrollParent?.nodeName || '';
+      if (!contextMenu) {
+        referenceScrollParent = getScrollParent(referenceEl!);
+        let nodeName = referenceScrollParent?.nodeName || '';
 
-      // 如果参照元素有有滚动条的父级节点且不为body，则给该父级节点绑定scroll事件，在容器滚动的时候刷新下拉位置
-      if (referenceScrollParent && !documentNodeNames.includes(nodeName)) {
-        referenceScrollParent.addEventListener('scroll', scrollEvent, false);
+        console.log('referenceScrollParent', referenceScrollParent);
+        // 如果参照元素有有滚动条的父级节点且不为body，则给该父级节点绑定scroll事件，在容器滚动的时候刷新下拉位置
+        if (referenceScrollParent && !documentNodeNames.includes(nodeName)) {
+          referenceScrollParent.addEventListener('scroll', scrollEvent, false);
+        }
       }
       useGlobalEvent.addEvent('window', 'scroll', scrollEvent);
       useGlobalEvent.addEvent('window', resizeEventName, resizeEvent);
@@ -301,6 +340,7 @@ export default defineComponent({
       if (scrollTimer == 0 || now - scrollTimer >= 10) {
         let targetElPosition = getStyle(targetEl, 'position');
         if (targetElPosition == 'fixed') {
+          console.log(222);
           return;
         }
         let target = evt.currentTarget!;
@@ -313,24 +353,23 @@ export default defineComponent({
           currentScrollTop = (target as HTMLElement).scrollTop;
           // currentScrollLeft = (target as HTMLElement).scrollLeft;
         }
-        /*
-         由于 eleHasScroll() 函数判断元素是否有滚动条会触发滚动条事件，因此这里需要判断当前滚动条是否是由eleHasScroll函数触发的，如果是它触发的则不执行更新。
-         如果滚动条是否是由eleHasScroll函数触发的，它的2次执行时间在10-20之间
-         */
-        /* if ((lastScrollTop == 0 && currentScrollTop == 1) || ((lastScrollTop == 0 && currentScrollTop == 0) && (now - scrollTimer < 20))) {
-          console.log('这里拦掉了');
-          return;
-        } */
         lastScrollTop = currentScrollTop;
         refresh();
         scrollTimer = now;
       }
     };
-
     /* onMounted(function () {
       // useGlobalEvent.addEvent('window', resizeEventName, resizeEvent);
       // useGlobalEvent.addEvent('window', 'scroll', scrollEvent);
     }); */
+
+    let dynamicClassname = computed(function () {
+      let direction = dropdownStyle.direction;
+      if (!props.contextMenu) {
+        return `bs-placement-${camelCase2KebabCase(direction)}`;
+      }
+      return `bs-contextmenu-placement-${camelCase2KebabCase(direction)}`;
+    });
 
     onBeforeMount(function () {
       // 防止下拉菜单为隐藏，组件就被销毁了
@@ -348,6 +387,7 @@ export default defineComponent({
       targetRef,
       styleCustom,
       isVisible,
+      dynamicClassname,
 
       onEnter,
       onLeave,

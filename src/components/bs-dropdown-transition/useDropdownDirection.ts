@@ -14,7 +14,16 @@ import {
   checkTerminal
 } from '../../utils/bs-util';
 
-export interface DropdownOffset {
+import {
+  DropdownOffset,
+  DropdownDirection,
+  endReg,
+  centerReg,
+  documentNodeNames,
+  eleIsInView
+} from './dropdownDirectionHookCommon';
+
+/* export interface DropdownOffset {
   top?: number;
   left?: number;
   // bottom?: number;
@@ -34,7 +43,7 @@ export interface DropdownDirection {
   vertical: boolean;
   verticalVisibleHeight: number;
   isRollback?: boolean; // 是否为回滚到了默认方向
-};
+}; */
 
 /**
  * 计算绝对定位元素能完全出现在视口的展示方位
@@ -45,9 +54,9 @@ export interface DropdownDirection {
  * @param tryEndDirection 是否尝试切换当前方向的尾部方向
  * @param dropdownOffset 下拉菜单距参照元素的偏移量
  */
-const endReg = /(\w+)End$/;
+/* const endReg = /(\w+)End$/;
 const centerReg = /(\w+)Center$/;
-const documentNodeNames = ['HTML', 'BODY'];
+const documentNodeNames = ['HTML', 'BODY']; */
 export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLElement, direction: string, tryAllDirection = false, tryEndDirection = true, dropdownOffset?: DropdownOffset): DropdownDirection {
   if (!referenceEl || !targetEl || !direction) {
     throw new Error('One of the parameters of referenceEl, targetEl, direction is missing!');
@@ -703,6 +712,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
             return true;
           }
           return false;
+        } else { // 中间方向则直接return掉（不return掉会导致下拉在滚动容器中不能完全展示时也使用中间方向）
+          return;
         }
       }
       calcedDirection = result;
@@ -744,11 +755,11 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
   return calcedDirection;
 }
 
-/**
+/* /!**
  * 判断元素是否完全出现在视口中，优化性能，减少计算scrollParent、documentHasScroll、documentScrollInfo
  * @param {object} options
  * @returns {{horizontal: boolean, vertical: boolean}}
- */
+ *!/
 function eleIsInView (options: any) {
   let {
     ele,
@@ -856,4 +867,4 @@ function eleIsInView (options: any) {
     vertical: verticalFullVisible,
     horizontal: horizontalFullVisible
   };
-}
+} */

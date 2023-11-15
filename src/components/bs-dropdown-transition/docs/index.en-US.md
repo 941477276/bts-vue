@@ -26,6 +26,8 @@ The most basic drop-down component, you can use it to implement any component wi
 | offset | The offset of the dropdown menu from the reference element | { top?: number; left?: number; } | false |
 | customTransitionName | drop-down menu custom transition name | (direction) => string | |
 | customStyle | custom drop-down menu style | (direction) => string | |
+| contextMenu | Whether it is a right-click menu | boolean | false |
+| virtualMouseEvent | Virtual mouse event object, only valid when contextMenu=true | `{ clientX: number; clientY: number; contextElement?: HTMLElement; // Context element }` | |
 
 
 ### DropdownTransition event

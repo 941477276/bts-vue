@@ -26,6 +26,8 @@ subtitle: 下拉过渡
 | offset               | 下拉菜单距参照元素的偏移量                                           | { top?: number; left?: number; }                                                                                              | false    |
 | customTransitionName | 下拉菜单自定义transition name                                  | (direction) => string                                                                                                         |      |
 | customStyle          | 自定义下拉菜单style                                            | (direction) => string                                                                                                         |      |
+| contextMenu          | 是否为右键菜单                                                        | boolean                                                                                                                       | false    |
+| virtualMouseEvent          | 虚拟鼠标事件对象，仅在 contextMenu=true 时有效                                                         | `{ clientX: number; clientY: number; contextElement?: HTMLElement; // 上下文元素 }`                                                |          |
 
 
 ### DropdownTransition 事件

@@ -1,4 +1,5 @@
-import { PropType, Ref, Component, ExtractPropTypes } from 'vue';
+import { PropType, Ref, Component, ExtractPropTypes, UnwrapNestedRefs } from 'vue';
+import type { VirtualMouseEvent } from './dropdownDirectionHookCommon';
 
 export interface DropdownOffset {
   top?: number;
@@ -10,6 +11,12 @@ export interface DropdownOffset {
 export const bsDropdownTransitionProps = {
   referenceRef: { // 参照元素ref
     type: Object as PropType<Ref<Element|Component>>,
+    default () {
+      return {};
+    }
+  },
+  virtualMouseEvent: { // 虚拟鼠标事件对象，仅在 contextMenu=true 时有效
+    type: Object as PropType<Ref<VirtualMouseEvent>|UnwrapNestedRefs<VirtualMouseEvent>>,
     default () {
       return {};
     }
@@ -57,6 +64,10 @@ export const bsDropdownTransitionProps = {
   offset: { // 下拉菜单距参照元素的偏移量
     type: Object as PropType<DropdownOffset>,
     default: null
+  },
+  contextMenu: { // 是否为右键菜单
+    type: Boolean,
+    default: false
   }
 };
 
