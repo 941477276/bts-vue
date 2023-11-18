@@ -532,7 +532,7 @@ export default defineComponent({
             addCheckedKey(checkedKeys[0]);
           }
         } else {
-          let reserveSelectedRowKeys = props.selectionConfig.reserveSelectedRowKeys
+          let reserveSelectedRowKeys = props.selectionConfig.reserveSelectedRowKeys;
           checkedKeysRoot.value = new Set([...checkedKeys, ...(reserveSelectedRowKeys ? props.Array.from(checkedKeysRoot.value) : [])]);
         }
 

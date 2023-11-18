@@ -471,7 +471,7 @@ export default defineComponent({
           // console.log('inRowSpan inner', inRowSpanInner, colSpan);
           if (rowSpanCellIndex !== cellIndex) {
             if (colSpan! > 0 && inRowSpanInner) { // 当前列与行合并的列不是相同的列，但在列合并范围内
-              let inColSpan = cellIndex >= rowSpanCellIndex && (cellIndex <= (rowSpanCellIndex + colSpan - 1));
+              let inColSpan = cellIndex >= rowSpanCellIndex && (cellIndex <= (rowSpanCellIndex + colSpan! - 1));
               // console.log('inColSpan', inColSpan, cellIndex, rowSpanCellIndex);
               if (inColSpan) {
                 return true;

@@ -33,6 +33,7 @@ export function treeDataToFlattarnArr2 (treeId: string, treeData: Record<string,
     }
     let nodeLevelPath = parentNodeLevelPath ? (parentNodeLevelPath + '_' + (index + 1)) : '' + (index + 1);
     let nodeInfoItem = {
+      uid: '',
       nodeLevelPath,
       nodeLevel,
       node: treeNode,

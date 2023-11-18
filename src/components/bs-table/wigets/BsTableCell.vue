@@ -147,14 +147,14 @@ export default defineComponent({
         let siblingsCells = [...(cellEl.parentElement?.children || [])];
         let cellElIndex = siblingsCells.findIndex(nodeItem => nodeItem === cellEl);
         if (isFixedLeft) {
-          left = siblingsCells.slice(0, cellElIndex).reduce(function (result: number, siblingItem: HTMLTableCellElement) {
-            result += siblingItem.offsetWidth;
+          left = siblingsCells.slice(0, cellElIndex).reduce(function (result: number, siblingItem: Element) {
+            result += (siblingItem as HTMLTableCellElement).offsetWidth;
             return result;
           }, 0) + 'px';
         } else if (isFixedRight) {
           // console.log('siblingsCells.slice(cellElIndex + 1)', siblingsCells.slice(cellElIndex + 1));
-          right = siblingsCells.slice(cellElIndex + 1).reduce(function (result: number, siblingItem: HTMLTableCellElement) {
-            result += siblingItem.offsetWidth;
+          right = siblingsCells.slice(cellElIndex + 1).reduce(function (result: number, siblingItem: Element) {
+            result += (siblingItem as HTMLTableCellElement).offsetWidth;
             return result;
           }, 0) + 'px';
         }
