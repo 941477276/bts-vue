@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bs-date-time-editor"
+    class="bs-datetime-editor"
     :class="[
       {
         'is-focus': visible
       },
-      size ? `bs-date-time-editor-${size}` : ''
+      size ? `bs-datetime-editor-${size}` : ''
     ]">
     <BsOnlyChild>
       <slot name="trigger">
@@ -29,7 +29,7 @@
           @update:modelValue="$emit('update:inputModelValue', $event)">
           <slot name="suffix"></slot>
         </BsInput>-->
-        <div class="bs-date-time-editor-input-wrap">
+        <div class="bs-datetime-editor-input-wrap">
           <input
             type="text"
             autocomplete="off"
@@ -53,7 +53,7 @@
             @focus="onInputFocus"
             @blur="onInputBlur"
             @click="showDropdown" />
-          <div class="bs-date-time-editor-input-suffix" @click="handleInputSuffixClick">
+          <div class="bs-datetime-editor-input-suffix" @click="handleInputSuffixClick">
             <slot name="icon"><BsiCalendar></BsiCalendar></slot>
             <BsiXCircle v-if="inputModelValue && clearable && !disabled" class="clear-icon" @click.stop="handleClear"></BsiXCircle>
           </div>

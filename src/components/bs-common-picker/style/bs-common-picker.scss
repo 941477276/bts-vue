@@ -1,4 +1,4 @@
-.bs-date-time-editor{
+.bs-datetime-editor{
   //position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -20,29 +20,29 @@
   .form-control{
     padding-right: 2rem;
   }
-  &.bs-date-time-editor-lg{
+  &.bs-datetime-editor-lg{
     .form-control{
       padding-right: 2.5rem;
     }
-    .bs-date-time-editor-input-suffix{
+    .bs-datetime-editor-input-suffix{
       min-width: 2.5rem;
       font-size: 1.25rem;
     }
   }
-  &.bs-date-time-editor-sm{
+  &.bs-datetime-editor-sm{
     .form-control{
       padding-right: 1.5rem;
     }
-    .bs-date-time-editor-input-suffix{
+    .bs-datetime-editor-input-suffix{
       min-width: 1.5rem;
       font-size: 0.875rem;
     }
   }
 }
-.bs-date-time-editor-input-wrap{
+.bs-datetime-editor-input-wrap{
   position: relative;
 }
-.bs-date-time-editor-input-suffix{
+.bs-datetime-editor-input-suffix{
   display: flex;
   align-items: center;
   justify-content: center;
