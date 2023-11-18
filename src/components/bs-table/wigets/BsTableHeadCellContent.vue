@@ -255,7 +255,7 @@ export default defineComponent({
         direction
       } = onSortedInfo.value;
       if (hasOnSort) {
-        tableRootCtx.cancelSort(props.column.prop, props.cellIndex, direction);
+        tableRootCtx.cancelSort(props.column.prop, direction);
       }
     });
 
