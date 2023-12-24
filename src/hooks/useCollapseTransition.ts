@@ -23,6 +23,21 @@ export function useCollapseTransition (ctx: any, emitEvents?: boolean) {
     collapseEnter (el: HTMLElement, done: () => void) {
       oldOverflow = el.style.overflow;
       let elHeight = el.scrollHeight;
+      // 判断元素的父级是否隐藏了，如果元素的父级隐藏了那么元素的宽高都会为0
+      let elParentsIsHidden = el.offsetWidth == 0 && el.offsetHeight == 0;
+      if (elParentsIsHidden) {
+        el.style.paddingTop = oldPaddingTop;
+        el.style.paddingBottom = oldPaddingBottom;
+        // 延迟60毫秒再执行done函数，否则在元素上 collapse-transition-enter-to 类不会消失
+        let timer = setTimeout(function () {
+          clearTimeout(timer);
+          done();
+          if (emitEvents) {
+            ctx.emit('enter', el);
+          }
+        }, 60);
+        return;
+      }
       if (elHeight > 0) {
         el.style.maxHeight = elHeight + 'px';
       } else {
