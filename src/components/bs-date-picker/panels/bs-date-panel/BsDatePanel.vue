@@ -195,7 +195,7 @@ export default defineComponent({
     let tableHeader = computed(function () {
       let weeksName = dayjsUtil.locale.weekdaysMin('zh-cn');
       let firstDayOfWeek = weekFirstDay.value;
-      let headers = [];
+      let headers: Record<string, any>[] = [];
       if (props.hasPrefixColumn) {
         headers.push({
           text: ' '

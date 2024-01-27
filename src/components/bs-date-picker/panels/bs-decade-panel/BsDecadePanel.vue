@@ -81,9 +81,9 @@ export default defineComponent({
       let yearDecadeArr: any = [];
       let { currentYear, startDecadeYear, endDecadeYear } = decadeNumberInfo.value;
       let baseDecadeYearDate = dayjsUtil.addYear(dayjs(startDecadeYear + '', 'YYYY'), -10);
-      let tempYearArr = [];
+      let tempYearArr: Record<string, any>[] = [];
       let disabledDate = props.disabledDate;
-      let lastDecadeEndDate = null;
+      let lastDecadeEndDate: Dayjs|null = null;
       while (tempYearArr.length < panelDecadeCount) {
         let startDecadeDate = !lastDecadeEndDate ? baseDecadeYearDate : dayjsUtil.addYear(lastDecadeEndDate, 1);
         let endDecadeDate = dayjsUtil.addYear(startDecadeDate, yearDecadeCount - 1);

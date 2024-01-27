@@ -8,4 +8,4 @@ BsConfigProvider.install = function (vueApp: App): App {
   return vueApp;
 };
 
-export default BsConfigProvider as typeof BsConfigProvider  & Plugin;
+export default BsConfigProvider as typeof BsConfigProvider & Plugin;

@@ -45,7 +45,7 @@ export default defineComponent({
       if (typeof getCellNode === 'function') {
         slot = useCustomRender ? getCellNode : defaultSlot;
       } else {
-        let dateRenderSlot = datePicker.ctx.slots.dateRender;
+        let dateRenderSlot = datePicker.ctx.slots?.dateRender;
         slot = useCustomRender ? (dateRenderSlot || defaultSlot) : defaultSlot;
       }
 

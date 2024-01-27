@@ -8,4 +8,4 @@ BsDropdown.install = function (vueApp: any) {
   return vueApp;
 };
 
-export default BsDropdown as typeof BsDropdown  & Plugin;
+export default BsDropdown as typeof BsDropdown & Plugin;

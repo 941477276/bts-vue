@@ -23,7 +23,7 @@ export function useTreePagination (props: any, treeId: string, flatTreeNodeInfoA
     let nodeKey = props.nodeKey;
     let childrenKey = typeof treeData === 'undefined' ? props.childrenKey : treeNodeProps?.value.children;
 
-    let result = [];
+    let result: Record<string, any>[] = [];
     if (!isNaN(pageSize) && pageSize > 0 && children.length > pageSize) {
       result = children.slice(0, pageCount.value * pageSize);
     } else {

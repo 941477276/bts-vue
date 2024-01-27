@@ -46,13 +46,13 @@ export function useMenuLevel (currentInstance: ComponentInternalInstance, props:
   // 获取组件所有父级组件的ID
   let parentsIdPath = computed(function () {
     let parent = currentInstance.parent!;
-    let path = [];
+    let path: {id: string; name: string}[] = [];
     let menuComponentNames = [SUB_MENU_NAME, ITEM_GROUP_NAME];
     while (parent && parent.type.name !== MENU_NAME) {
       if (menuComponentNames.includes(parent.type.name as string)) {
         path.unshift({
           id: (parent.proxy as any)?.comId,
-          name: parent.type.name
+          name: parent.type.name!
         });
       }
       parent = parent.parent!;

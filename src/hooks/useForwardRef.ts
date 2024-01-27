@@ -18,7 +18,7 @@ export const forwardRefKey: InjectionKey<ForwardRefContext> = Symbol('bsForwardR
 export function useForwardRef <T> (forwardRef: Ref<T|null>): void {
   // 提供一个函数给子孙组件调用，以设置dom元素进变量
   provide(forwardRefKey, {
-    setForwardRef (el: T) {
+    setForwardRef (el: any) {
       forwardRef.value = el;
     }
   });

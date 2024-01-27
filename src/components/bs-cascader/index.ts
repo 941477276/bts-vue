@@ -8,4 +8,4 @@ BsCascader.install = function (vueApp: App) {
   return vueApp;
 };
 
-export default BsCascader as typeof BsCascader  & Plugin;
+export default BsCascader as typeof BsCascader & Plugin;

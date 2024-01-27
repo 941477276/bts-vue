@@ -19,13 +19,13 @@ export interface BsTableColumn {
   customCellAttrs?: (data: Record<string, any>, cellIndex: number, rowIndex: number, column: BsTableColumn) => Record<any, any>; // 自定义数据单元格属性及样式
   cellClassName?: string|string[]|((data: Record<string, any>, cellIndex: number, rowIndex: number, column: BsTableColumn) => (string|string[])); // 自定义数据单元格class
   ellipsis?: boolean; // 文本溢出后是否显示3个点
-  showTooltip?: boolean|object; // 文本溢出后是否显示tooltip
+  showTooltip?: boolean|Record<string, any>; // 文本溢出后是否显示tooltip
   resizeable?: boolean; // 列宽是否可以拖拽
   sorter?: (rowData1: Record<string, any>, rowData2: Record<string, any>) => number; // 行排序函数，参考 Array.sort 的 compareFunction
   sortOrder?: BsTableSortDirection; // 列的排序方向（sorter执行后的排序方向），可设置为`ascend`（升序）、`descend`（降序），默认为升序
   sortDirections?: BsTableSortDirection[]; // 支持的排序方式，支持`ascend`（升序）、`descend`（降序）
   defaultSortOrder?: BsTableSortDirection; // 默认排序顺序，设置该值后默认会对表格进行一次排序
-  showSorterTooltip?: boolean|object; // 表头显示下一次排序的 tooltip 提示
+  showSorterTooltip?: boolean|Record<string, any>; // 表头显示下一次排序的 tooltip 提示
 };
 
 export interface BsTableColumnInner extends BsTableColumn {

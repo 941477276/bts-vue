@@ -8,4 +8,4 @@ BsDatePicker.install = function (vueApp: App) {
   return vueApp;
 };
 
-export default BsDatePicker as typeof BsDatePicker  & Plugin;
+export default BsDatePicker as typeof BsDatePicker & Plugin;

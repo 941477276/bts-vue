@@ -156,8 +156,8 @@ export function getContextmenuDropdownDirection (virtualMouseEvt: VirtualMouseEv
   var dropdownOffsetTop = dropdownOffset?.top || 0;
   var dropdownOffsetLeft = dropdownOffset?.left || 0;
 
-  var calcedDirection = null;
-  var directionCalcFlow = []; // 存储按流程计算方向的函数，当下拉菜单在某个方向上不能完全展示时会自动切换一个方向
+  var calcedDirection: any = null;
+  var directionCalcFlow: Record<string, any>[] = []; // 存储按流程计算方向的函数，当下拉菜单在某个方向上不能完全展示时会自动切换一个方向
   var handleBottom = function (isBottomRight: boolean, isCenter?: boolean) {
     var top = clientY;
     var left = clientX;
@@ -167,8 +167,8 @@ export function getContextmenuDropdownDirection (virtualMouseEvt: VirtualMouseEv
     if (isCenter) {
       top -= targetElRect.height / 2;
     }
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
 
     if (!targetIsInFixedPosition) {
       // 加上滚动条滚动的距离
@@ -323,8 +323,8 @@ export function getContextmenuDropdownDirection (virtualMouseEvt: VirtualMouseEv
     // top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
     // left -= targetIsInBody ? referenceElWrapperScrollLeft : 0;
     // var bottom = referenceOffset.top - targetElOffsetParentOffset.top - (targetElOffsetParentIsDocument ? referenceElWrapperScrollTop : 0) + referenceRect.height;
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
 
     // 计算top值时需减去目标元素position不为static的父级元素的top值
     let newTop = top; // - targetElOffsetParentOffset.top;

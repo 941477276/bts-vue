@@ -243,7 +243,7 @@ export default defineComponent({
 
       if (keyCode === 37 || keyCode === 38) { // 上下
         let prevTabIndex = activeTabIndex;
-        let prevTab = null;
+        let prevTab: Record<string, any>|null = null;
         if (activeTabIndex == 0) {
           return;
         }
@@ -261,7 +261,7 @@ export default defineComponent({
         }
       } else { // 上下
         let nextTabIndex = activeTabIndex;
-        let nextTab = null;
+        let nextTab: Record<string, any>|null = null;
         let panesLen = panesArr.length;
         if (activeTabIndex == panesArr.length - 1) {
           return;

@@ -170,8 +170,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     if (!isBottomRight && isCenter) {
       left -= (targetElRect.width - referenceRect.width) / 2;
     }
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
     // var isInView = eleIsInView(targetEl, top, left, needSubtractScrollOffset);
     top += dropdownOffsetTop;
     left += dropdownOffsetLeft;
@@ -283,8 +283,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     top -= targetIsInBody ? referenceElWrapperScrollTop : 0;
     left -= targetIsInBody ? referenceElWrapperScrollLeft : 0;
     // var bottom = referenceOffset.top - targetElOffsetParentOffset.top - (targetElOffsetParentIsDocument ? referenceElWrapperScrollTop : 0) + referenceRect.height;
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
     if (targetIsInBody) {
       // 如果目标元素插入在body中，则bottom的值为浏览器可见高度减去参照元素至浏览器最顶端的距离，再加上参照元素滚动容器滚动滚动的距离即可
       // 实际为：浏览器可见高度-参照元素在可见高度内的位置-浏览器滚动条滚动的距离+参照元素滚动容器滚动滚动的距离
@@ -339,8 +339,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
     if (!isLeftBottom && isCenter) {
       top -= (targetElRect.height - referenceRect.height) / 2;
     }
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
 
     top += dropdownOffsetTop;
     left += dropdownOffsetLeft;
@@ -473,8 +473,8 @@ export function getDropdownDirection (referenceEl: HTMLElement, targetEl: HTMLEl
       }
     }
 
-    var bottom = null;
-    var right = null;
+    var bottom: number|null = null;
+    var right: number|null = null;
     if (isRightBottom) {
       if (targetIsInBody) {
         // 如果目标元素插入在body中，则bottom的值为浏览器可见高度减去参照元素至浏览器最顶端的距离，再加上参照元素滚动容器滚动滚动的距离即可

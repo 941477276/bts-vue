@@ -32,7 +32,7 @@ export default defineComponent({
   emits: ['click', 'focus', 'blur', 'mouseenter', 'mouseleave', 'mousewheel', 'contextmenu', 'dblclick'],
   setup (props: any, ctx) {
     let btnClass = computed<Array<string|unknown>>(() => {
-      let classArr = [];
+      let classArr: string[] = [];
       let bntType = props.type;
 
       if (bntType) {

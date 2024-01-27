@@ -65,9 +65,9 @@ export default defineComponent({
   },
   setup (props: any) {
     let dots = computed(function () {
-      let marks = props.marks;
+      let marks: Record<string, any>|undefined = props.marks;
       let step = props.step;
-      let result = [];
+      let result: any[] = [];
       let min = props.min;
       let max = props.max;
       if (marks && Object.keys(marks).length > 0) {

@@ -6,4 +6,4 @@ BsCollapseTransition.install = function (vueApp: App) {
   return vueApp;
 };
 
-export default BsCollapseTransition as typeof BsCollapseTransition  & Plugin;
+export default BsCollapseTransition as typeof BsCollapseTransition & Plugin;

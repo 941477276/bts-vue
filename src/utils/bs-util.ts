@@ -511,7 +511,7 @@ export function setCss (ele: HTMLElement, attrs?: string|{[key: string]: any}, v
  * @returns {Array}
  */
 export function siblings (elm: Element): Element[] {
-  var a = [];
+  var a: Element[] = [];
   var p = elm.parentNode?.children || [];
   for (var i = 0, pl = p.length; i < pl; i++) {
     if (p[i] !== elm) a.push(p[i]);

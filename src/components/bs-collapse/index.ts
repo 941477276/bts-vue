@@ -8,4 +8,4 @@ BsCollapse.install = function (vueApp: any) {
   return vueApp;
 };
 
-export default BsCollapse as typeof BsCollapse  & Plugin;
+export default BsCollapse as typeof BsCollapse & Plugin;

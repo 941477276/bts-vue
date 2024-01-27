@@ -18,7 +18,7 @@ export default defineComponent({
   emits: ['click'],
   setup (props: any, ctx) {
     let badgeClass = computed<Array<string|unknown>>(() => {
-      let classArr = [];
+      let classArr: string[] = [];
       let bntType = props.type;
 
       if (bntType) {

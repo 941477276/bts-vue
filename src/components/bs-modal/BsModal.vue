@@ -128,7 +128,7 @@ export default defineComponent({
     let updateDialogLeftPosition = function () {
       let el = rootRef.value;
       if (!el) {
-        return
+        return;
       }
       let elWidth = el.offsetWidth;
       if (!elWidth) {
@@ -136,7 +136,7 @@ export default defineComponent({
       }
       let elLeft = (window.innerWidth - elWidth) / 2;
       el.style.left = elLeft + 'px';
-    }
+    };
 
     watch(() => props.visible, function (visible) {
       if (props.confirmLoading && !visible) { // 当前不允许关闭
