@@ -13,7 +13,7 @@
     :aria-valuenow="percentage"
     aria-valuemin="0"
     aria-valuemax="100">
-    <slot :percentage="percentageNumber">{{ text }}</slot>
+    <slot v-bind="{percentage: percentageNumber, backgroundColor}">{{ text }}</slot>
   </div>
 </template>
 
