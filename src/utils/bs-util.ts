@@ -48,11 +48,12 @@ export function isNoneValue (variable: any): boolean {
  * @returns {string|string|"undefined"|"object"|"boolean"|"number"|"string"|"function"|"symbol"|"bigint"}
  */
 export function getType (obj: any): string {
-  let class2type: any = {};
+  /* let class2type: any = {};
   if (obj == null) {
     return obj + '';
   }
-  return typeof obj === 'object' || typeof obj === 'function' ? class2type[toString.call(obj)] || 'object' : typeof obj;
+  return typeof obj === 'object' || typeof obj === 'function' ? class2type[toString.call(obj)] || 'object' : typeof obj; */
+  return Object.prototype.toString.call(obj).substring(8).replace(']', '').toLowerCase();
 }
 
 /**
