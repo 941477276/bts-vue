@@ -26,38 +26,86 @@ import {
   defineComponent,
   h
 } from 'vue';
-import { bsProgressProps, BsMultipleProgressDefine } from './bs-progress-types';
+import { bsProgressProps, bsProgressCircleProps, BsMultipleProgressDefine, BsProgressStatus } from './bs-progress-types';
+import { getPercentageNumber, getFormatText } from './useProgress';
 import BsProgressBar from './widgets/BsProgressBar.vue';
+import BsProgressCircle from './widgets/BsProgressCircle.vue';
+import { BsiInfo } from 'vue3-bootstrap-icon/es/icons/BsiInfo';
+import { BsiCheck } from 'vue3-bootstrap-icon/es/icons/BsiCheck';
+import { BsiExclamation } from 'vue3-bootstrap-icon/es/icons/BsiExclamation';
+import { BsiX } from 'vue3-bootstrap-icon/es/icons/BsiX';
 
 export default defineComponent({
   name: 'BsProgress',
   components: {
-    BsProgressBar
+    BsProgressBar,
+    BsProgressCircle,
+    BsiInfo,
+    BsiCheck,
+    BsiExclamation,
+    BsiX
   },
-  props: bsProgressProps,
+  props: {
+    ...bsProgressProps,
+    ...bsProgressCircleProps
+  },
   setup (props: any, ctx: any) {
+    let statusIconMap: Record<BsProgressStatus, any> = {
+      success: BsiCheck,
+      warning: BsiExclamation,
+      info: BsiInfo,
+      danger: BsiX
+    };
+    const renderStatus = function (status: BsProgressStatus) {
+      let Com = statusIconMap[(status + '').toLowerCase() as BsProgressStatus];
+      return Com ? h(Com) : null;
+    };
     return function () {
       let children;
       let slotDefault = ctx.slots.default;
+      let {
+        showText,
+        percentage,
+        textFormat,
+        type,
+        status
+      } = props;
+      let percentageNum = getPercentageNumber(props.percentage);
 
-      if (!props.multiple) {
-        children = h(BsProgressBar, props, slotDefault);
-      } else {
-        children = props.progresses.map((progress: BsMultipleProgressDefine, index: number) => {
-          return h(BsProgressBar, {
-            ...progress,
-            key: `multiple_progress_item-${index}`
-          }, slotDefault);
-        });
-      }
       let classnames = ['bs-progress progress'];
-      if (!props.multiple) {
-        if (!props.color) {
-          classnames.push(`bs-progress-${props.colorType}`);
+      if (type == 'line') {
+        if (!props.multiple) {
+          children = h(BsProgressBar, props, slotDefault);
+        } else {
+          children = props.progresses.map((progress: BsMultipleProgressDefine, index: number) => {
+            return h(BsProgressBar, {
+              ...progress,
+              key: `multiple_progress_item-${index}`
+            }, slotDefault);
+          });
         }
-      } else {
-        classnames.push('bs-progress-multiple');
+        if (!props.multiple) {
+          if (!props.color) {
+            classnames.push(`bs-progress-${props.colorType}`);
+          }
+        } else {
+          classnames.push('bs-progress-multiple');
+        }
+      } else { // 环形进度条
+        children = [
+          h(BsProgressCircle, props),
+          h('div', {
+            'class': 'bs-progress-text'
+          }, slotDefault ? slotDefault(percentageNum) : !status ? getFormatText(showText, percentage, textFormat) : renderStatus(status))
+        ];
+        classnames.pop();
+        classnames.push('bs-progress-circle');
+        if (!!status && !slotDefault) {
+          classnames.push('bs-progress-show-status');
+          classnames.push('bs-progress-status-' + status);
+        }
       }
+
       if (props.color) {
         classnames.push('bs-progress-custom-color');
       }

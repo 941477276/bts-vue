@@ -1,2 +1,59 @@
 @import "../../../styles/bootstrap-variables";
 @import "bootstrap/scss/progress";
+
+.bs-progress-circle-track{
+  stroke: #e5e5e5;
+}
+.bs-progress-circle-path:not(.bs-progress-circle-path-custom-stroke){
+  stroke: var(--primary);
+}
+.bs-progress-circle{
+  position: relative;
+  display: inline-block;
+  width: 8rem;
+  height: 8rem;
+  & + .bs-progress-circle{
+    margin-left: 1rem;
+  }
+  .bs-progress-text{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    //line-height: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+.bs-progress-show-status{
+  .bs-progress-text{
+    font-size: 2rem;
+    line-height: 0;
+  }
+}
+
+.bs-progress-status-success{
+  color: var(--success);
+  .bs-progress-circle-path{
+    stroke: var(--success);
+  }
+}
+.bs-progress-status-info{
+  color: var(--info);
+  .bs-progress-circle-path{
+    stroke: var(--info);
+  }
+}
+.bs-progress-status-warning{
+  color: var(--warning);
+  .bs-progress-circle-path{
+    stroke: var(--warning);
+  }
+}
+.bs-progress-status-danger{
+  color: var(--danger);
+  .bs-progress-circle-path{
+    stroke: var(--danger);
+  }
+}

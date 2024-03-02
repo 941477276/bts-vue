@@ -23,6 +23,7 @@ import {
   computed
 } from 'vue';
 import { bsProgressProps } from '../bs-progress-types';
+import { useProgress } from '../useProgress';
 
 export default defineComponent({
   name: 'BsProgressBar',
@@ -30,7 +31,7 @@ export default defineComponent({
   },
   props: bsProgressProps,
   setup (props: any, ctx: any) {
-    let percentageNumber = computed(function () {
+    /* let percentageNumber = computed(function () {
       let percentage = props.percentage;
       if (typeof percentage === 'string' && /%$/.test(percentage)) {
         percentage = percentage.split('%')[0];
@@ -53,7 +54,11 @@ export default defineComponent({
         return props.textFormat(percentageNumber.value);
       }
       return percentageNumber.value + '%';
-    });
+    }); */
+    let {
+      percentageNumber,
+      text
+    } = useProgress(props);
 
     // 背景色
     let backgroundColor = computed(function () {
@@ -72,7 +77,7 @@ export default defineComponent({
       }
       if (Array.isArray(color)) {
         // 根据当前进度显示不同的颜色
-        let colorItem = color.find(item => percentageVal < (item.percentage || 0));
+        let colorItem = color.sort((item1, item2) => item1.percentage - item2.percentage).find(item => percentageVal <= (item.percentage || 0));
         if (!colorItem) {
           return '';
         }
