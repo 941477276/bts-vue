@@ -17,7 +17,7 @@ export function getPropValueByPath (obj: { [key: string]: any }, path: string): 
   let tempObj = obj;
   let value;
   let key = '';
-  while (pathArr.length > 1) {
+  while (pathArr.length > 1 && tempObj) {
     // @ts-ignore
     key = pathArr.shift();
     tempObj = tempObj[key];
