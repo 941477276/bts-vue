@@ -1,7 +1,10 @@
 <template>
 <div class="demo-box">
   <div class="demo-box-header">
-    <h6 class="demo-title">{{ title[langCode] }}</h6>
+    <h6 class="demo-title">
+      {{ title[langCode] }}
+      <bs-tag type="primary" size="mini" v-if="!!startVersion" title="start version">{{ startVersion }}</bs-tag>
+    </h6>
     <div class="demo-operate-area">
       <!--在Playground中打开-->
       <bs-tooltip :content="$t('openOnPlayground')" placement="top" transition-name="scale">
@@ -87,6 +90,10 @@ export default defineComponent({
       }
     },
     exampleCode: { // 示例代码
+      type: String,
+      default: ''
+    },
+    startVersion: { // 功能/特性初始版本
       type: String,
       default: ''
     }

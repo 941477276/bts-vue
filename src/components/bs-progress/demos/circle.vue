@@ -2,6 +2,7 @@
 
 ---
 order: 0
+startVersion: 0.1.6
 title:
   zh-CN: 环形进度条
   en-US: Basic usage

@@ -43,6 +43,7 @@ export function exampleTransform () {
         // 将 ` 符号转成 【 号，matter遇到` 符号在会报错
         let matterResult = matter(docsContent.replace(/`/g, '【【'));
         let titles = matterResult.data.title || {};
+        let startVersion = (matterResult.data.startVersion || '').trim();
         let descriptions = matterResult.data.description || {};
         let descCN = descriptions['zh-CN'] ? mt.render(descriptions['zh-CN'].replace(reg, '`')) : '';
         let descEN = descriptions['en-US'] ? mt.render(descriptions['en-US'].replace(reg, '`')) : '';
@@ -79,7 +80,8 @@ ${style}`.trim();
               id="${domId}"
               :title="{cn: '${titles['zh-CN']}', en: '${titles['en-US']}' }"
               :description="{cn: '${encodeURIComponent(descCN)}', en: '${encodeURIComponent(descEN)}' }"
-              example-code="${exampleCode}">
+              example-code="${exampleCode}"
+              start-version="${startVersion}">
               ${templateCode}
             </demo-box>
           </template>
