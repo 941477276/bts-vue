@@ -19,6 +19,9 @@
   }*/
   .form-control{
     padding-right: 2rem;
+    &.date-is-disabled{
+      text-decoration: line-through;
+    }
   }
   &.bs-datetime-editor-lg{
     .form-control{
