@@ -322,7 +322,3 @@ Therefore, it is very suitable for beginners and intermediate developers to lear
 
 If you are interested in `bts-vue`, or if you find any problems during use or learning the source code, you can join the `QQ` group for consultation:
 ![bts-vue qq群1](./imgs/qq1.jpeg)
-
-
-If you think `bts-vue` is helpful to your growth and learning, you can also sponsor me. Please note **bts-vue + your git nickname** when sponsoring:
-![alipay](./imgs/alipay.jpeg)

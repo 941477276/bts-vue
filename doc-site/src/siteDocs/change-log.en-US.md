@@ -22,3 +22,9 @@ Update date: `2023-11-15`
 + 🌟 `tooltip` floating window content is inserted into the specified container (no longer directly inserted into the body)
 + 🌟 `BsModal` adds free mode pop-up window
 + 🌟 `BsDropdownTransition` drop-down transition component adds right-click menu function
+
+Update date: `2024-03-24`
++ 🐞 Fix some ts type errors and known issues
++ 🐞 Fixed the problem that the collapsed elements of the `BsCollapseTransition` component are not displayed when the parent element is hidden and expanded by default.
++ 🌟 `BsProgress` component adds a ring progress bar
++ 🌟 Added `BsDateRangePicker` date range selection component

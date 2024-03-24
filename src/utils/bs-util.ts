@@ -4,8 +4,7 @@
  * @param path 路径
  * @returns {*}
  */
-
-export function getPropValueByPath (obj: { [key: string]: any }, path: string): { value?: any; lastKey?: string; parentObj?: any } {
+export function getPropValueByPath (obj: Record<string, any>, path: string): { value?: any; lastKey?: string; parentObj?: any } {
   if (!obj || !path || (path + '').length === 0) {
     return {};
   }
@@ -17,7 +16,7 @@ export function getPropValueByPath (obj: { [key: string]: any }, path: string): 
   let tempObj = obj;
   let value;
   let key = '';
-  while (pathArr.length > 1 && tempObj) {
+  while (pathArr.length > 1) {
     // @ts-ignore
     key = pathArr.shift();
     tempObj = tempObj[key];

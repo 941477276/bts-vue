@@ -5,7 +5,7 @@ order: 0
 title:
   zh-CN: 禁用
   en-US: Disabled
-description: 
+description:
   zh-CN: 设置`disabled`属性可以禁用日期选择器，设置`disabled-date`属性可以禁用部分日期
   en-US: Set the `disabled` attribute to disable the date picker, and set the `disabled-date` attribute to disable some dates
 ---

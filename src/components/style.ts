@@ -35,6 +35,7 @@ import './bs-input-tags/style';
 // import './bs-select-input/style';
 import './bs-time-picker/style';
 import './bs-date-picker/style';
+import './bs-date-range-picker/style';
 import './bs-backtop/style';
 import './bs-loading/style';
 import './bs-cascader/style';

@@ -105,6 +105,9 @@ export { default as BsTimePicker } from './bs-time-picker';
 export type { BsDatePickerProps } from './bs-date-picker/bs-date-picker-types';
 export { default as BsDatePicker } from './bs-date-picker';
 
+export type { BsDateRangePickerProps } from './bs-date-range-picker/bs-date-range-picker-types';
+export { default as BsDateRangePicker } from './bs-date-range-picker';
+
 export type { BsBacktopProps } from './bs-backtop/bs-backtop-types';
 export { default as BsBackTop } from './bs-backtop';
 

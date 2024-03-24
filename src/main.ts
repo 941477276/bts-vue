@@ -24,6 +24,6 @@ dayjs.locale('zh-cn');
 // app.use(store);
 // app.use(router);
 app.use(BtsVue);
-app.use(Antd);
+// app.use(Antd);
 
 app.mount('#app');

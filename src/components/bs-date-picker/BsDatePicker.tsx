@@ -41,6 +41,14 @@ let pickerCounts: any = {
   year: 0,
   dateTime: 0
 };
+let defaultFormatMap: any = {
+  date: 'YYYY-MM-DD',
+  dateTime: 'YYYY-MM-DD',
+  week: 'YYYY-wo',
+  month: 'YYYY-MM',
+  quarter: 'YYYY-[Q]Q',
+  year: 'YYYY'
+};
 // js编写日历思路：https://www.cnblogs.com/zaijin-yang/p/12009727.html
 export default defineComponent({
   name: 'BsDatePicker',
@@ -67,21 +75,19 @@ export default defineComponent({
 
     // 格式模板
     let formatInner = computed(function () {
-      let format = props.format;
+      let {
+        format,
+        pickerType,
+        timePanelProps
+      } = props;
       if (format) {
         return format;
       }
-      let pickerType = props.pickerType;
-      let formatMap: any = {
-        date: 'YYYY-MM-DD',
-        dateTime: 'YYYY-MM-DD',
-        week: 'YYYY-wo',
-        month: 'YYYY-MM',
-        quarter: 'YYYY-[Q]Q',
-        year: 'YYYY'
-      };
-      formatMap.dateTime += props.timePanelProps.use12Hours ? ' hh:mm:ss' : ' HH:mm:ss';
-      let formatValue = formatMap[pickerType];
+
+      let formatValue = defaultFormatMap[pickerType];
+      if (pickerType == 'dateTime') {
+        formatValue += timePanelProps?.use12Hours ? ' hh:mm:ss' : ' HH:mm:ss';
+      }
       return formatValue;
     });
 
@@ -101,9 +107,12 @@ export default defineComponent({
     let viewDate = ref<Dayjs|null>();
     // 显示的文本
     let viewDateText = ref('');
+    // 判断显示的日期是否禁用或在禁用范围内
+    let viewDatesIsDisabled = ref<boolean>(false);
     let setViewDateTxt = function (modelValue: Dayjs|string) {
       if (!modelValue) {
         viewDateText.value = '';
+        viewDatesIsDisabled.value = false;
         return;
       }
       if (typeof modelValue === 'string') {
@@ -123,10 +132,11 @@ export default defineComponent({
       }
       if (!dayjsIns) {
         viewDateText.value = '';
+        viewDatesIsDisabled.value = false;
         return;
       }
       let viewText = '';
-      if (pickerType == 'dateTime') {
+      if (pickerType == 'dateTime' && !props.format) {
         let { timePanelProps, datePanelProps } = props;
         let timePanelFormat = timePanelProps.format;
         let datePanelFormat = datePanelProps.format;
@@ -142,6 +152,10 @@ export default defineComponent({
         viewText = dayjsIns.format(format);
       }
       viewDateText.value = viewText;
+      let disabledDate = props.disabledDate;
+      if (isFunction(disabledDate)) {
+        viewDatesIsDisabled.value = dayjsIns ? !!disabledDate(dayjsIns) : false;
+      }
     };
     watch(() => props.modelValue, function (modelValue: Dayjs|string) {
       if (!modelValue) {
@@ -166,7 +180,7 @@ export default defineComponent({
             if (timePanelValueFormat && datePanelValueFormat) {
               tempFormat = datePanelValueFormat + props.valueFormatSpliter + timePanelValueFormat;
             }
-            let dateTemp = dayjsUtil.parseToDayjs(modelValue, tempFormat || format);
+            let dateTemp = dayjsUtil.parseToDayjs(modelValue, tempFormat || format)!;
             let hour = dateTemp.hour();
             let periods = '';
             if (upperCaseValue.endsWith('PM')) {
@@ -217,7 +231,7 @@ export default defineComponent({
           pickerText = '日期';
           break;
         case 'dateTime':
-          pickerText = '时间';
+          pickerText = '日期时间';
           break;
         case 'week':
           pickerText = '周';
@@ -297,7 +311,7 @@ export default defineComponent({
       }
       let valueFormat = props.valueFormat;
       let value;
-      if (props.pickerType == 'dateTime') {
+      if (props.pickerType == 'dateTime' && !valueFormat) {
         let period = '';
         let timePanelProps = props.timePanelProps;
         let datePanelProps = props.datePanelProps;
@@ -422,6 +436,23 @@ export default defineComponent({
       hide(300);
     };
 
+    // 判断时间是否被禁用
+    let checkTimeAvailable = function (dayjsIns: Dayjs, use12Hours: boolean) {
+      let hour = dayjsIns.hour();
+      let minute = dayjsIns.minute();
+      let second = dayjsIns.second();
+      let { disabledHours, disabledMinutes, disabledSeconds } = props.timePanelProps;
+      // 如果时分秒被禁用，则用来的时分秒
+      let hourDisabled = isFunction(disabledHours) && !!disabledHours(hour, use12Hours);
+      let minuteDisabled = isFunction(disabledMinutes) && !!disabledMinutes(hour, minute, use12Hours);
+      let secondDisabled = isFunction(disabledSeconds) && !!disabledSeconds(hour, minute, second, use12Hours);
+      return {
+        hourDisabled,
+        minuteDisabled,
+        secondDisabled
+      };
+    };
+
     // 开启输入与操作同步功能
     let isInputTextValid = true;
     // 输入框输入事件
@@ -433,6 +464,7 @@ export default defineComponent({
       let format = formatInner.value;
       let pickerType = props.pickerType;
       let disabledDate = props.disabledDate;
+      let use12Hours = props.timePanelProps.use12Hours;
       isInputTextValid = false;
       if (pickerType == 'quarter' || pickerType == 'week') {
         let dayjsIns = pickerType == 'quarter' ? dayjsUtil.parseQuarter(value, format) : dayjsUtil.parseWeek(value, format, 'zh-cn');
@@ -458,7 +490,7 @@ export default defineComponent({
       let dayjsIns;
       let periods = '';
 
-      if (pickerType == 'dateTime' && typeof value == 'string') {
+      if (pickerType == 'dateTime' && typeof value == 'string' && use12Hours) {
         let upperCaseValue = value.toUpperCase();
         if (upperCaseValue.endsWith('AM')) {
           value = value.replace(/AM/i, '').trim();
@@ -481,11 +513,17 @@ export default defineComponent({
         if (isFunction(disabledDate) && disabledDate(dayjsIns)) {
           return;
         }
-        let hour = dayjsIns.hour();
-        if (periods == 'AM' && hour > 12) {
-          dayjsIns = dayjsIns.hour(hour - 12);
-        } else if (periods == 'PM' && hour < 12) {
-          dayjsIns = dayjsIns.hour(hour + 12);
+        if (pickerType == 'dateTime') {
+          let hour = dayjsIns.hour();
+          if (periods == 'AM' && hour > 12) {
+            dayjsIns = dayjsIns.hour(hour - 12);
+          } else if (periods == 'PM' && hour < 12) {
+            dayjsIns = dayjsIns.hour(hour + 12);
+          }
+          let timeAvailable = checkTimeAvailable(dayjsIns, use12Hours);
+          if (timeAvailable.hourDisabled || timeAvailable.minuteDisabled || timeAvailable.secondDisabled) {
+            return;
+          }
         }
         setDate(dayjsIns);
         isInputTextValid = true;
@@ -529,6 +567,7 @@ export default defineComponent({
       todayIsDisabled,
       footerVisible,
       currentMode,
+      viewDatesIsDisabled,
 
       clear,
       hide,
@@ -596,13 +635,22 @@ export default defineComponent({
     };
 
     // 面板公共属性
-    let panelcommonProps = {
+    let panelcommonProps: Record<string, any> = {
       'model-value': this.date,
-      'date-render': this.dateRender,
-      'disabled-date': this.disabledDate,
+      // 'date-render': this.dateRender,
+      // 'disabled-date': this.disabledDate,
       'show-header': this.showHeader,
       'onUpdate:modelValue': this.onDatePanelModelValueChange
     };
+
+    console.log('currentMode == pickerType', currentMode, pickerType);
+    // 只有当前的面板类型与选择器类型一致时才需要添加这些属性，否则在用户切换面板后以下这些函数执行时可能会报错
+    if (!currentMode || currentMode == pickerType) {
+      panelcommonProps.dateRender = this.dateRender;
+      panelcommonProps.disabledDate = this.disabledDate;
+      panelcommonProps.getCellClassname = this.getCellClassname;
+      panelcommonProps.getRowClassname = this.getRowClassname;
+    }
 
     // 年份按钮点击事件
     let onYearButtonClick = () => {
@@ -715,20 +763,23 @@ export default defineComponent({
       </div>);
     };
 
+    let dropdownClass = `bs-${this.pickerType}-picker-dropdown`;
+    let pickerTypeClass = `bs-${this.pickerType}-editor`;
     return (<BsCommonPicker
-      class="bs-date-editor"
       ref="bsCommonPicker"
       suffix-icon="calendar"
       size={ this.size }
       show-footer={ this.showFooter }
       input-model-value={ this.viewDateText }
+      input-value-disabled={ this.viewDatesIsDisabled }
       delive-context-to-form-item={ this.deliveContextToFormItem }
       disabled={ this.disabled }
       id={ this.pickerId }
       name={ this.name }
+      class={ pickerTypeClass }
       placeholder={ this.inputPlaceholder }
-      input-readonly={ this.inputReadOnly }
-      dropdown-class={ this.dropdownClass }
+      input-readonly={ this.inputReadonly }
+      dropdown-class={ [this.dropdownClass, dropdownClass] }
       native-attrs={ this.nativeAttrs }
       {
         ...{

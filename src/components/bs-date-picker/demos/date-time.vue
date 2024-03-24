@@ -5,7 +5,7 @@ order: 0
 title:
   zh-CN: 日期时间选择
   en-US: Date time selection
-description: 
+description:
   zh-CN: 设置`picker-type=dateTime`属性可选择日期及时间
   en-US: Set `picker-type=dateTime` attribute to select date and time
 ---
@@ -13,7 +13,11 @@ description:
 
 <template>
   <div>
-    <BsDatePicker v-model="dateTime" picker-type="dateTime" placeholder="请选择日期时间"></BsDatePicker>
+    <BsDatePicker
+      v-model="dateTime"
+      picker-type="dateTime"
+      :time-panel-props="{ disabledMinutes }"
+      placeholder="请选择日期时间"></BsDatePicker>
 
     <h6>12-hour(12小时制)</h6>
     <BsDatePicker
@@ -29,4 +33,8 @@ import { ref } from 'vue';
 
 let dateTime = ref(new Date());
 let dateTime2 = ref('2022-08-20 19:37:50');
+
+let disabledMinutes = function (hour, minute) {
+  return minute > 10 && minute < 20;
+};
 </script>

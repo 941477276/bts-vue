@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs, ConfigType, OpUnitType } from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import weekday from 'dayjs/plugin/weekday';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
@@ -7,6 +7,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import isToday from 'dayjs/plugin/isToday';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
+import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(weekday);
 // 设置国际化
@@ -22,6 +23,8 @@ dayjs.extend(isToday);
 dayjs.extend(customParseFormat);
 // 季度插件
 dayjs.extend(quarterOfYear);
+// 比较插件
+dayjs.extend(isBetween);
 
 const localeMap: Record<string, string> = {
   // ar_EG:
@@ -133,6 +136,73 @@ export function getMonthDays (year: number, month: number): number {
   return monthDays[month];
 };
 
+export const yearDecadeCount = 10;
+export const decadeDistanceCount = yearDecadeCount * 10;
+
+/**
+ * 获取当前年份所处的十年区间
+ * @param currentYear {number|Dayjs|Date} 当前年份
+ */
+export function getDecade (currentYear: number|Dayjs|Date) {
+  let fullYear: number;
+  if (currentYear instanceof Date) {
+    fullYear = currentYear.getFullYear();
+  } else if (typeof currentYear == 'number') {
+    fullYear = currentYear;
+  } else {
+    fullYear = currentYear.year();
+  }
+  let startYear = Math.floor(fullYear / yearDecadeCount) * yearDecadeCount;
+  let endYear = startYear + yearDecadeCount - 1;
+
+  return {
+    currentYear: fullYear,
+    startYear,
+    endYear
+  };
+}
+
+/**
+ * 获取下一个十年区间信息
+ * @param currentYear
+ */
+export function getNextDecade (currentYear: number|Dayjs|Date) {
+  let decadeInfo = getDecade(currentYear);
+  decadeInfo.startYear += yearDecadeCount;
+  decadeInfo.endYear += yearDecadeCount;
+  return decadeInfo;
+}
+
+/**
+ * 获取上一个十年区间信息
+ * @param currentYear
+ */
+export function getPrevDecade (currentYear: number|Dayjs|Date) {
+  let decadeInfo = getDecade(currentYear);
+  decadeInfo.startYear -= yearDecadeCount;
+  decadeInfo.endYear -= yearDecadeCount;
+  return decadeInfo;
+}
+
+/**
+ * 格式化日期
+ * @param dateValue 日期
+ * @param formatter 格式
+ */
+export function formatDate (dateValue: string|number|Dayjs|Date, formatter: string) {
+  let valueType = typeof dateValue;
+  if (!dateValue) {
+    return dateValue;
+  }
+  if (valueType == 'string') {
+    return dateValue;
+  }
+  if (dateValue instanceof Date || valueType == 'number') {
+    dateValue = dayjs(dateValue);
+  }
+  return (dateValue as Dayjs).format(formatter);
+}
+
 export const dayjsUtil = {
   addYear: (dayIns: Dayjs, diff: number) => dayIns.add(diff, 'year'),
   addMonth: (dayIns: Dayjs, diff: number) => dayIns.add(diff, 'month'),
@@ -144,12 +214,37 @@ export const dayjsUtil = {
   getYear: (dayIns: Dayjs) => dayIns.year(),
   getMonth: (dayIns: Dayjs) => dayIns.month(),
   getDate: (dayIns: Dayjs) => dayIns.date(),
-  parseToDayjs: (value: Dayjs|string, format: string) => {
-    if (typeof value === 'string') {
+  parseToDayjs: (value: Dayjs|string|null, format: string) => {
+    if (!value) {
+      return null;
+    }
+    let valueType = typeof value;
+    // 如果格式类型为年份，并且值为数字类型，那么需将其转为字符串类型，否则格式化不正确
+    if (valueType == 'number' && format == 'YYYY') {
+      value = value + '';
+    }
+    if (valueType === 'string') {
+      console.log('parseToDayjs', value, format);
       return dayjs(value, format);
     } else {
       return dayjs(value);
     }
+  },
+  /**
+   * 判断指定日期是否在开始和结束日期之间
+   * @param dayIns 待比较的日期
+   * @param startDate 开始日期
+   * @param endDate 结束日期
+   * @param unitType 精度单位
+   * @param inclusivity 包含性
+   * // 第5个参数是两个字符 '[' 表示包含, '(' 表示不包含
+   * // '()' 不包含开始和结束的日期 (默认)
+   * // '[]' 包含开始和结束的日期
+   * // '[)' 包含开始日期但不包含结束日期
+   * // 例如，当想包含开始的日期作为比较依据，你应该使用“day”作为第三个参数。
+   */
+  isBetween: (dayIns: Dayjs, startDate: ConfigType, endDate: ConfigType, unitType?: OpUnitType, inclusivity?: '()' | '[]' | '[)' | '(]') => {
+    return dayIns.isBetween(startDate, endDate, unitType, inclusivity);
   },
   /**
    *  强校的验日期/时间
@@ -165,7 +260,10 @@ export const dayjsUtil = {
    * @param quarterValue 季度值
    * @param format 格式化模板
    */
-  parseQuarter (quarterValue: Dayjs|string, format: string) {
+  parseQuarter (quarterValue: Dayjs|string|null, format: string) {
+    if (!quarterValue) {
+      return null;
+    }
     if (typeof quarterValue == 'object') {
       return quarterValue;
     }
@@ -194,7 +292,10 @@ export const dayjsUtil = {
    * @param weekValue 周字符串
    * @param format 格式化模板
    */
-  parseWeek (weekValue: Dayjs|string, format: string, lang: string) {
+  parseWeek (weekValue: Dayjs|string|null, format: string, lang: string) {
+    if (!weekValue) {
+      return null;
+    }
     if (typeof weekValue == 'object') {
       return weekValue;
     }
@@ -256,7 +357,10 @@ export const dayjsUtil = {
      * @param lang 语言
      * @param format 格式模板
      */
-    format (dayjsIns: Dayjs, lang:string, format: string) {
+    format (dayjsIns: Dayjs|null, lang:string, format: string) {
+      if (!dayjsIns) {
+        return '';
+      }
       dayjsIns = isDate(dayjsIns) ? dayjs(dayjsIns) : dayjsIns;
       return dayjsIns.locale(getLocale(lang)).format(format);
     },

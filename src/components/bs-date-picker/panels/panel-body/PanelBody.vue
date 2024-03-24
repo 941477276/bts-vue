@@ -15,7 +15,7 @@
           class="bs-picker-row"
           v-for="(cells, rowIndex) in bodyCells"
           :key="rowIndex"
-          :class="getRowClassname(cells, rowIndex)">
+          :class="getRowClassname(cells, rowIndex, externalData)">
           <template v-for="(cellItem, cellIndex) in cells" :key="cellIndex">
             <PrefixColumn
               v-if="hasPrefixColumn && cellIndex == 0"
@@ -26,8 +26,8 @@
               :data-row-index="rowIndex"
               :data-cell-index="cellIndex"
               :class="[
-              ...getCellClassname(cellItem, cellIndex)
-            ]">
+                ...getCellClassname(cellItem, cellIndex, rowIndex, externalData)
+              ]">
               <!--<div class="bs-picker-cell-inner">{{ getCellText(cellItem, cellIndex) }}</div>-->
               <PickerCellInner
                 :get-cell-node="getCellNode"
@@ -98,6 +98,12 @@ export default defineComponent({
       type: Array,
       default () {
         return [];
+      }
+    },
+    externalData: { // 扩展数据
+      type: Object,
+      default () {
+        return {};
       }
     },
     getRowClassname: { // 自定义表格行classname

@@ -139,7 +139,7 @@
       }
     }
   }
-  &:hover:not(.is-selected):not(.is-disabled):not(.cell-in-range):not(.cell-range-hover){
+  &:hover:not(.is-selected):not(.is-disabled):not(.bs-picker-cell-in-range):not(.bs-picker-cell-range-start):not(.bs-picker-cell-range-end):not(.bs-picker-cell-range-hover){
     .bs-picker-cell-inner{
       background-color: #f0f0f0;
     }
@@ -197,7 +197,7 @@
 
 .bs-picker-month-panel{
   .bs-picker-table {
-    height: 14rem;
+    height: 13.2rem;
   }
 }
 
@@ -209,7 +209,7 @@
 
 .bs-picker-year-panel{
   .bs-picker-table{
-    height: 14rem;
+    height: 13.13rem;
   }
 }
 
@@ -219,7 +219,7 @@
     padding-right: 0.5rem;
   }
   .bs-picker-table {
-    height: 14rem;
+    height: 13.2rem;
   }
 }
 

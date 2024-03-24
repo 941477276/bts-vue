@@ -33,6 +33,7 @@ import {
 import dayjs, { Dayjs } from 'dayjs';
 import { dayjsUtil } from '../../../../utils/dayjsUtil';
 import BsDatePanel from '../bs-date-panel/BsDatePanel.vue';
+import { panelsCommonProps } from '../panels-common-props';
 
 let defaultFormat = 'YYYY-wo';
 export default defineComponent({
@@ -41,7 +42,8 @@ export default defineComponent({
     BsDatePanel
   },
   props: {
-    modelValue: {
+    ...panelsCommonProps,
+    /* modelValue: {
       type: Object as PropType<Dayjs>,
       default: null
     },
@@ -56,17 +58,17 @@ export default defineComponent({
     showHeader: { // 是否显头部
       type: Boolean,
       default: true
-    },
+    }, */
     hasPrefixColumn: { // 是否有前置列
       type: Boolean,
       default: false
     },
-    onYearClick: { // 年份按钮点击事件
+    /* onYearClick: { // 年份按钮点击事件
       type: Function,
       default () {
         return NOOP;
       }
-    },
+    }, */
     onMonthClick: { // 月份按钮点击事件
       type: Function,
       default () {
@@ -107,6 +109,14 @@ export default defineComponent({
       },
       setPanelViewDate (date: Dayjs) {
         (datePanelRef.value as any)?.setPanelViewDate(date);
+      },
+      /**
+       * 获取单元格单数据
+       * @param rowIndex 行索引
+       * @param cellIndex 单元格索引
+       */
+      getCellData (rowIndex: number, cellIndex: number) {
+        return (datePanelRef.value as any)?.getCellData(rowIndex, cellIndex);
       }
     };
   }

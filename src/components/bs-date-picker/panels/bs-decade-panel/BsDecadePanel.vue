@@ -26,12 +26,9 @@ import {
 // import PanelHeader from '../panel-header/PanelHeader.vue';
 import PanelBody from '../panel-body/PanelBody.vue';
 import dayjs, { Dayjs } from 'dayjs';
-import { dayjsUtil, getMonthDays } from '../../../../utils/dayjsUtil';
+import { dayjsUtil, getMonthDays, yearDecadeCount, decadeDistanceCount } from '../../../../utils/dayjsUtil';
 import { usePanelViewDate } from '../../hooks/usePanelViewDate';
 
-let yearDecadeCount = 10;
-let panelDecadeCount = 12;
-let decadeDistanceCount = yearDecadeCount * 10;
 export default defineComponent({
   name: 'BsDecadePanel',
   components: {
@@ -42,6 +39,10 @@ export default defineComponent({
     modelValue: {
       type: Object as PropType<Dayjs>,
       default: null
+    },
+    panelDecadeCount: { // 面板中显示的十年日期数量
+      type: Number,
+      default: 12
     },
     dateRender: { // 自定义日期单元格的内容
       type: Function,
@@ -62,7 +63,8 @@ export default defineComponent({
     // 用于面板展示的日期
     let {
       panelViewDate,
-      setPanelViewDate
+      setPanelViewDate,
+      getPanelViewDate
     } = usePanelViewDate(props, ctx);
 
     // 年份区间信息
@@ -84,6 +86,10 @@ export default defineComponent({
       let tempYearArr: Record<string, any>[] = [];
       let disabledDate = props.disabledDate;
       let lastDecadeEndDate: Dayjs|null = null;
+      let panelDecadeCount = parseInt(props.panelDecadeCount);
+      if (!panelDecadeCount || isNaN(panelDecadeCount) || panelDecadeCount < 0) {
+        panelDecadeCount = 12;
+      }
       while (tempYearArr.length < panelDecadeCount) {
         let startDecadeDate = !lastDecadeEndDate ? baseDecadeYearDate : dayjsUtil.addYear(lastDecadeEndDate, 1);
         let endDecadeDate = dayjsUtil.addYear(startDecadeDate, yearDecadeCount - 1);
@@ -165,6 +171,20 @@ export default defineComponent({
       onCellClick,
       setPanelViewDate (date: Dayjs) {
         setPanelViewDate(date, false);
+      },
+      getPanelViewDate,
+      /**
+       * 获取单元格单数据
+       * @param rowIndex 行索引
+       * @param cellIndex 单元格索引
+       */
+      getCellData (rowIndex: number, cellIndex: number) {
+        let tableDataRaw = tableBody.value;
+        if (rowIndex < 0 || cellIndex < 0) {
+          return;
+        }
+        let rowData = tableDataRaw[rowIndex];
+        return rowData?.[cellIndex];
       }
     };
   }

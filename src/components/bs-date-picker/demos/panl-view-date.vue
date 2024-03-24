@@ -5,7 +5,7 @@ order: 0
 title:
   zh-CN: 默认日期
   en-US: Default date
-description: 
+description:
   zh-CN: 设置`panelViewDate`属性可以设置选择器打开时默认显示的时间，该属性只有在`modelValue`为空时才有效，或者你以可以通过调用选择器的`setPanelViewDate`方法来设置选择器默认显示的时间
   en-US: Set the `panelViewDate` property to set the default display time when the picker is opened. This property is only valid when `modelValue` is empty, or you can set the default display time of the picker by calling the `setPanelViewDate` method of the picker
 ---
@@ -22,7 +22,7 @@ description:
       style="margin-right: 0.5rem;"
       ref="datePickerRef"
       v-model="date2"
-      @open="handleOpen"></BsDatePicker>
+      @show="handleOpen"></BsDatePicker>
   </div>
 </template>
 

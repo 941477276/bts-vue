@@ -116,6 +116,9 @@
       <BsDatePickerUsage></BsDatePickerUsage>
     </div>-->
     <!--<div class="box">
+      <BsDateRangePickerUsage></BsDateRangePickerUsage>
+    </div>-->
+    <!--<div class="box">
       <BsBackTopUsage></BsBackTopUsage>
     </div>-->
     <!--<div class="box">
@@ -183,6 +186,7 @@ import BsInputTagsUsage from '@/components/bs-input-tags/BsInputTagsUsage.vue';
 import BsSelectInputUsage from '@/components/bs-select-input/BsSelectInputUsage.vue';
 import BsTimePickerUsage from '@/components/bs-time-picker/BsTimePickerUsage.vue';
 import BsDatePickerUsage from '@/components/bs-date-picker/BsDatePickerUsage.vue';
+import BsDateRangePickerUsage from '@/components/bs-date-range-picker/BsDateRangePickerUsage.vue';
 import BsBackTopUsage from '@/components/bs-backtop/BsBackTopUsage.vue';
 import BsRelativeTimeUsage from '@/components/bs-relative-time/BsRelativeTimeUsage.vue';
 import BsLoadingUsage from '@/components/bs-loading/BsLoadingUsage.vue';
@@ -236,6 +240,7 @@ export default defineComponent({
     BsSelectInputUsage,
     BsTimePickerUsage,
     BsDatePickerUsage,
+    BsDateRangePickerUsage,
     BsBackTopUsage,
     BsRelativeTimeUsage,
     BsLoadingUsage,

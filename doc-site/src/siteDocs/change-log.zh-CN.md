@@ -22,3 +22,10 @@
 + 🌟 `tooltip`浮窗内容插入到指定容器中（不再直接插入到body）
 + 🌟 `BsModal`增加自由模式弹窗
 + 🌟 `BsDropdownTransition`下拉过渡组件增加右键菜单功能
+
+## 0.1.6
+更新日期：`2024-03-24`
++ 🐞 修复一些ts类型报错及已知问题
++ 🐞 修复`BsCollapseTransition`组件在父级元素为隐藏状态且默认为展开时，被折叠的元素不显示问题
++ 🌟 `BsProgress`组件增加圆环进度条
++ 🌟 增加`BsDateRangePicker`日期范围选择组件

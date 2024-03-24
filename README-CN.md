@@ -322,7 +322,3 @@ import 'bts-vue/es/components/bs-toast/style';
 
 如果你对`bts-vue`感兴趣，或使用过程中、或学习源码中发现有问题可以加入`QQ`群进行咨询：
 ![bts-vue qq群1](./imgs/qq1.jpeg)
-
-
-如果你觉得`bts-vue`对你的成长、学习有帮助，也可以对我进行赞助，赞助时请备注 **bts-vue + 你的git昵称**：
-![alipay](./imgs/alipay.jpeg)

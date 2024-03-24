@@ -45,7 +45,7 @@ export const bsDatePickerTypes = {
     type: Boolean,
     default: false
   },
-  inputReadOnly: { // 设置输入框为只读（避免在移动设备上打开虚拟键盘）
+  inputReadonly: { // 设置输入框为只读（避免在移动设备上打开虚拟键盘）
     type: Boolean,
     default: false
   },
@@ -128,6 +128,18 @@ export const bsDatePickerTypes = {
     type: Object,
     default () {
       return {};
+    }
+  },
+  getRowClassname: { // 自定义表格行classname
+    type: Function,
+    default () {
+      return [];
+    }
+  },
+  getCellClassname: { // 自定义表格单元格classname
+    type: Function,
+    default () {
+      return [];
     }
   }
 };

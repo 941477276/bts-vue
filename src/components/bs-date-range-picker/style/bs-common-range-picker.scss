@@ -1,0 +1,191 @@
+@import "../../../styles/bootstrap-variables";
+//@import "../../bs-common-picker/style/bs-common-picker";
+.bs-range-editor{
+  &.is-focus{
+    .bs-range-editor-input-wrap{
+      color: $input-focus-color;
+      background-color: $input-focus-bg;
+      border-color: $input-focus-border-color;
+      outline: 0;
+      @if $enable-shadows {
+        @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: $input-focus-box-shadow;
+      }
+    }
+  }
+}
+.bs-range-editor-input-wrap{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  line-height: inherit;
+  font-size: inherit;
+  padding: 0 $input-padding-x;
+  border: $input-border-width solid $input-border-color;
+  // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
+  @include border-radius($input-border-radius, 0);
+  @include box-shadow($input-box-shadow);
+  background-color: #fff;
+}
+.bs-range-editor{
+  display: inline-block;
+  .bs-range-editor-input{
+    flex: 1;
+    width: 100%;
+    max-width: 8rem; // 128px
+    height: add($input-line-height * 1em, add($input-padding-y * 2, 0, false));
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    font-family: $input-font-family;
+    @include font-size($input-font-size);
+    font-weight: $input-font-weight;
+    line-height: add($input-line-height * 1em, add($input-padding-y * 2, 0, false));
+    color: $input-color;
+    text-align: center;
+    background-color: transparent;
+    //background-color: $input-bg;
+    //background-clip: padding-box;
+    //border: $input-border-width solid $input-border-color;
+
+    // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
+    //@include border-radius($input-border-radius, 0);
+
+    //@include box-shadow($input-box-shadow);
+    @include transition($input-transition);
+
+    // Unstyle the caret on `<select>`s in IE10+.
+    &::-ms-expand {
+      background-color: transparent;
+      border: 0;
+    }
+    &::placeholder {
+      color: $input-placeholder-color;
+      // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+      opacity: 1;
+    }
+    &.date-is-disabled{
+      text-decoration: line-through;
+    }
+  }
+  &.bs-range-editor-lg{
+    .bs-range-editor-input-wrap{
+      padding: 0 $input-padding-x-lg;
+      @include border-radius($input-border-radius-lg);
+    }
+    .bs-picker-range-separator{
+      margin: 0 0.9rem 0 0.75rem;
+    }
+    .bs-range-editor-input{
+      max-width: 10rem; // 160px
+      // bootstrap的大的输入框高度为48px，且包含了边框；由于这个输入框不能包含输入框，因此它的高度需减去边框
+      height: add($input-line-height-lg * 1em, add($input-padding-y-lg * 2, 0, false));// $input-height-lg;
+      @include font-size($input-font-size-lg);
+      line-height: add($input-line-height-lg * 1em, add($input-padding-y-lg * 2, 0, false));
+    }
+    .bs-range-editor-input-suffix{
+      padding: 0 $input-font-size-lg 0 0.75rem;
+      margin-right: -$input-font-size-lg;
+      font-size: 1.25rem;
+    }
+  }
+  &.bs-range-editor-sm{
+    .bs-range-editor-input-wrap{
+      padding: 0 $input-padding-x-sm;
+      @include border-radius($input-border-radius-sm);
+    }
+    .bs-picker-range-separator{
+      margin: 0 0.4rem 0 0.25rem;
+    }
+    .bs-range-editor-input{
+      max-width: 7rem; // 112px
+      // bootstrap的大的输入框高度为48px，且包含了边框；由于这个输入框不能包含输入框，因此它的高度需减去边框
+      height: add($input-line-height-sm * 1em, add($input-padding-y-sm * 2, 0, false));
+      @include font-size($input-font-size-sm);
+      line-height: add($input-line-height-sm * 1em, add($input-padding-y-sm * 2, 0, false));
+    }
+    .bs-range-editor-input-suffix{
+      padding: 0 $input-font-size-sm 0 0.25rem;
+      margin-right: -$input-font-size-sm;
+      font-size: 0.875rem;
+    }
+  }
+  &.is-disabled,
+  &.is-readonly {
+    .bs-range-editor-input-wrap{
+      background-color: $input-disabled-bg;
+      // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+      opacity: 1;
+    }
+  }
+}
+.bs-datetime-range-editor{
+  .bs-range-editor-input {
+    max-width: 12rem;
+  }
+  &.bs-range-editor-lg{
+    .bs-range-editor-input {
+      max-width: 14rem;
+    }
+  }
+  &.bs-range-editor-sm{
+    .bs-range-editor-input {
+      max-width: 10rem;
+    }
+  }
+}
+.bs-picker-range-separator{
+  align-self: center;
+  margin: 0 0.65rem 0 0.5rem;
+  color: #6E757C;
+  .bs-icon{
+    vertical-align: middle;
+  }
+}
+.bs-range-editor-input-suffix{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //position: absolute;
+  //z-index: 5;
+  //right: 1px;
+  //top: 1px;
+  //bottom: 1px;
+  position: relative;
+  padding: 0 $input-padding-x 0 0.5rem;
+  margin-right: -$input-padding-x;
+  //min-width: 2rem;
+  font-size: 1rem;
+  color: #aaa;
+  //cursor: pointer;
+  /*&:hover{
+    color: #333;
+  }*/
+  .clear-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0.125rem;
+    transform: translate(-50%, -50%);
+    transition: opacity .2s;
+    opacity: 0;
+    cursor: pointer;
+    background-color: #fff;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+.bs-range-picker-dropdown{
+  .bs-picker-cancel{
+    margin-left: auto;
+  }
+  .bs-picker-ok{
+    margin-left: 0.85rem;
+  }
+}

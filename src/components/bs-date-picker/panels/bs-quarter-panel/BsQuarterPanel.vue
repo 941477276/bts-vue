@@ -37,6 +37,7 @@ import PanelBody from '../panel-body/PanelBody.vue';
 import dayjs, { Dayjs } from 'dayjs';
 import { dayjsUtil, getMonthDays } from '../../../../utils/dayjsUtil';
 import { usePanelViewDate } from '../../hooks/usePanelViewDate';
+import { panelsCommonProps } from '../panels-common-props';
 
 let defaultFormat = 'YYYY-[Q]Q';
 export default defineComponent({
@@ -46,7 +47,8 @@ export default defineComponent({
     PanelBody
   },
   props: {
-    modelValue: {
+    ...panelsCommonProps
+    /* modelValue: {
       type: Object as PropType<Dayjs>,
       default: null
     },
@@ -67,7 +69,7 @@ export default defineComponent({
       default () {
         return NOOP;
       }
-    }
+    } */
   },
   emits: ['update:modelValue', 'viewDateChange'],
   setup (props: any, ctx: any) {
@@ -88,7 +90,8 @@ export default defineComponent({
     }); */
     let {
       panelViewDate,
-      setPanelViewDate
+      setPanelViewDate,
+      getPanelViewDate
     } = usePanelViewDate(props, ctx);
 
     let yearName = computed(function () {
@@ -170,6 +173,20 @@ export default defineComponent({
       onCellClick,
       setPanelViewDate (date: Dayjs) {
         setPanelViewDate(date, false);
+      },
+      getPanelViewDate,
+      /**
+       * 获取单元格单数据
+       * @param rowIndex 行索引
+       * @param cellIndex 单元格索引
+       */
+      getCellData (rowIndex: number, cellIndex: number) {
+        let tableDataRaw = tableBody.value;
+        if (rowIndex < 0 || cellIndex < 0) {
+          return;
+        }
+        let rowData = tableDataRaw[rowIndex];
+        return rowData?.[cellIndex];
       }
     };
   }

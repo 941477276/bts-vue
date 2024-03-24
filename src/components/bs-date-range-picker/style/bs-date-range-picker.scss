@@ -1,0 +1,136 @@
+.bs-picker-date-range-panels{
+  /*.bs-picker-table{
+    tbody{
+      min-height: 11rem;
+    }
+  }*/
+}
+$in-range-bg: #dfeafd;
+.bs-picker-cell-range-start,
+.bs-picker-cell-range-end{
+  .bs-picker-cell-inner{
+    color: #fff;
+    background-color: var(--primary);
+  }
+  &.is-disabled{
+    .bs-picker-cell-inner{
+      background-color: #469bf7;
+    }
+  }
+}
+.bs-picker-cell-range-start{
+  &:not(.bs-picker-cell-range-start-single)::before{
+    left: 50%;
+    top: 0.125rem;
+    bottom: 0.125rem;
+    background-color: $in-range-bg;
+  }
+  .bs-picker-cell-inner{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+.bs-picker-cell-range-end{
+  &:not(.bs-picker-cell-range-end-single)::before{
+    right: 50%;
+    top: 0.125rem;
+    bottom: 0.125rem;
+    background-color: $in-range-bg;
+  }
+  .bs-picker-cell-inner{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+.bs-picker-cell-in-range{
+  &::before{
+    top: 0.125rem;
+    bottom: 0.125rem;
+    background-color: $in-range-bg;
+  }
+}
+.bs-picker-cell-range-hover{
+  &::before{
+    top: 0.125rem;
+    bottom: 0.125rem;
+    border-top: 1px dashed var(--primary);
+    border-bottom: 1px dashed var(--primary);
+  }
+}
+.bs-picker-cell-range-hover-end{
+  &::after{
+    position: absolute;
+    top: 0.125rem;
+    bottom: 0.125rem;
+    right: 0;
+    content: ' ';
+    border-left: 1px dashed var(--primary);
+  }
+  &.hover-end-is-before-hover-start{
+    &::after {
+      right: auto;
+      left: 0;
+    }
+  }
+}
+/*日期时间范围选择器 start*/
+.bs-picker-date-range-panels-wrap{
+  display: flex;
+}
+.bs-picker-date-range-time-header{
+  position: relative;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+.bs-picker-date-range-time-editor{
+  padding: 0 0.5rem;
+}
+.bs-picker-date-range-time-editor-input
+/*.bs-time-editor*/{
+  flex: 1;
+  width: 0;
+  max-width: none!important;
+  margin: 0 0.5rem;
+}
+.bs-picker-date-range-time-separator{
+  display: block;
+  width: 1rem;
+}
+/*日期时间范围选择器 end*/
+
+//月份范围选择器
+.bs-picker-month-panel,
+.bs-picker-year-panel{
+  .bs-picker-cell-range-start{
+    &:not(.bs-picker-cell-range-start-single){
+      &::before{
+        top: calc(0.125rem + 10%);
+        bottom: calc(0.125rem + 10%);
+      }
+    }
+  }
+  .bs-picker-cell-range-end{
+    &:not(.bs-picker-cell-range-end-single){
+      &::before{
+        top: calc(0.125rem + 10%);
+        bottom: calc(0.125rem + 10%);
+      }
+    }
+  }
+  .bs-picker-cell-range-hover-end::after{
+    top: calc(0.125rem + 10%);
+    bottom: calc(0.125rem + 10%);
+  }
+}
+
+// 年份选择器
+.bs-year-range-picker-dropdown{
+  .bs-picker-decade-panel{
+    .bs-picker-table{
+      height: 15.5rem;
+    }
+  }
+ }
